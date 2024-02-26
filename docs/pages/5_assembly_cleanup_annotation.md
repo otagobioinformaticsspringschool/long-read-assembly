@@ -23,7 +23,7 @@ With that understanding, we are ready to test it out for ourselves...
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2023/genome_assembly/
+    cd ~/lra/
     mkdir -p cleanup/fcs/
     cd cleanup/fcs/
     ```
@@ -143,7 +143,7 @@ There is a file created called something like `*fcs_gx_report.txt`. Open it in y
 
     We will copy over our prebaked Hifiasm trio assembly (maternal haplotype) and create a slurm script...
     ```bash
-    cp /nesi/project/nesi02659/obss_2023/resources/genome_assembly/trio/HG002.mat.fa.gz .
+    cp /nesi/project/nesi02659/lra23/resources/genome_assembly/trio/HG002.mat.fa.gz .
 
     nano fcs_full.sl
     ```
@@ -170,7 +170,7 @@ There is a file created called something like `*fcs_gx_report.txt`. Open it in y
     screen genome \
     --fasta ./HG002.mat.fa.gz \
     --out-dir ./asm_fcs_output \
-    --gx-db /nesi/project/nesi02659/obss_2023/resources/genome_assembly/gxdb \
+    --gx-db /nesi/project/nesi02659/lra/resources/genome_assembly/gxdb \
     --tax-id 9606
     ```
     Then you would just run the slurm script. Don't do this now. The results are boring for this assembly and the run takes 500GB of memory! (This is required to load the contamination database into memory -- if you don't give fcs enough memory it will take much much longer.)
@@ -321,7 +321,7 @@ of HG002.
 !!! terminal "code"
 
     ```shell
-    cd ~/obss_2023/genome_assembly/
+    cd ~/lra/
     cd liftoff-annotation
     ```
 
@@ -491,7 +491,7 @@ The first thing we would like to do is to find out how our assembled genome comp
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2023/genome_assembly/
+    cd ~/lra/
     cd annotation/mashmap
     ```
 
@@ -601,7 +601,7 @@ Today we are going to use minimap2 to align ONT reads that have 5mC information 
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2023/genome_assembly/
+    cd ~/lra/
     cd annotation/minimap2
     ```
 

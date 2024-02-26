@@ -1,8 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://genomicsaotearoa.github.io/long-read-assembly/</loc>
-         <lastmod>2023-06-21</lastmod>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/pages/0_intro/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/pages/1_read_inputs/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/pages/2_familiarise_w_data/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/pages/3_assembly/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/pages/4_assembly_qc/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/pages/5_assembly_cleanup_annotation/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/pages/6_phased_assemblies_in_action/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/supplementary/supplementary_1/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/supplementary/supplementary_2/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/supplementary/supplementary_3/</loc>
+         <lastmod>2024-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://otagobioinformaticsspringschool.github.io/long-read-assembly/supplementary/supplementary_4/</loc>
+         <lastmod>2024-02-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

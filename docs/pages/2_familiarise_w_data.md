@@ -6,7 +6,7 @@ Let's get our hands on some data so we can see with our own eyes what HiFi and U
 
 !!! terminal "code"
     ```bash
-    cd ~/obss_2023/genome_assembly
+    cd ~/lra
     cd data
     ```
 *Load modules*
