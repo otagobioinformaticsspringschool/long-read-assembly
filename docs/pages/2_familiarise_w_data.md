@@ -26,7 +26,7 @@ In order to get a feel for the data, we only need a small portion of it. Pull th
     ```bash
     zcat m64011_190830_220126.Q20.fastq.gz \
         | head -n 200000 \
-        | pigz > hifi_50k_reads.fq.gz &
+        | pigz > hifi_50k_reads.fq.gz
     ```
 Next, downsample the ONT UL reads, too.
 
@@ -35,7 +35,7 @@ Next, downsample the ONT UL reads, too.
     samtools fastq -@2 \
         03_08_22_R941_HG002_1_Guppy_6.1.2_5mc_cg_prom_sup.bam \
         | head -n 20000 \
-        | pigz > ont_ul_5k_reads.fq.gz &
+        | pigz > ont_ul_5k_reads.fq.gz 
     ```
 
 **Now let's compare the data**<br>
@@ -50,7 +50,7 @@ We are going to use a tool called NanoComp. This tool can take in multiple FASTQ
         --names PacBio_HiFi ONT_UL \
         --outdir nanocomp_hifi_vs_ul
     ```
-Once the run is complete (~2 minutes), navigate in your file browser to the folder that NanoComp just created and then click on the `NanoComp-report.html` file (near the bottom of the folder's contents) to open it. Take a look at the plots for log-transformed read lengths and basecall quality scores. (Note that you may have to click **Trust HTML** at the top of the page for the charts to display.)
+Once the run is complete (~5 minutes), navigate in your file browser to the folder that NanoComp just created and then click on the `NanoComp-report.html` file (near the bottom of the folder's contents) to open it. Take a look at the plots for log-transformed read lengths and basecall quality scores. (Note that you may have to click **Trust HTML** at the top of the page for the charts to display.)
 
 ??? clipboard-question "What is the range of Q-scores seen in HiFi data?"
     
@@ -109,7 +109,7 @@ Hifiasm is often run with ONT data filtered to be over 50kb in length, so let's 
     seqkit seq \
         -m 50000 \
         ont_ul_5k_reads.fq.gz \
-        | pigz > ont_ul_5k_reads.50kb.fq.gz &
+        | pigz > ont_ul_5k_reads.50kb.fq.gz 
     ```
 Now we can quickly check how many reads are retained.
 

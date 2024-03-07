@@ -122,7 +122,7 @@ And actually run the test data
         -t4 \
         -f0 \
         chr11-2M.fa.gz \
-        2> test.log &
+        2> test.log
     ```
 
 
