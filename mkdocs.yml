@@ -1,12 +1,12 @@
 site_name: Long-read Assembly
 site_author: Originally Genomics Aotearoa. This is a modified version.
 site_dir: public
-site_url: "https://otagobioinformaticsspringschool.github.io/long-read-assembly/"
+site_url: "https://genomicsaotearoa.github.io/long-read-assembly-one-day/"
 
 #Repository information
 
-repo_name: otagobioinformaticsspringschool/long-read-assembly
-repo_url: https://github.com/otagobioinformaticsspringschool/long-read-assembly
+repo_name: GenomicsAotearoa/long-read-assembly-one-day
+repo_url: https://github.com/GenomicsAotearoa/long-read-assembly-one-day
 
 theme:
   name: material
