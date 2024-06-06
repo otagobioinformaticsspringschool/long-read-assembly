@@ -691,7 +691,7 @@ If you are familiar with ONT data already you know that ONT and PacBio have the 
 Take a look around `mat-0000038` (this is the biggest contig that maps to chrX).
 
 ??? clipboard-question "Why did we choose to show you an example in chrX ?"
-In male samples chrX is haploid, so outside of the psuedoautosomal, or PAR, regions we don't have to worry about whether or not our reads map to the correct haplotype.
+    In male samples chrX is haploid, so outside of the psuedoautosomal, or PAR, regions we don't have to worry about whether or not our reads map to the correct haplotype.
 
 ??? clipboard-question "What would have happened if we had just aligned this data to CHM13 ?"
 
