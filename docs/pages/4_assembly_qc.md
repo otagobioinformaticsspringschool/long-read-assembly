@@ -342,7 +342,6 @@ Use your text editor of choice to make a Slurm script (`run_merqury.sl`) to run 
     ## load modules
     module purge
     module load Merqury
-    export MERQURY=/opt/nesi/CS400_centos7_bdw/Merqury/1.3-Miniconda3/merqury
 
     ## create solo merqury dir and use it
     mkdir -p merqury_solo
@@ -354,10 +353,6 @@ Use your text editor of choice to make a Slurm script (`run_merqury.sl`) to run 
         ../assembly.fasta \
         output
     ```
-
-??? note "What's that `export` command doing there?"
-
-    Merqury as a package ships with a lot of scripts, especially for plotting. The `merqury.sh` command that we're using is calling those scripts, but we need to tell it where we installed Merqury.
 
 To find out the QV, we want the file named `output.qv`. Take a look at it and try to interpret the QV value you find (third column). If we recall the Phred scale system, this would mean that this QV value is great! Which is not surprising, considering we used HiFi data. **It's worth noting, though, that we are using HiFi _k_-mers to evaluate sequences derived from those same HiFi reads.** This does a good job of showing whether the assembly worked with that data well, but what if the HiFi data itself is missing parts of the genome, such as due to bias (_e.g._, GA dropout)? That's why it's important to use orthogonal datasets made using different sequencing technology, when possible. For instance, we can use an Illumina-based Meryl database to evaluate a HiFi assembly. For non-human vertebrates, this often results in the QV dropping from 50-60 to 35-45, depending on the genome in question.
 
