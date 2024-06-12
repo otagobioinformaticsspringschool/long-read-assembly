@@ -177,11 +177,11 @@ P   14  11+,12-,13+ 4M,5M
 To get a FASTA we just pull the S lines from a GFA and print them to a file:
 
 !!! terminal "code"
-```bash
+    ```bash
     awk '/^S/{print ">"$2;print $3}' \
         test.bp.p_ctg.gfa \
         > test.p_ctg.fa
-```
+    ```
 
 !!! info "You can read this awk command as:"
 
