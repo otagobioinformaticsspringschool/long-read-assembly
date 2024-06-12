@@ -269,33 +269,6 @@ Now we can run Mercury!
 meryl count k=30 memory=4 threads=2 hifi.fastq.gz output read-db.meryl
 ```
 
-??? note "`--wrap` ???"
-
-    Previously, we used the `sbatch` command to submit a slurm script to the cluster and the slurm job handler. The `sbatch` command can actually take a lot of parameters like the ones we included in the beginning of our script, and one of those parameters is `--wrap` which kind of wraps whatever command you give it in a Slurm wrapper so that the cluster can schedule it as if it was a Slurm script.
-
-    Take note that running a process in this manner is not reproducible. Unless you have access to the `history` logs, other researchers are not able to know what parameters you have used. Therefore, it is advisable to write it out in a Slurm script as below:
-
-    !!! terminal "code"
-
-        ```bash
-        #!/bin/bash -e
-        #SBATCH --account=nesi02659
-        #SBATCH --job-name=meryl
-        #SBATCH --time=00:15:00
-        #SBATCH --cpus-per-task=2
-        #SBATCH --mem=4G
-        #SBATCH --partition=milan
-
-        # Modules
-        module purge
-        module load Merqury/1.3-Miniconda3
-
-        # Run
-        meryl count k=30 memory=4 threads=2 \
-          hifi.fastq.gz \
-          output read-db.meryl
-        ```
-
 That shouldn't take too long to run. Now we have a Meryl DB for our HiFi reads. If we're curious about the distribution of our _k_-mers, we can use Meryl generate a histogram of the counts to show us how often a _k_-mer occurs only once in the reads, twice, etc.
 
 ??? question "How would you go about trying to do this with meryl?"
