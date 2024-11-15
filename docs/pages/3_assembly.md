@@ -88,7 +88,7 @@ Running assemblers is very computationally intensive and the output files can be
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2023/genome_assembly/
+    cd ~/obss_2024/genome_assembly/
     mkdir -p assembly/hifiasm_test
     cd assembly/hifiasm_test
     ```
@@ -124,7 +124,6 @@ And actually run the test data
         chr11-2M.fa.gz \
         2> test.log &
     ```
-
 
 !!! terminal "code"
 
@@ -177,6 +176,7 @@ P   14  11+,12-,13+ 4M,5M
 To get a FASTA we just pull the S lines from a GFA and print them to a file:
 
 !!! terminal "code"
+
 ```bash
     awk '/^S/{print ">"$2;print $3}' \
         test.bp.p_ctg.gfa \
@@ -208,7 +208,7 @@ We are going to take a look at the assembly GFA file in a browser called Bandage
     **Load a unitig GFA**
 
     1. Click the *File* dropdown then *Load Graph*
-    2. Navigate to our current folder (`cd ~/obss_2023/genome_assembly/assembly/hifiasm_test`)
+    2. Navigate to our current folder (`cd ~/obss_2024/genome_assembly/assembly/hifiasm_test`)
     3. Select the `test.bp.r_utg.noseq.gfa` file and press the **Open** icon
     4. Under **Graph Drawing** on the left-hand side click **Draw Graph**
 
@@ -232,7 +232,7 @@ We are going to take a look at the assembly GFA file in a browser called Bandage
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2023/genome_assembly
+    cd ~/obss_2024/genome_assembly
     mkdir -p assembly/verkko_test
     cd assembly/verkko_test
     ```
