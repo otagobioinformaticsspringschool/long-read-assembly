@@ -260,7 +260,7 @@ Let's try this out on the _E. coli_ Verkko assembly. First we need a Meryl datab
 
 We just made a directory for our runs, now let's sym link the fasta and reads here so we can refer to them more easily
 
-```
+```bash
 ln -s ~/obss_2024/genome_assembly/assembly/verkko_test/assembly/assembly.fasta .
 ln -s ~/obss_2024/genome_assembly//assembly/verkko_test/hifi.fastq.gz .
 ```

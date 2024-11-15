@@ -5,11 +5,12 @@ Let's get our hands on some data so we can see with our own eyes what HiFi and U
 **Start Into the Right Directory**
 
 !!! terminal "code"
-`bash
+    ```bash
     cd ~/obss_2024/genome_assembly
     cd data
-    `
-_Load modules_
+    ```
+    
+    _Load modules_
 
 !!! terminal "code"
 
@@ -33,12 +34,12 @@ In order to get a feel for the data, we only need a small portion of it. Pull th
 Next, downsample the ONT UL reads, too.
 
 !!! terminal "code"
-`bash
+    ```bash
     samtools fastq -@2 \
         03_08_22_R941_HG002_1_Guppy_6.1.2_5mc_cg_prom_sup.bam \
         | head -n 20000 \
         | pigz > ont_ul_5k_reads.fq.gz &
-    `
+    ```
 
 **Now let's compare the data**<br>
 We are going to use a tool called NanoComp. This tool can take in multiple FASTQs (or BAMs) and will create summary statistics and nice plots that show things like read length and quality scores. NanoComp has nano in the name, and has some ONT-specific functionality, but it can be used with PacBio data just fine.
