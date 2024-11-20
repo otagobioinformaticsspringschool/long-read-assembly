@@ -35,7 +35,7 @@ With that understanding, we are ready to test it out for ourselves...
     ```bash
     curl -LO https://github.com/ncbi/fcs/raw/main/dist/fcs.py
     # this was the last commit that had this file in the repo
-    curl -LO https://github.com/ncbi/fcs/blob/b8814cbc2458ab0e7d16533d5fdec1c1dccae420/examples/fcsgx_test.fa.gz
+    curl -LO https://github.com/ncbi/fcs/raw/b8814cbc2458ab0e7d16533d5fdec1c1dccae420/examples/fcsgx_test.fa.gz
     ```
 
 This tool is a python script that calls a Docker/Singularity container. This was done because contamination screens notoriously require a ton of dependencies. So having a Docker container makes things easier on the user. The docker container requires that a database of contaminants are downloaded. We have already downloaded the test database here: test-only`. The container has already been downloaded as well, we just need to load the singularity module and let FCS know where the container is:
