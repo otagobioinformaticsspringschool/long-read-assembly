@@ -6,7 +6,7 @@ Let's get our hands on some data so we can see with our own eyes what HiFi and U
 
 !!! terminal "code"
     ```bash
-    cd ~/obss_2024/genome_assembly
+    cd ~/obss_2025/genome_assembly
     cd data
     ```
     

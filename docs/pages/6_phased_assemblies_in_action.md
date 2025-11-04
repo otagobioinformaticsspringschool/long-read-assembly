@@ -83,7 +83,7 @@ can map against the human CHM13-T2T reference.
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2024/genome_assembly/
+    cd ~/obss_2025/genome_assembly/
     mkdir moddotplot
     cd moddotplot
     ```
@@ -93,9 +93,9 @@ can map against the human CHM13-T2T reference.
 !!! terminal "code"
 
     ```bash
-    ln -s /nesi/project/nesi02659/obss_2024/resources/genome_assembly/chm13v2.0.fa chm13.fa
-    ln -s /nesi/project/nesi02659/obss_2024/resources/genome_assembly/assembly.haplotype2.fasta hg002.hap2.fa
-    ln -s /nesi/project/nesi02659/obss_2024/resources/genome_assembly/assembly.haplotype2.fasta.fai hg002.hap2.fa.fai
+    ln -s /nesi/project/nesi02659/obss_2025/resources/genome_assembly/chm13v2.0.fa chm13.fa
+    ln -s /nesi/project/nesi02659/obss_2025/resources/genome_assembly/assembly.haplotype2.fasta hg002.hap2.fa
+    ln -s /nesi/project/nesi02659/obss_2025/resources/genome_assembly/assembly.haplotype2.fasta.fai hg002.hap2.fa.fai
     ```
 
 Note that we&rsquo;re cheating a bit. We could map against the entire diploid

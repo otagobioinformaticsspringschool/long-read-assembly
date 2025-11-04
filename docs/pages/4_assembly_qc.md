@@ -43,7 +43,7 @@ Let's get some basic statistics for an assembly using a tool called **gfastats**
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2024/genome_assembly
+    cd ~/obss_2025/genome_assembly
     cd assembly_qc/gfastats
     ls -la          # you should see a bunch of "files" that are actually symlinks pointing to their actual content
     ```
@@ -253,7 +253,7 @@ Let's try this out on the _E. coli_ Verkko assembly. First we need a Meryl datab
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2024/genome_assembly/assembly_qc
+    cd ~/obss_2025/genome_assembly/assembly_qc
     mkdir   merqury
     cd merqury
     ```
@@ -261,8 +261,8 @@ Let's try this out on the _E. coli_ Verkko assembly. First we need a Meryl datab
 We just made a directory for our runs, now let's sym link the fasta and reads here so we can refer to them more easily
 
 ```bash
-ln -s ~/obss_2024/genome_assembly/assembly/verkko_test/assembly/assembly.fasta .
-ln -s ~/obss_2024/genome_assembly//assembly/verkko_test/hifi.fastq.gz .
+ln -s ~/obss_2025/genome_assembly/assembly/verkko_test/assembly/assembly.fasta .
+ln -s ~/obss_2025/genome_assembly//assembly/verkko_test/hifi.fastq.gz .
 ```
 
 Now we can run Mercury!
@@ -413,11 +413,11 @@ We just ran Merqury on our E. coli assembly, and evaluated it using the HiFi rea
     export MERQURY=/opt/nesi/CS400_centos7_bdw/Merqury/1.3-Miniconda3/merqury
 
     ## create trio merqury dir and use it
-    cd ~/obss_2024/genome_assembly/assembly_qc
+    cd ~/obss_2025/genome_assembly/assembly_qc
     mkdir -p  merqury_trio
     cd merqury_trio
     # Go get the necessary files
-    OBSS_RESOURCES=/nesi/project/nesi02659/obss_2024/resources/genome_assembly
+    OBSS_RESOURCES=/nesi/project/nesi02659/obss_2025/resources/genome_assembly
     ln -s $OBSS_RESOURCES/assembly.*.fasta .
     ln -s $OBSS_RESOURCES/maternal.k30.hapmer.meryl .
     ln -s $OBSS_RESOURCES/paternal.k30.hapmer.meryl .
@@ -475,7 +475,7 @@ Let's first create a director within `assembly_qc` for it.
 !!! terminal "code"
 
 ```bash
-cd ~/obss_2024/genome_assembly/assembly_qc
+cd ~/obss_2025/genome_assembly/assembly_qc
 mkdir -p yak
 cd yak
 ```
@@ -496,8 +496,8 @@ As the image illustrates, switch errors occur when an assembly _switches_ betwee
     #SBATCH --partition     milan
 
     ## change to qc dir, link the necessary files
-    cd ~/obss_2024/genome_assembly/assembly_qc/yak
-    OBSS_RESOURCES=/nesi/project/nesi02659/obss_2024/resources/genome_assembly
+    cd ~/obss_2025/genome_assembly/assembly_qc/yak
+    OBSS_RESOURCES=/nesi/project/nesi02659/obss_2025/resources/genome_assembly
     ln -s $OBSS_RESOURCES/yak .
     ln -s $OBSS_RESOURCES/hic .
     ln -s $OBSS_RESOURCES/trio .
@@ -536,11 +536,11 @@ Let's try running asmgene on `haplotype1` and `haplotype2` from the pre-baked Ve
 
     ```bash
     ## asmgene
-    cd ~/obss_2024/genome_assembly/
-    mkdir -p ~/obss_2024/genome_assembly/assembly_qc/asmgene
+    cd ~/obss_2025/genome_assembly/
+    mkdir -p ~/obss_2025/genome_assembly/assembly_qc/asmgene
     cd assembly_qc/asmgene
     # let's symlink some of the necessary files
-    OBSS_RESOURCES=/nesi/project/nesi02659/obss_2024/resources/genome_assembly
+    OBSS_RESOURCES=/nesi/project/nesi02659/obss_2025/resources/genome_assembly
     ln -s $OBSS_RESOURCES/chm13v2.0.fa .
     ln -s $OBSS_RESOURCES/CHM13-T2T.cds.fasta .
     ln -s $OBSS_RESOURCES/assembly.haplotype1.fasta .
