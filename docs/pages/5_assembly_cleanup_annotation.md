@@ -264,21 +264,19 @@ your assembly.
     analysis, and conversion tasks.
 
 ??? clipboard-question "How can I learn more about annotation ?"
-Please consider the following sources:
+
+    Please consider the following sources:
 
     - Review of eukaryotic genome annotation written for beginners
     (Yandell and Ence, 2012; doi:
     <a href="https://doi.org/10.1038/nrg3174">10.1038/nrg3174</a>)
-
     - Review of assembly and annotation written for conservation
     geneticists and assuming limited understanding of bioinformatics and
     high-throughput sequencing (Ekblom and Wolf, 2014; doi:
     <a href="https://doi.org/10.1111/eva.12178">10.1111/eva.12178</a>)
-
     - Review of structural and functional annotation, providing
     definitions and the limitations of annotation (Mudge and Harrow,
     2016; doi: <a href="https://doi.org/10.1038/nrg.2016.119">10.1038/nrg.2016.119</a>)
-
     - Protocol (from <a href="https://www.protocols.io">protocols.io</a>)
     for <em>de novo</em> annotation using the <a
     href="https://yandell-lab.org/software/maker.html">MAKER</a>
@@ -691,7 +689,7 @@ If you are familiar with ONT data already you know that ONT and PacBio have the 
 Take a look around `mat-0000038` (this is the biggest contig that maps to chrX).
 
 ??? clipboard-question "Why did we choose to show you an example in chrX ?"
-In male samples chrX is haploid, so outside of the psuedoautosomal, or PAR, regions we don't have to worry about whether or not our reads map to the correct haplotype.
+    In male samples chrX is haploid, so outside of the psuedoautosomal, or PAR, regions we don't have to worry about whether or not our reads map to the correct haplotype.
 
 ??? clipboard-question "What would have happened if we had just aligned this data to CHM13 ?"
 

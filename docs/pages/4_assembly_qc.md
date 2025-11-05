@@ -1,6 +1,6 @@
 # 5. Assembly QC
 
-Now that we have understood our data types (day 1) and put them through an assembly algorithm (day 2), we have this file of A's, T's, C's, and G's that's supposed to be our assembly. This file is meant to represent a biological reality, so let's try to assess its quality through several lens, some biological and some more technical. One way to remember the ways we evaluate assemblies is by thinking about the "3C's": **contiguity**, **correctness**, and **completeness**.
+Now that we have understood our data types and put them through an assembly algorithm, we have this file of A's, T's, C's, and G's that's supposed to be our assembly. This file is meant to represent a biological reality, so let's try to assess its quality through several lens, some biological and some more technical. One way to remember the ways we evaluate assemblies is by thinking about the "3C's": **contiguity**, **correctness**, and **completeness**.
 
 !!! question "Food for thought"
 
@@ -271,33 +271,6 @@ Now we can run Mercury!
 meryl count k=30 memory=4 threads=2 hifi.fastq.gz output read-db.meryl
 ```
 
-??? note "`--wrap` ???"
-
-    Previously, we used the `sbatch` command to submit a slurm script to the cluster and the slurm job handler. The `sbatch` command can actually take a lot of parameters like the ones we included in the beginning of our script, and one of those parameters is `--wrap` which kind of wraps whatever command you give it in a Slurm wrapper so that the cluster can schedule it as if it was a Slurm script.
-
-    Take note that running a process in this manner is not reproducible. Unless you have access to the `history` logs, other researchers are not able to know what parameters you have used. Therefore, it is advisable to write it out in a Slurm script as below:
-
-    !!! terminal "code"
-
-        ```bash
-        #!/bin/bash -e
-        #SBATCH --account=nesi02659
-        #SBATCH --job-name=meryl
-        #SBATCH --time=00:15:00
-        #SBATCH --cpus-per-task=2
-        #SBATCH --mem=4G
-        #SBATCH --partition=milan
-
-        # Modules
-        module purge
-        module load Merqury/1.3-Miniconda3
-
-        # Run
-        meryl count k=30 memory=4 threads=2 \
-          hifi.fastq.gz \
-          output read-db.meryl
-        ```
-
 That shouldn't take too long to run. Now we have a Meryl DB for our HiFi reads. If we're curious about the distribution of our _k_-mers, we can use Meryl generate a histogram of the counts to show us how often a _k_-mer occurs only once in the reads, twice, etc.
 
 ??? question "How would you go about trying to do this with meryl?"
@@ -371,7 +344,6 @@ Use your text editor of choice to make a Slurm script (`run_merqury.sl`) to run 
     ## load modules
     module purge
     module load Merqury
-    export MERQURY=/opt/nesi/CS400_centos7_bdw/Merqury/1.3-Miniconda3/merqury
 
     ## create solo merqury dir and use it
     mkdir -p merqury_solo
@@ -383,10 +355,6 @@ Use your text editor of choice to make a Slurm script (`run_merqury.sl`) to run 
         ../assembly.fasta \
         output
     ```
-
-??? note "What's that `export` command doing there?"
-
-    Merqury as a package ships with a lot of scripts, especially for plotting. The `merqury.sh` command that we're using is calling those scripts, but we need to tell it where we installed Merqury.
 
 To find out the QV, we want the file named `output.qv`. Take a look at it and try to interpret the QV value you find (third column). If we recall the Phred scale system, this would mean that this QV value is great! Which is not surprising, considering we used HiFi data. **It's worth noting, though, that we are using HiFi _k_-mers to evaluate sequences derived from those same HiFi reads.** This does a good job of showing whether the assembly worked with that data well, but what if the HiFi data itself is missing parts of the genome, such as due to bias (_e.g._, GA dropout)? That's why it's important to use orthogonal datasets made using different sequencing technology, when possible. For instance, we can use an Illumina-based Meryl database to evaluate a HiFi assembly. For non-human vertebrates, this often results in the QV dropping from 50-60 to 35-45, depending on the genome in question.
 

@@ -20,7 +20,7 @@
     - [Assembly clean-up](pages/5_assembly_cleanup_annotation.md)
     - [Phased assemblies in action](pages/6_phased_assemblies_in_action.md)
 
-??? example "Supplementary materials"
+??? example "Supplementary material"
 
     | Supplementary   | Topic                                                                                      |
     | :-------------- | :----------------------------------------------------------------------------------------- |

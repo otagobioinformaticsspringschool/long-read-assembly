@@ -122,7 +122,7 @@ And actually run the test data
         -t4 \
         -f0 \
         chr11-2M.fa.gz \
-        2> test.log &
+        2> test.log
     ```
 
 !!! terminal "code"
@@ -177,11 +177,11 @@ To get a FASTA we just pull the S lines from a GFA and print them to a file:
 
 !!! terminal "code"
 
-```bash
+    ```bash
     awk '/^S/{print ">"$2;print $3}' \
         test.bp.p_ctg.gfa \
         > test.p_ctg.fa
-```
+    ```
 
 !!! info "You can read this awk command as:"
 
