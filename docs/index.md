@@ -1,14 +1,15 @@
-<center>![image](./theme_figures/institution_logos.png){width="500"}</center>
+<p align="center">
+  <img src="./theme_figures/institution_logos.png" alt="institutional logos" width="500" />
+</p>
 <hr style="border:1px solid grey">
-<center>
 
-# **Long-read Assembly**
+<h1 style="text-align:center">Long-read Assembly</h1>
 
-</center>
 
-<center>
-![image](./theme_figures/double_helix_mirror.png){width="300"}
-</center>
+<p align="center">
+  <img src="./theme_figures/double_helix_mirror.png" alt="double helix" width="300" />
+</p>
+
 
 !!! calendar-days "Workshop schedule"
 

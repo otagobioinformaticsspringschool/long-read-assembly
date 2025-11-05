@@ -1,7 +1,7 @@
 site_name: Long-read Assembly
 site_author: Originally Genomics Aotearoa. This is a modified version.
 site_dir: public
-site_url: "https://genomicsaotearoa.github.io/long-read-assembly-one-day/"
+site_url: "https://otagobioinformaticsspringschool.github.io/long-read-assembly-one-day/"
 
 #Repository information
 
@@ -78,8 +78,8 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.details
   - pymdownx.emoji:
-      emoji_generator: !!python/name:materialx.emoji.to_svg
-      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
