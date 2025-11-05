@@ -38,7 +38,7 @@ auN tries to capture the nature of this curve, instead of a value from an arbitr
 
 ### Run gfastats on a FASTA
 
-Let's get some basic statistics for an assembly using a tool called **gfastats**, which will output metrics such as N50, auN, total size, etc. We can try it out on a Verkko trio assembly of HG002 that's already been downloaded onto NeSI.
+Let's get some basic statistics for an assembly using a tool called **gfastats**, which will output metrics such as N50, auN, total size, etc. We can try it out on a Verkko trio assembly of HG002 that's already been downloaded onto the REANNZ HPC.
 
 !!! terminal "code"
 

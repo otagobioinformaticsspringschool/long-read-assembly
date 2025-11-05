@@ -1,7 +1,9 @@
 <center>![image](./theme_figures/institution_logos.png){width="500"}</center>
 <hr style="border:1px solid grey">
 <center>
+
 # **Long-read Assembly**
+
 </center>
 
 <center>
@@ -24,8 +26,8 @@
 
     | Supplementary   | Topic                                                                                      |
     | :-------------- | :----------------------------------------------------------------------------------------- |
-    | Supplementary 1 | [NeSI HPC Authentication Factor Setup and Jupyter Login](supplementary/supplementary_1.md) |
-    | Supplementary 2 | [NeSI File System, Working Directory, and Symlinks](supplementary/supplementary_2.md) |
+    | Supplementary 1 | [REANNZ HPC Authentication Factor Setup and Jupyter Login](supplementary/supplementary_1.md) |
+    | Supplementary 2 | [REANNZ HPC File System, Working Directory, and Symlinks](supplementary/supplementary_2.md) |
     | Supplementary 3 | [Jupyter Virtual Desktop](supplementary/supplementary_3.md)|
 
 !!! copyright "Attribution notice"
