@@ -28,7 +28,7 @@ In order to get a feel for the data, we only need a small portion of it. Pull th
     ```bash
     zcat m64011_190830_220126.Q20.fastq.gz \
         | head -n 200000 \
-        | pigz > hifi_50k_reads.fq.gz &
+        | pigz > hifi_50k_reads.fq.gz
     ```
 
 Next, downsample the ONT UL reads, too.
@@ -38,7 +38,7 @@ Next, downsample the ONT UL reads, too.
     samtools fastq -@2 \
         03_08_22_R941_HG002_1_Guppy_6.1.2_5mc_cg_prom_sup.bam \
         | head -n 20000 \
-        | pigz > ont_ul_5k_reads.fq.gz &
+        | pigz > ont_ul_5k_reads.fq.gz 
     ```
 
 **Now let's compare the data**<br>
@@ -113,7 +113,7 @@ Hifiasm is often run with ONT data filtered to be over 50kb in length, so let's 
     seqkit seq \
         -m 50000 \
         ont_ul_5k_reads.fq.gz \
-        | pigz > ont_ul_5k_reads.50kb.fq.gz &
+        | pigz > ont_ul_5k_reads.50kb.fq.gz 
     ```
 
 Now we can quickly check how many reads are retained.
