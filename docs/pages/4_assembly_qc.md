@@ -356,6 +356,9 @@ Use your text editor of choice to make a Slurm script (`run_merqury.sl`) to run 
         output
     ```
 
+    !!! callout
+        Submit using `sbatch` on the login node
+
 To find out the QV, we want the file named `output.qv`. Take a look at it and try to interpret the QV value you find (third column). If we recall the Phred scale system, this would mean that this QV value is great! Which is not surprising, considering we used HiFi data. **It's worth noting, though, that we are using HiFi _k_-mers to evaluate sequences derived from those same HiFi reads.** This does a good job of showing whether the assembly worked with that data well, but what if the HiFi data itself is missing parts of the genome, such as due to bias (_e.g._, GA dropout)? That's why it's important to use orthogonal datasets made using different sequencing technology, when possible. For instance, we can use an Illumina-based Meryl database to evaluate a HiFi assembly. For non-human vertebrates, this often results in the QV dropping from 50-60 to 35-45, depending on the genome in question.
 
 ### Using Merqury in trio mode
@@ -403,6 +406,8 @@ We just ran Merqury on our E. coli assembly, and evaluated it using the HiFi rea
         ../assembly.haplotype2.fasta \
         output
     ```
+    !!! callout
+        Submit using `sbatch` on the login node
 
 You can also look in this folder for the merqury outputs if there isn't enough time to run the actual program: `/nesi/nobackup/nesi02659/LRA/resources/merqury`
 
@@ -487,6 +492,8 @@ As the image illustrates, switch errors occur when an assembly _switches_ betwee
         ../trio/HG002.mat.fa.gz \
         > hifiasm.trio.mat.trioeval
     ```
+    !!! callout
+        Submit using `sbatch` on the login node
 
 ## Completeness (asmgene)
 
@@ -550,7 +557,9 @@ Now that we have our files, we're ready to go. Make a script with the following 
     k8 /opt/nesi/CS400_centos7_bdw/minimap2/2.24-GCC-11.3.0/bin/paftools.js asmgene -a ref.cdna.paf asm.hap1.cdna.paf > verkko.haplotype1.asmgene.tsv
     k8 /opt/nesi/CS400_centos7_bdw/minimap2/2.24-GCC-11.3.0/bin/paftools.js asmgene -a ref.cdna.paf asm.hap2.cdna.paf > verkko.haplotype2.asmgene.tsv
     ```
-
+    !!! callout
+        Submit using `sbatch` on the login node
+        
 !!! tip "Tip"
 
     Another popular tool for checking genome completeness using gene content is the software Benchmarking Universal Single-Copy Orthologs (BUSCO). This approach uses a set of evolutionarily conserved genes that are expected to be present at single copy for a given taxa, so one could check their genome to see if, for instance, it has all the genes predicted to be necessary for *Aves* or *Vertebrata*. This approach is useful if your *de novo* genome assembly is for a species that does not have a reference genome yet. And it's even faster now with the recently developed tool *minibusco*!

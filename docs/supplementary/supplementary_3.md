@@ -1,12 +1,12 @@
-# Jupyter Virtual Desktop 
+# OnDemand Virtual Desktop 
 
-## Open a Virtual Desktop from JupyterHub
+## Open a Virtual Desktop from OnDemand
 
 !!! jupyter "How to open a Virtual Desktop"
 
-    -  Click blue <KBD>+</KBD> button on top left corner and then the <KBD>Virtual Desktop</KBD> icon
+    -  From the OnDemand Dashboard select "Virtual Desktop"
 
-    <center>![image](../theme_figures/open_vdt.png){width="400"}</center>
+    <center>![image](../images/virtualDesktop.png){width="800"}</center>
 
 ## Troubleshooting 
 
@@ -16,6 +16,4 @@
 
     <center>![image](../theme_figures/novnc.png){width="299"}</center>
 
-    - Restart Jupyter as below and try again please 
-
-    ![image](../theme_figures/restart_jupyter.png)
+    - Cancel the job and resubmit

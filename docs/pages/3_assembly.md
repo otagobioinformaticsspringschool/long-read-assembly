@@ -199,18 +199,19 @@ We are going to take a look at the assembly GFA file in a browser called Bandage
 
 !!! jupyter "Start Bandage"
 
-    1. Open Jupyter Virtual Desktop [according to these instructions](../supplementary/supplementary_3.md)
+    1. Open the Virtual Desktop app within OnDemand
+    ![Launching Virtual Desktop](../images/virtualDesktop.png)
     2. In the Virtual Desktop, click on the terminal emulator icon (in your toolbar at the bottom of your screen)
     3. Load the Bandage module with `module load Bandage`
     4. Type `Bandage &` to start Bandage
-       ![image](../theme_figures/bandage_vdt.png){width="600"}
+       ![image](../images/bandage.png){width="600"}
 
     **Load a unitig GFA**
 
-    1. Click the *File* dropdown then *Load Graph*
-    2. Navigate to our current folder (`cd ~/obss_2025/genome_assembly/assembly/hifiasm_test`)
-    3. Select the `test.bp.r_utg.noseq.gfa` file and press the **Open** icon
-    4. Under **Graph Drawing** on the left-hand side click **Draw Graph**
+    5. Click the *File* dropdown then *Load Graph*
+    6. Navigate to our current folder (`cd ~/obss_2025/genome_assembly/assembly/hifiasm_test`)
+    7. Select the `test.bp.r_utg.noseq.gfa` file and press the **Open** icon
+    8. Under **Graph Drawing** on the left-hand side click **Draw Graph**
 
     Ok, so what are we looking at? The thick lines are nodes&mdash;which in this case represent sequences. Since we loaded the unitig graph the sequences are unitigs. A unitig is a high confidence contig. It is a place where the assembler says "I know exactly what is going on here". The ends of unitigs are where it gets messy. At the ends, an assembler has choices to make about which unitig(s) to connect to next.
 
@@ -221,9 +222,9 @@ We are going to take a look at the assembly GFA file in a browser called Bandage
 
     **Here are some things you can do with Bandage**
 
-    1. Let's say you mapped a sample's ONT reads back onto that sample's *de novo* assembly and have identified a misjoin. You can open up bandage and find that  unitigs that went into the contig to see if it can be easily manually broken.
-    2. If you have a phased diploid assembly with a large sequence that is missing, you can look at the unitig gfa, color the nodes by haplotype, and see which sequences are omitted. Those sequences can then be analyzed and manually added into the final assembly.
-    3. You can label nodes with (HiFi) coverage and inspect regions with low quality too see if they have low coverage as well. If so, you might want to throw them out. (This does happen, in particular for small contigs that assemblers tend to output.)
+    9.  Let's say you mapped a sample's ONT reads back onto that sample's *de novo* assembly and have identified a misjoin. You can open up bandage and find that  unitigs that went into the contig to see if it can be easily manually broken.
+    10. If you have a phased diploid assembly with a large sequence that is missing, you can look at the unitig gfa, color the nodes by haplotype, and see which sequences are omitted. Those sequences can then be analyzed and manually added into the final assembly.
+    11. You can label nodes with (HiFi) coverage and inspect regions with low quality too see if they have low coverage as well. If so, you might want to throw them out. (This does happen, in particular for small contigs that assemblers tend to output.)
 
 ## Run Verkko With Test Data
 
@@ -249,6 +250,7 @@ We are going to take a look at the assembly GFA file in a browser called Bandage
 You can see that this dataset is for _E. coli_ and there is both HiFi and ONT data included.
 
 **Create Slurm script for test Verkko run**
+
 
 !!! terminal "code"
 
@@ -283,20 +285,29 @@ You can see that this dataset is for _E. coli_ and there is both HiFi and ONT da
         --nano ./ont.fastq.gz
     ```
 
-    **Run verkko test**
-    ```bash
-    sbatch verkko_test.sl
-    ```
+    !!! callout
+    
+        This has to be run on the login node, not within the Juptyer terminal
+
+        **Run verkko test**
+        !!! terminal "code"
+            ```bash
+            sbatch verkko_test.sl
+            ```
 
 This should only take a few minutes to complete.
 
 You can keep track of the run with the `squeue` command.
 
-!!! terminal "code"
+!!! callout
+    
+    This has to be run on the login node, not within the Juptyer terminal
+        
+    !!! terminal "code"
 
-    ```bash
-    squeue --me
-    ```
+        ```bash
+        squeue --me
+        ```
 
 **How does Verkko run?**
 

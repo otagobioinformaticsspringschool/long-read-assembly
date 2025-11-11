@@ -656,10 +656,12 @@ And paste in the following:
     ```
     **And run the script**
 
-    !!! terminal
-    ```bash
-    sbatch ont_mm2.sl
-    ```
+    !!! callout
+    Run this on the login node
+        !!! terminal
+        ```bash
+        sbatch ont_mm2.sl
+        ```
 
 This should take only 3 hours or so, but we have some pre-baked results for you already. We will use these results in the next section.
 

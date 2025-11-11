@@ -356,11 +356,22 @@ Yak won't work on our Jupyter instances, so create a slurm script that has 32 co
     ```
 
 If you haven't already, execute your yak script using slurm (takes about 2 minutes).
-!!! terminal "code"
 
-    ```bash
-    sbatch yak.sl
-    ```
+!!! callout
+
+    Slurm Scheduler commands such `sbatch`, `squeue`, and `sacct` cannot be run within Juptyer on the REANZ HPC. Instead, goto https://ondemand.nesi.org.nz, login if prompted, then in the top menu bar select "Clusters", then "NeSI HPC Shell access". This will open up a terminal on the login node. Then ensure you navigate this terminal to where you made the script
+
+    !!! terminal "code"
+
+        ```bash
+        cd ~/obss_2025/genome_assembly/data/
+        ```  
+
+    !!! terminal "code"
+
+        ```bash
+        sbatch yak.sl
+        ```
 
 When you are done you get out a non-human readable file. It doesn't need to be compressed or decompressed, and nothing else needs to be done in order to use it.
 
