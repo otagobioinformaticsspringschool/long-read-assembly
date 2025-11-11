@@ -27,9 +27,8 @@
 
     | Supplementary   | Topic                                                                                      |
     | :-------------- | :----------------------------------------------------------------------------------------- |
-    | Supplementary 1 | [REANNZ HPC Authentication Factor Setup and Jupyter Login](supplementary/supplementary_1.md) |
-    | Supplementary 2 | [REANNZ HPC File System, Working Directory, and Symlinks](supplementary/supplementary_2.md) |
-    | Supplementary 3 | [Jupyter Virtual Desktop](supplementary/supplementary_3.md)|
+    | Supplementary 1 | [REANNZ HPC File System, Working Directory, and Symlinks](supplementary/supplementary_2.md) |
+    | Supplementary 2 | [Jupyter Virtual Desktop](supplementary/supplementary_3.md)|
 
 !!! copyright "Attribution notice"
 
