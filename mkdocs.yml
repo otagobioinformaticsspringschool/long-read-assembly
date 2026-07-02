@@ -10,9 +10,9 @@ repo_url: https://github.com/GenomicsAotearoa/long-read-assembly-one-day
 
 theme:
   name: material
-  logo: ./theme_figures/threelogo_fav.png
+  logo: ./theme_figures/ga_logo.png
   favicon:
-    ./theme_figures/nesi_ga.png
+    ./theme_figures/ga_logo.png
     # 404 page
   static_templates:
     - 404.html
