@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./theme_figures/institution_logos.png" alt="institutional logos" width="500" />
+  <img src="./theme_figures/institutional_logos_2025.png" alt="institutional logos" width="500" />
 </p>
 <hr style="border:1px solid grey">
 
