@@ -88,7 +88,7 @@ Running assemblers is very computationally intensive and the output files can be
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2025/genome_assembly/
+    cd ~/obss_2026/genome_assembly/
     mkdir -p assembly/hifiasm_test
     cd assembly/hifiasm_test
     ```
@@ -209,7 +209,7 @@ We are going to take a look at the assembly GFA file in a browser called Bandage
     **Load a unitig GFA**
 
     5. Click the *File* dropdown then *Load Graph*
-    6. Navigate to our current folder (`cd ~/obss_2025/genome_assembly/assembly/hifiasm_test`)
+    6. Navigate to our current folder (`cd ~/obss_2026/genome_assembly/assembly/hifiasm_test`)
     7. Select the `test.bp.r_utg.noseq.gfa` file and press the **Open** icon
     8. Under **Graph Drawing** on the left-hand side click **Draw Graph**
 
@@ -233,7 +233,7 @@ We are going to take a look at the assembly GFA file in a browser called Bandage
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2025/genome_assembly
+    cd ~/obss_2026/genome_assembly
     mkdir -p assembly/verkko_test
     cd assembly/verkko_test
     ```

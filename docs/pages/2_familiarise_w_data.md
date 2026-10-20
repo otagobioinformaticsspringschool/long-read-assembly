@@ -6,7 +6,7 @@ Let's get our hands on some data so we can see with our own eyes what HiFi and U
 
 !!! terminal "code"
     ```bash
-    cd ~/obss_2025/genome_assembly
+    cd ~/obss_2026/genome_assembly
     cd data
     ```
     
@@ -364,7 +364,7 @@ If you haven't already, execute your yak script using slurm (takes about 2 minut
     !!! terminal "code"
 
         ```bash
-        cd ~/obss_2025/genome_assembly/data/
+        cd ~/obss_2026/genome_assembly/data/
         ```  
 
     !!! terminal "code"

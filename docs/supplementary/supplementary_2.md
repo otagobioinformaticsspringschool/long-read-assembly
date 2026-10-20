@@ -27,29 +27,29 @@ Directories are like places — at any time while we are using the shell, we are
 
 ## Symlinks (shortcuts ?) 
 
-All of the Long-read assembly material  will be hosted on either `/nesi/nobackup/nesi02659` or `/nesi/project/nesi02659` file systems.  Also, each one of the attendee has an individual working space in `/nesi/project/nesi02659/obss_2025/users/`. Although this is great in everyway, having to type the full path to access this particular path (or having to remember it) from the default login site (`/home` filesystem) can be a tedious task. Therefore, we recommend creating a **Symbolic link** to your individual working directory from `/home` Think of it as a shortcut from your Desktop 🙂
+All of the Long-read assembly material  will be hosted on either `/nesi/nobackup/nesi02659` or `/nesi/project/nesi02659` file systems.  Also, each one of the attendee has an individual working space in `/nesi/project/nesi02659/obss_2026/users/`. Although this is great in everyway, having to type the full path to access this particular path (or having to remember it) from the default login site (`/home` filesystem) can be a tedious task. Therefore, we recommend creating a **Symbolic link** to your individual working directory from `/home` Think of it as a shortcut from your Desktop 🙂
 
 !!! folder-open " This is already done for you 😊 - Creating a symlink from `/home/$USER` to project(persistent) -"
     * Log into the REANNZ HPC Jupyter service as per **S.1.1 : REANNZ HPC Jupyter login** in [REANNZ HPC Setup Supplementary material](http://127.0.0.1:8000/metagenomics_summer_school/supplementary/supplementary_1/) and open a terminal session
-    * Let's call the symlink (shortcut) `obss_2025`
-    * Following command will create the `obss_2025` symlink from your `/home` directory to individual working directory in `/nesi/project/nesi02659/obss_2025/users/`
+    * Let's call the symlink (shortcut) `obss_2026`
+    * Following command will create the `obss_2026` symlink from your `/home` directory to individual working directory in `/nesi/project/nesi02659/obss_2026/users/`
     ```bash
-    ln -s /nesi/project/nesi02659/obss_2025/users/$USER ~/obss_2025
+    ln -s /nesi/project/nesi02659/obss_2026/users/$USER ~/obss_2026
     ```
 
     * Now, you can access your working directory with     
     ```
-    cd ~/obss_2025
+    cd ~/obss_2026
     ```
     * Run `pwd` to check the current working directory
     * `pwd` commands on symlinks will print the "relative path" (location from where we are, rather than from the root of the file system) with respect to "absolute path" (entire path from the root directory)
     * Run the command `realpath /path/you/want/to/know`  to show the absolute path of the symlink. i..e
     ```bash
-    realpath ~/obss_2025
+    realpath ~/obss_2026
     ```
     OR if you are already at the symlinked path
     ```bash
-    cd ~/obss_2025
+    cd ~/obss_2026
     ```
     ```bash
     realpath .
