@@ -10,10 +10,17 @@
         <meta name="author" content="Originally Genomics Aotearoa. This is a modified version.">
       
       
-        <link rel="canonical" href="https://otagobioinformaticsspringschool.github.io/long-read-assembly/pages/4_assembly_qc/">
+        <link rel="canonical" href="https://otagobioinformaticsspringschool.github.io/long-read-assembly-one-day/pages/4_assembly_qc/">
+      
+      
+        <link rel="prev" href="../3_assembly/">
+      
+      
+        <link rel="next" href="../5_assembly_cleanup_annotation/">
+      
       
       <link rel="icon" href="../../theme_figures/nesi_ga.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
@@ -21,14 +28,17 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.1d29e8d0.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
-        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
+
+
     
+    
+      
     
     
       
@@ -42,10 +52,11 @@
     
       <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
+    
     
     
   </head>
@@ -58,11 +69,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="custom" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -82,7 +90,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Long-read Assembly" class="md-header__button md-logo" aria-label="Long-read Assembly" data-md-component="logo">
       
@@ -90,7 +100,8 @@
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -109,81 +120,96 @@
       </div>
     </div>
     
-      <form class="md-header__option" data-md-component="palette">
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="" data-md-color-primary="custom" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
-          
-            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_3" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
-            </label>
-          
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
-          
-            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
-            </label>
-          
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent=""  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_3">
-          
-            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_2" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
-            </label>
-          
-        
-      </form>
+      
+        <form class="md-header__option" data-md-component="palette">
+  
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
       </label>
-      <div class="md-search" data-md-component="search" role="dialog">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
   </div>
 </div>
+      
     
     
       <div class="md-header__source">
-        <a href="https://github.com/otagobioinformaticsspringschool/long-read-assembly" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/GenomicsAotearoa/long-read-assembly-one-day" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    otagobioinformaticsspringschool/long-read-assembly
+    GenomicsAotearoa/long-read-assembly-one-day
   </div>
 </a>
       </div>
@@ -210,6 +236,7 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Long-read Assembly" class="md-nav__button md-logo" aria-label="Long-read Assembly" data-md-component="logo">
@@ -221,13 +248,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/otagobioinformaticsspringschool/long-read-assembly" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/GenomicsAotearoa/long-read-assembly-one-day" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    otagobioinformaticsspringschool/long-read-assembly
+    GenomicsAotearoa/long-read-assembly-one-day
   </div>
 </a>
     </div>
@@ -236,14 +263,21 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../.." class="md-nav__link">
-        Home
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -251,114 +285,180 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
+    
     
       
+        
+        
+      
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_2">
-          Pages
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Pages" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
-          <span class="md-nav__icon md-icon"></span>
-          Pages
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
           
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pages
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Pages
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../0_intro/" class="md-nav__link">
-        1. Introduction - Long Read Assembly Workshop
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Introduction - Long Read Assembly Workshop
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../1_read_inputs/" class="md-nav__link">
-        2. Sequence Data
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Sequence Data
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../2_familiarise_w_data/" class="md-nav__link">
-        3. Familiarize Ourselves With The Data
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Familiarize Ourselves With The Data
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../3_assembly/" class="md-nav__link">
-        4. Assembly
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Assembly
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          5. Assembly QC
+          
+  
+  
+  <span class="md-ellipsis">
+    5. Assembly QC
+    
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        5. Assembly QC
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Assembly QC
+    
+  </span>
+  
+
       </a>
       
         
@@ -378,7 +478,9 @@
       
         <li class="md-nav__item">
   <a href="#contiguity-assembly-statistics-using-gfastats" class="md-nav__link">
-    Contiguity (assembly statistics using gfastats)
+    <span class="md-ellipsis">
+      Contiguity (assembly statistics using gfastats)
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Contiguity (assembly statistics using gfastats)">
@@ -386,21 +488,27 @@
         
           <li class="md-nav__item">
   <a href="#run-gfastats-on-a-fasta" class="md-nav__link">
-    Run gfastats on a FASTA
+    <span class="md-ellipsis">
+      Run gfastats on a FASTA
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#run-gfastats-on-a-gfa" class="md-nav__link">
-    Run gfastats on a GFA
+    <span class="md-ellipsis">
+      Run gfastats on a GFA
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#compare-two-graphs-stats" class="md-nav__link">
-    Compare two graphs' stats
+    <span class="md-ellipsis">
+      Compare two graphs' stats
+    </span>
   </a>
   
 </li>
@@ -412,7 +520,9 @@
       
         <li class="md-nav__item">
   <a href="#correctness-qv-using-merqury" class="md-nav__link">
-    Correctness (QV using Merqury)
+    <span class="md-ellipsis">
+      Correctness (QV using Merqury)
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Correctness (QV using Merqury)">
@@ -420,35 +530,45 @@
         
           <li class="md-nav__item">
   <a href="#running-meryl-and-genomescope-on-the-e-coli-verkko-assembly" class="md-nav__link">
-    Running Meryl and GenomeScope on the E. coli Verkko assembly
+    <span class="md-ellipsis">
+      Running Meryl and GenomeScope on the E. coli Verkko assembly
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#using-merqury-in-solo-mode" class="md-nav__link">
-    Using Merqury in solo mode
+    <span class="md-ellipsis">
+      Using Merqury in solo mode
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#using-merqury-in-trio-mode" class="md-nav__link">
-    Using Merqury in trio mode
+    <span class="md-ellipsis">
+      Using Merqury in trio mode
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#what-do-different-phasing-approaches-look-like-in-merqury" class="md-nav__link">
-    What do different phasing approaches look like in Merqury?
+    <span class="md-ellipsis">
+      What do different phasing approaches look like in Merqury?
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#switch-and-hamming-errors-using-yak" class="md-nav__link">
-    Switch and Hamming errors using yak
+    <span class="md-ellipsis">
+      Switch and Hamming errors using yak
+    </span>
   </a>
   
 </li>
@@ -460,7 +580,9 @@
       
         <li class="md-nav__item">
   <a href="#completeness-asmgene" class="md-nav__link">
-    Completeness (asmgene)
+    <span class="md-ellipsis">
+      Completeness (asmgene)
+    </span>
   </a>
   
 </li>
@@ -472,130 +594,178 @@
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../5_assembly_cleanup_annotation/" class="md-nav__link">
-        6. Assembly Cleanup & Genome Annotation
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Assembly Cleanup &amp; Genome Annotation
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../6_phased_assemblies_in_action/" class="md-nav__link">
-        7. Phased Assemblies in Action
+        
+  
+  
+  <span class="md-ellipsis">
+    7. Phased Assemblies in Action
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
     
       
       
-      
-
+  
   
   
   
     
+    
+    
+    
       
+        
+        
+      
+    
     
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3">
-          Supplementary
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Supplementary" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
-          <span class="md-nav__icon md-icon"></span>
-          Supplementary
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
           
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
-              
   
   
-  
-    <li class="md-nav__item">
-      <a href="../../supplementary/supplementary_1/" class="md-nav__link">
-        NeSI HPC Auth.Factors Setup & Jupyter Login
-      </a>
-    </li>
+  <span class="md-ellipsis">
+    Supplementary
+    
+  </span>
   
 
-            
-          
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Supplementary
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../supplementary/supplementary_2/" class="md-nav__link">
-        NeSI File system, Working directory and Symlinks
+        
+  
+  
+  <span class="md-ellipsis">
+    the REANNZ HPC File system, Working directory and Symlinks
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../supplementary/supplementary_3/" class="md-nav__link">
-        Jupyter Virtual Desktop
+        
+  
+  
+  <span class="md-ellipsis">
+    OnDemand Virtual Desktop
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../supplementary/supplementary_4/" class="md-nav__link">
-        Additional materials
+        
+  
+  
+  <span class="md-ellipsis">
+    Additional materials
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -628,7 +798,9 @@
       
         <li class="md-nav__item">
   <a href="#contiguity-assembly-statistics-using-gfastats" class="md-nav__link">
-    Contiguity (assembly statistics using gfastats)
+    <span class="md-ellipsis">
+      Contiguity (assembly statistics using gfastats)
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Contiguity (assembly statistics using gfastats)">
@@ -636,21 +808,27 @@
         
           <li class="md-nav__item">
   <a href="#run-gfastats-on-a-fasta" class="md-nav__link">
-    Run gfastats on a FASTA
+    <span class="md-ellipsis">
+      Run gfastats on a FASTA
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#run-gfastats-on-a-gfa" class="md-nav__link">
-    Run gfastats on a GFA
+    <span class="md-ellipsis">
+      Run gfastats on a GFA
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#compare-two-graphs-stats" class="md-nav__link">
-    Compare two graphs' stats
+    <span class="md-ellipsis">
+      Compare two graphs' stats
+    </span>
   </a>
   
 </li>
@@ -662,7 +840,9 @@
       
         <li class="md-nav__item">
   <a href="#correctness-qv-using-merqury" class="md-nav__link">
-    Correctness (QV using Merqury)
+    <span class="md-ellipsis">
+      Correctness (QV using Merqury)
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Correctness (QV using Merqury)">
@@ -670,35 +850,45 @@
         
           <li class="md-nav__item">
   <a href="#running-meryl-and-genomescope-on-the-e-coli-verkko-assembly" class="md-nav__link">
-    Running Meryl and GenomeScope on the E. coli Verkko assembly
+    <span class="md-ellipsis">
+      Running Meryl and GenomeScope on the E. coli Verkko assembly
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#using-merqury-in-solo-mode" class="md-nav__link">
-    Using Merqury in solo mode
+    <span class="md-ellipsis">
+      Using Merqury in solo mode
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#using-merqury-in-trio-mode" class="md-nav__link">
-    Using Merqury in trio mode
+    <span class="md-ellipsis">
+      Using Merqury in trio mode
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#what-do-different-phasing-approaches-look-like-in-merqury" class="md-nav__link">
-    What do different phasing approaches look like in Merqury?
+    <span class="md-ellipsis">
+      What do different phasing approaches look like in Merqury?
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#switch-and-hamming-errors-using-yak" class="md-nav__link">
-    Switch and Hamming errors using yak
+    <span class="md-ellipsis">
+      Switch and Hamming errors using yak
+    </span>
   </a>
   
 </li>
@@ -710,7 +900,9 @@
       
         <li class="md-nav__item">
   <a href="#completeness-asmgene" class="md-nav__link">
-    Completeness (asmgene)
+    <span class="md-ellipsis">
+      Completeness (asmgene)
+    </span>
   </a>
   
 </li>
@@ -723,18 +915,19 @@
               </div>
             
           
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
                 
-  <a href="https://github.com/otagobioinformaticsspringschool/long-read-assembly/edit/master/docs/pages/4_assembly_qc.md" title="Edit this page" class="md-content__button md-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+                  
 
+
+  
+  
 
 
 <h1 id="5-assembly-qc">5. Assembly QC<a class="headerlink" href="#5-assembly-qc" title="Permanent link">&para;</a></h1>
-<p>Now that we have understood our data types (day 1) and put them through an assembly algorithm (day 2), we have this file of A's, T's, C's, and G's that's supposed to be our assembly. This file is meant to represent a biological reality, so let's try to assess its quality through several lens, some biological and some more technical. One way to remember the ways we evaluate assemblies is by thinking about the "3C's": <strong>contiguity</strong>, <strong>correctness</strong>, and <strong>completeness</strong>.</p>
+<p>Now that we have understood our data types and put them through an assembly algorithm, we have this file of A's, T's, C's, and G's that's supposed to be our assembly. This file is meant to represent a biological reality, so let's try to assess its quality through several lens, some biological and some more technical. One way to remember the ways we evaluate assemblies is by thinking about the "3C's": <strong>contiguity</strong>, <strong>correctness</strong>, and <strong>completeness</strong>.</p>
 <div class="admonition question">
 <p class="admonition-title">Food for thought</p>
 <ul>
@@ -756,16 +949,18 @@
 <p>Another measurement you might see is NG50. This is the N50 value, just calculated using a given genome size instead of the sum of the contigs.</p>
 </details>
 <p>Given how the N50 value can be so affected by addition or removal of small contigs, another metric has come into use: <a href="https://lh3.github.io/2020/04/08/a-new-metric-on-assembly-contiguity">the area under the (N50) curve</a>, or the auN value. Though N50 is measured at the 50% mark, we could make similar values for any value of x, for instance N30 would be the value where 30% of the sequence in that assembly is of that length or longer. These metrics are thus called Nx statistics, and one could plot them against contig length to get an <em>Nx curve</em>, which gives a more nuanced view of the actual contig size distribution of your assembly.</p>
-<p><center><img alt="NGx plot" src="https://raw.githubusercontent.com/human-pangenomics/hprc-tutorials/GA-workshop/assembly/genomics_aotearoa/images/qc/NGx_plot.png" /></center></p>
-<p><center><small>Image adapted from <a href='https://lh3.github.io/2020/04/08/a-new-metric-on-assembly-contiguity'>Heng Li's blog, which in turn adapts it from a NIBS workshop</a></small></center></p>
+<center>![NGx plot](https://raw.githubusercontent.com/human-pangenomics/hprc-tutorials/GA-workshop/assembly/genomics_aotearoa/images/qc/NGx_plot.png)</center>
+
+<center><small>Image adapted from <a href='https://lh3.github.io/2020/04/08/a-new-metric-on-assembly-contiguity'>Heng Li's blog, which in turn adapts it from a NIBS workshop</a></small></center>
+
 <p>auN tries to capture the nature of this curve, instead of a value from an arbitrary point on it. On the above example, each step on the curve represents a contig (length on the y-axis), so the black curve is the most contiguous as it has one contig that covers over 40% of the assembly. Despite that, this assembly would have the same N50 value (on the x-axis) as multiple other assemblies that are more fragmented in the same area.</p>
 <h3 id="run-gfastats-on-a-fasta">Run gfastats on a FASTA<a class="headerlink" href="#run-gfastats-on-a-fasta" title="Permanent link">&para;</a></h3>
-<p>Let's get some basic statistics for an assembly using a tool called <strong>gfastats</strong>, which will output metrics such as N50, auN, total size, etc. We can try it out on a Verkko trio assembly of HG002 that's already been downloaded onto NeSI.</p>
+<p>Let's get some basic statistics for an assembly using a tool called <strong>gfastats</strong>, which will output metrics such as N50, auN, total size, etc. We can try it out on a Verkko trio assembly of HG002 that's already been downloaded onto the REANNZ HPC.</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span> ~/obss_2023/genome_assembly
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span> assembly_qc/gfastats
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>ls -la          <span class="c1"># you should see a bunch of &quot;files&quot; that are actually symlinks pointing to their actual content</span>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/obss_2026/genome_assembly
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>assembly_qc/gfastats
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>ls<span class="w"> </span>-la<span class="w">          </span><span class="c1"># you should see a bunch of &quot;files&quot; that are actually symlinks pointing to their actual content</span>
 </code></pre></div>
 Now we're ready to roll!
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>module purge
@@ -777,37 +972,37 @@ Now we're ready to roll!
 </ul>
 <details class="success">
 <summary>Output</summary>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>+++Assembly summary+++:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>+++Assembly<span class="w"> </span>summary+++:
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># scaffolds: 81</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Total scaffold length: <span class="m">3025610697</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Average scaffold length: <span class="m">37353218</span>.48
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Scaffold N50: <span class="m">112270693</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>Scaffold auN: <span class="m">120344050</span>.34
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Scaffold L50: <span class="m">10</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>Largest scaffold: <span class="m">242261106</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Smallest scaffold: <span class="m">7980</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Total<span class="w"> </span>scaffold<span class="w"> </span>length:<span class="w"> </span><span class="m">3025610697</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Average<span class="w"> </span>scaffold<span class="w"> </span>length:<span class="w"> </span><span class="m">37353218</span>.48
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Scaffold<span class="w"> </span>N50:<span class="w"> </span><span class="m">112270693</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>Scaffold<span class="w"> </span>auN:<span class="w"> </span><span class="m">120344050</span>.34
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Scaffold<span class="w"> </span>L50:<span class="w"> </span><span class="m">10</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>Largest<span class="w"> </span>scaffold:<span class="w"> </span><span class="m">242261106</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Smallest<span class="w"> </span>scaffold:<span class="w"> </span><span class="m">7980</span>
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># contigs: 95</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>Total contig length: <span class="m">3024505387</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>Average contig length: <span class="m">31836898</span>.81
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>Contig N50: <span class="m">101137168</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>Contig auN: <span class="m">98109753</span>.40
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>Contig L50: <span class="m">12</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>Largest contig: <span class="m">201096255</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>Smallest contig: <span class="m">7980</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>Total<span class="w"> </span>contig<span class="w"> </span>length:<span class="w"> </span><span class="m">3024505387</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>Average<span class="w"> </span>contig<span class="w"> </span>length:<span class="w"> </span><span class="m">31836898</span>.81
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>Contig<span class="w"> </span>N50:<span class="w"> </span><span class="m">101137168</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>Contig<span class="w"> </span>auN:<span class="w"> </span><span class="m">98109753</span>.40
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>Contig<span class="w"> </span>L50:<span class="w"> </span><span class="m">12</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>Largest<span class="w"> </span>contig:<span class="w"> </span><span class="m">201096255</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>Smallest<span class="w"> </span>contig:<span class="w"> </span><span class="m">7980</span>
 <a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="c1"># gaps in scaffolds: 14</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>Total gap length <span class="k">in</span> scaffolds: <span class="m">1105310</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>Average gap length <span class="k">in</span> scaffolds: <span class="m">78950</span>.71
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>Gap N50 <span class="k">in</span> scaffolds: <span class="m">222184</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>Gap auN <span class="k">in</span> scaffolds: <span class="m">267123</span>.76
-<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>Gap L50 <span class="k">in</span> scaffolds: <span class="m">2</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>Largest gap <span class="k">in</span> scaffolds: <span class="m">425849</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>Smallest gap <span class="k">in</span> scaffolds: <span class="m">1000</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>Base composition <span class="o">(</span>A:C:G:T<span class="o">)</span>: <span class="m">893171444</span>:618413603:615928136:896992204
-<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>GC content %: <span class="m">40</span>.81
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>Total<span class="w"> </span>gap<span class="w"> </span>length<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">1105310</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>Average<span class="w"> </span>gap<span class="w"> </span>length<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">78950</span>.71
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>Gap<span class="w"> </span>N50<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">222184</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>Gap<span class="w"> </span>auN<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">267123</span>.76
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>Gap<span class="w"> </span>L50<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">2</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>Largest<span class="w"> </span>gap<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">425849</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>Smallest<span class="w"> </span>gap<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">1000</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>Base<span class="w"> </span>composition<span class="w"> </span><span class="o">(</span>A:C:G:T<span class="o">)</span>:<span class="w"> </span><span class="m">893171444</span>:618413603:615928136:896992204
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>GC<span class="w"> </span>content<span class="w"> </span>%:<span class="w"> </span><span class="m">40</span>.81
 <a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="c1"># soft-masked bases: 0</span>
 <a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="c1"># segments: 95</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>Total segment length: <span class="m">3024505387</span>
-<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>Average segment length: <span class="m">31836898</span>.81
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>Total<span class="w"> </span>segment<span class="w"> </span>length:<span class="w"> </span><span class="m">3024505387</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>Average<span class="w"> </span>segment<span class="w"> </span>length:<span class="w"> </span><span class="m">31836898</span>.81
 <a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="c1"># gaps: 14</span>
 <a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="c1"># paths: 81</span>
 </code></pre></div>
@@ -817,50 +1012,50 @@ Now we're ready to roll!
 <p>Remember that the file we initially got was an assembly <em>graph</em>&mdash;what if we wanted to know some graph-specific stats about our assembly, such as number of nodes or disconnected components? We can also assess that using gfastats.</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>gfastats --discover-paths unitig-normal-connected-tip.gfa
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>gfastats<span class="w"> </span>--discover-paths<span class="w"> </span>unitig-normal-connected-tip.gfa
 </code></pre></div>
 <details class="success">
 <summary>Output</summary>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>+++Assembly summary+++:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>+++Assembly<span class="w"> </span>summary+++:
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># scaffolds: 2312</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Total scaffold length: <span class="m">4179275425</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Average scaffold length: <span class="m">1807645</span>.08
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Scaffold N50: <span class="m">10829035</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Scaffold auN: <span class="m">11407399</span>.64
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Scaffold L50: <span class="m">134</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>Largest scaffold: <span class="m">38686347</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Smallest scaffold: <span class="m">1987</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Total<span class="w"> </span>scaffold<span class="w"> </span>length:<span class="w"> </span><span class="m">4179275425</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Average<span class="w"> </span>scaffold<span class="w"> </span>length:<span class="w"> </span><span class="m">1807645</span>.08
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Scaffold<span class="w"> </span>N50:<span class="w"> </span><span class="m">10829035</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Scaffold<span class="w"> </span>auN:<span class="w"> </span><span class="m">11407399</span>.64
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Scaffold<span class="w"> </span>L50:<span class="w"> </span><span class="m">134</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>Largest<span class="w"> </span>scaffold:<span class="w"> </span><span class="m">38686347</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Smallest<span class="w"> </span>scaffold:<span class="w"> </span><span class="m">1987</span>
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1"># contigs: 2312</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Total contig length: <span class="m">4179275425</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>Average contig length: <span class="m">1807645</span>.08
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>Contig N50: <span class="m">10829035</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>Contig auN: <span class="m">11407399</span>.64
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>Contig L50: <span class="m">134</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>Largest contig: <span class="m">38686347</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>Smallest contig: <span class="m">1987</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Total<span class="w"> </span>contig<span class="w"> </span>length:<span class="w"> </span><span class="m">4179275425</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>Average<span class="w"> </span>contig<span class="w"> </span>length:<span class="w"> </span><span class="m">1807645</span>.08
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>Contig<span class="w"> </span>N50:<span class="w"> </span><span class="m">10829035</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>Contig<span class="w"> </span>auN:<span class="w"> </span><span class="m">11407399</span>.64
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>Contig<span class="w"> </span>L50:<span class="w"> </span><span class="m">134</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>Largest<span class="w"> </span>contig:<span class="w"> </span><span class="m">38686347</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>Smallest<span class="w"> </span>contig:<span class="w"> </span><span class="m">1987</span>
 <a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="c1"># gaps in scaffolds: 0</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>Total gap length <span class="k">in</span> scaffolds: <span class="m">0</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>Average gap length <span class="k">in</span> scaffolds: <span class="m">0</span>.00
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>Gap N50 <span class="k">in</span> scaffolds: <span class="m">0</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>Gap auN <span class="k">in</span> scaffolds: <span class="m">0</span>.00
-<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>Gap L50 <span class="k">in</span> scaffolds: <span class="m">0</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>Largest gap <span class="k">in</span> scaffolds: <span class="m">0</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>Smallest gap <span class="k">in</span> scaffolds: <span class="m">0</span>
-<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>Base composition <span class="o">(</span>A:C:G:T<span class="o">)</span>: <span class="m">1180405407</span>:909914907:908088683:1180866428
-<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>GC content %: <span class="m">43</span>.50
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>Total<span class="w"> </span>gap<span class="w"> </span>length<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>Average<span class="w"> </span>gap<span class="w"> </span>length<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">0</span>.00
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>Gap<span class="w"> </span>N50<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>Gap<span class="w"> </span>auN<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">0</span>.00
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>Gap<span class="w"> </span>L50<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>Largest<span class="w"> </span>gap<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>Smallest<span class="w"> </span>gap<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds:<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>Base<span class="w"> </span>composition<span class="w"> </span><span class="o">(</span>A:C:G:T<span class="o">)</span>:<span class="w"> </span><span class="m">1180405407</span>:909914907:908088683:1180866428
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>GC<span class="w"> </span>content<span class="w"> </span>%:<span class="w"> </span><span class="m">43</span>.50
 <a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="c1"># soft-masked bases: 0</span>
 <a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="c1"># segments: 2312</span>
-<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>Total segment length: <span class="m">4179275425</span>
-<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>Average segment length: <span class="m">1807645</span>.08
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>Total<span class="w"> </span>segment<span class="w"> </span>length:<span class="w"> </span><span class="m">4179275425</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>Average<span class="w"> </span>segment<span class="w"> </span>length:<span class="w"> </span><span class="m">1807645</span>.08
 <a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="c1"># gaps: 0</span>
 <a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="c1"># paths: 2312</span>
 <a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="c1"># edges: 5790</span>
-<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>Average degree: <span class="m">2</span>.50
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>Average<span class="w"> </span>degree:<span class="w"> </span><span class="m">2</span>.50
 <a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="c1"># connected components: 47</span>
-<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>Largest connected component length: <span class="m">530557693</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>Largest<span class="w"> </span>connected<span class="w"> </span>component<span class="w"> </span>length:<span class="w"> </span><span class="m">530557693</span>
 <a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="c1"># dead ends: 562</span>
 <a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="c1"># disconnected components: 184</span>
-<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>Total length disconnected components: <span class="m">60717682</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>Total<span class="w"> </span>length<span class="w"> </span>disconnected<span class="w"> </span>components:<span class="w"> </span><span class="m">60717682</span>
 <a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="c1"># separated components: 231</span>
 <a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="c1"># bubbles: 8</span>
 <a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="c1"># circular segments: 11</span>
@@ -876,10 +1071,10 @@ Now we're ready to roll!
 <p>Now that we know how to get the statistics for one assembly, let's get them for two so we can actually compare them. We already compared a Verkko HiFi-only and HiFi+ONT graph visually, so let's do it with assembly stats this time. We're going to use a one-liner to put the assembly stats side-by-side, because it can be kind of cumbersome to scroll up and down between two separate command line runs and their outputs.</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>paste <span class="se">\</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>&lt;<span class="o">(</span>gfastats -t --discover-paths hifi-resolved.gfa<span class="o">)</span> <span class="se">\</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>&lt;<span class="o">(</span>gfastats -t --discover-paths unitig-normal-connected-tip.gfa <span class="se">\</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">|</span> cut -f <span class="m">2</span><span class="o">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>paste<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>&lt;<span class="o">(</span>gfastats<span class="w"> </span>-t<span class="w"> </span>--discover-paths<span class="w"> </span>hifi-resolved.gfa<span class="o">)</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>&lt;<span class="o">(</span>gfastats<span class="w"> </span>-t<span class="w"> </span>--discover-paths<span class="w"> </span>unitig-normal-connected-tip.gfa<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f<span class="w"> </span><span class="m">2</span><span class="o">)</span>
 </code></pre></div>
 <div class="admonition info">
 <ol>
@@ -893,36 +1088,36 @@ Now we're ready to roll!
 <details class="success">
 <summary>Output</summary>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># contigs       68252   2312</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Total contig length     <span class="m">3858601893</span>      <span class="m">4179275425</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Average contig length   <span class="m">56534</span>.63        <span class="m">1807645</span>.08
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Contig N50      <span class="m">223090</span>  <span class="m">10829035</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Contig auN      <span class="m">638121</span>.24       <span class="m">11407399</span>.64
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Contig L50      <span class="m">4232</span>    <span class="m">134</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>Largest contig  <span class="m">23667669</span>        <span class="m">38686347</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>Smallest contig <span class="m">1608</span>    <span class="m">1987</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Total<span class="w"> </span>contig<span class="w"> </span>length<span class="w">     </span><span class="m">3858601893</span><span class="w">      </span><span class="m">4179275425</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Average<span class="w"> </span>contig<span class="w"> </span>length<span class="w">   </span><span class="m">56534</span>.63<span class="w">        </span><span class="m">1807645</span>.08
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Contig<span class="w"> </span>N50<span class="w">      </span><span class="m">223090</span><span class="w">  </span><span class="m">10829035</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Contig<span class="w"> </span>auN<span class="w">      </span><span class="m">638121</span>.24<span class="w">       </span><span class="m">11407399</span>.64
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Contig<span class="w"> </span>L50<span class="w">      </span><span class="m">4232</span><span class="w">    </span><span class="m">134</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>Largest<span class="w"> </span>contig<span class="w">  </span><span class="m">23667669</span><span class="w">        </span><span class="m">38686347</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>Smallest<span class="w"> </span>contig<span class="w"> </span><span class="m">1608</span><span class="w">    </span><span class="m">1987</span>
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># gaps in scaffolds     0       0</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>Total gap length <span class="k">in</span> scaffolds   <span class="m">0</span>       <span class="m">0</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>Average gap length <span class="k">in</span> scaffolds <span class="m">0</span>.00    <span class="m">0</span>.00
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>Gap N50 <span class="k">in</span> scaffolds    <span class="m">0</span>       <span class="m">0</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>Gap auN <span class="k">in</span> scaffolds    <span class="m">0</span>.00    <span class="m">0</span>.00
-<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>Gap L50 <span class="k">in</span> scaffolds    <span class="m">0</span>       <span class="m">0</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>Largest gap <span class="k">in</span> scaffolds        <span class="m">0</span>       <span class="m">0</span>
-<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>Smallest gap <span class="k">in</span> scaffolds       <span class="m">0</span>       <span class="m">0</span>
-<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>Base composition <span class="o">(</span>A:C:G:T<span class="o">)</span>      <span class="m">1089358958</span>:840831652:838233402:1090177881       <span class="m">1180405407</span>:909914907:908088683:1180866428
-<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>GC content %    <span class="m">43</span>.51   <span class="m">43</span>.50
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>Total<span class="w"> </span>gap<span class="w"> </span>length<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds<span class="w">   </span><span class="m">0</span><span class="w">       </span><span class="m">0</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>Average<span class="w"> </span>gap<span class="w"> </span>length<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds<span class="w"> </span><span class="m">0</span>.00<span class="w">    </span><span class="m">0</span>.00
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>Gap<span class="w"> </span>N50<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds<span class="w">    </span><span class="m">0</span><span class="w">       </span><span class="m">0</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>Gap<span class="w"> </span>auN<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds<span class="w">    </span><span class="m">0</span>.00<span class="w">    </span><span class="m">0</span>.00
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>Gap<span class="w"> </span>L50<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds<span class="w">    </span><span class="m">0</span><span class="w">       </span><span class="m">0</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>Largest<span class="w"> </span>gap<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds<span class="w">        </span><span class="m">0</span><span class="w">       </span><span class="m">0</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>Smallest<span class="w"> </span>gap<span class="w"> </span><span class="k">in</span><span class="w"> </span>scaffolds<span class="w">       </span><span class="m">0</span><span class="w">       </span><span class="m">0</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>Base<span class="w"> </span>composition<span class="w"> </span><span class="o">(</span>A:C:G:T<span class="o">)</span><span class="w">      </span><span class="m">1089358958</span>:840831652:838233402:1090177881<span class="w">       </span><span class="m">1180405407</span>:909914907:908088683:1180866428
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>GC<span class="w"> </span>content<span class="w"> </span>%<span class="w">    </span><span class="m">43</span>.51<span class="w">   </span><span class="m">43</span>.50
 <a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="c1"># soft-masked bases     0       0</span>
 <a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="c1"># segments      68252   2312</span>
-<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>Total segment length    <span class="m">3858601893</span>      <span class="m">4179275425</span>
-<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>Average segment length  <span class="m">56534</span>.63        <span class="m">1807645</span>.08
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>Total<span class="w"> </span>segment<span class="w"> </span>length<span class="w">    </span><span class="m">3858601893</span><span class="w">      </span><span class="m">4179275425</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>Average<span class="w"> </span>segment<span class="w"> </span>length<span class="w">  </span><span class="m">56534</span>.63<span class="w">        </span><span class="m">1807645</span>.08
 <a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="c1"># gaps  0       0</span>
 <a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="c1"># paths 68252   2312</span>
 <a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="c1"># edges 181274  5790</span>
-<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>Average degree  <span class="m">2</span>.66    <span class="m">2</span>.50
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>Average<span class="w"> </span>degree<span class="w">  </span><span class="m">2</span>.66<span class="w">    </span><span class="m">2</span>.50
 <a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="c1"># connected components  45      47</span>
-<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>Largest connected component length      <span class="m">496518810</span>       <span class="m">530557693</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>Largest<span class="w"> </span>connected<span class="w"> </span>component<span class="w"> </span>length<span class="w">      </span><span class="m">496518810</span><span class="w">       </span><span class="m">530557693</span>
 <a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="c1"># dead ends     684     562</span>
 <a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="c1"># disconnected components       18      184</span>
-<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>Total length disconnected components    <span class="m">7267912</span> <span class="m">60717682</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>Total<span class="w"> </span>length<span class="w"> </span>disconnected<span class="w"> </span>components<span class="w">    </span><span class="m">7267912</span><span class="w"> </span><span class="m">60717682</span>
 <a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="c1"># separated components  63      231</span>
 <a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="c1"># bubbles       4312    8</span>
 <a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a><span class="c1"># circular segments     31      11</span>
@@ -958,43 +1153,18 @@ Now we're ready to roll!
 <p>Let's try this out on the <em>E. coli</em> Verkko assembly. First we need a Meryl database, so let's generate that.</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span> ~/obss_2023/genome_assembly/assembly_qc
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>mkdir   merqury
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">cd</span> merqury
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>~/obss_2026/genome_assembly/assembly_qc
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>mkdir<span class="w">   </span>merqury
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">cd</span><span class="w"> </span>merqury
 </code></pre></div>
 </div>
-<p>We just made a directory for our runs, now let's sym link the fasta and reads here so we can refer to them more easily
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ln -s ~/obss_2023/genome_assembly/assembly/verkko_test/assembly/assembly.fasta .
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ln -s ~/obss_2023/genome_assembly//assembly/verkko_test/hifi.fastq.gz .
-</code></pre></div></p>
-<p>Now we can run Mercury!
+<p>We just made a directory for our runs, now let's sym link the fasta and reads here so we can refer to them more easily</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ln<span class="w"> </span>-s<span class="w"> </span>~/obss_2026/genome_assembly/assembly/verkko_test/assembly/assembly.fasta<span class="w"> </span>.
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ln<span class="w"> </span>-s<span class="w"> </span>~/obss_2026/genome_assembly//assembly/verkko_test/hifi.fastq.gz<span class="w"> </span>.
+</code></pre></div>
+<p>Now we can run Mercury!</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>meryl count k=30 memory=4 threads=2 hifi.fastq.gz output read-db.meryl
-</code></pre></div></p>
-<details class="note">
-<summary><code>--wrap</code> ???</summary>
-<p>Previously, we used the <code>sbatch</code> command to submit a slurm script to the cluster and the slurm job handler. The <code>sbatch</code> command can actually take a lot of parameters like the ones we included in the beginning of our script, and one of those parameters is <code>--wrap</code> which kind of wraps whatever command you give it in a Slurm wrapper so that the cluster can schedule it as if it was a Slurm script.</p>
-<p>Take note that running a process in this manner is not reproducible. Unless you have access to the <code>history</code> logs, other researchers are not able to know what parameters you have used. Therefore, it is advisable to write it out in a Slurm script as below:</p>
-<div class="admonition terminal">
-<p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="ch">#!/bin/bash -e</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1">#SBATCH --account=nesi02659</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1">#SBATCH --job-name=meryl</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">#SBATCH --time=00:15:00</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">#SBATCH --cpus-per-task=2</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1">#SBATCH --mem=4G</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">#SBATCH --partition=milan</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c1"># Modules</span>
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>module purge
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>module load Merqury/1.3-Miniconda3
-<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
-<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c1"># Run</span>
-<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>meryl count <span class="nv">k</span><span class="o">=</span><span class="m">30</span> <span class="nv">memory</span><span class="o">=</span><span class="m">4</span> <span class="nv">threads</span><span class="o">=</span><span class="m">2</span> <span class="se">\</span>
-<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>  hifi.fastq.gz <span class="se">\</span>
-<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>  output read-db.meryl
 </code></pre></div>
-</div>
-</details>
 <p>That shouldn't take too long to run. Now we have a Meryl DB for our HiFi reads. If we're curious about the distribution of our <em>k</em>-mers, we can use Meryl generate a histogram of the counts to show us how often a <em>k</em>-mer occurs only once in the reads, twice, etc.</p>
 <details class="question">
 <summary>How would you go about trying to do this with meryl?</summary>
@@ -1003,12 +1173,12 @@ Now we're ready to roll!
 <p>If you tried to run that command with the output straight to standard out (<em>i.e.</em>, your terminal screen), you'll see it's rather overwhelming and puts you all the way at the high, high coverage <em>k</em>-mer counts, which are only one occurrence. Let's look at just the first 100 lines instead.</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>meryl histogram read-db.meryl &gt; read-db.hist
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>head -n <span class="m">100</span> read-db.hist
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>meryl<span class="w"> </span>histogram<span class="w"> </span>read-db.meryl<span class="w"> </span>&gt;<span class="w"> </span>read-db.hist
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>head<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>read-db.hist
 </code></pre></div>
 </div>
 <p>This is more manageable, and you can even kind of see the histogram forming from the count values. There's a lot of <em>k</em>-mers that are present at only one copy (or otherwise very low copy) in the read set: these are usually sequencing errors, because there's a lot of these <em>k</em>-mers present at low copy. Because the sequence isn't actually real (<em>i.e.</em>, it isn't actually in the genome and isn't actually serving as sequencing template), these <em>k</em>-mers stay at low copy. After these error <em>k</em>-mers, there's a dip in the histogram until about the 24&ndash;28 copy range. This peak is the coverage of the actual <em>k</em>-mers coming from the genome that you sequenced, thus it corresponds to having coverage of ~26X in this read set. We only have one peak here because this is a haploid dataset, but if your dataset is diploid then expect two peaks with the first peak varying in height depending on heterozygosity of your sample.</p>
-<p>"What if I want a pretty graph instead of imagining it?" Good news&mdash;there's <del>an app</del> a program for that. GenomeScope is a straightforward program with an online web page where you can just drop in your meryl histogram file and it will draw the histogram for you as well as use the GenomeScope model to predict some genome characteristics of your data, given the expected ploidy. Let's try it out! Download the <code>read-db.hist</code> file and throw it into the GenomeScope website: <a href="http://qb.cshl.edu/genomescope/genomescope2.0/">http://qb.cshl.edu/genomescope/genomescope2.0/</a> and adjust the parameters accordingly.</p>
+<p>"What if I want a pretty graph instead of imagining it?" Good news&mdash;there's <del>an app</del> a program for that. GenomeScope is a straightforward program with an online web page where you can just drop in your meryl histogram file and it will draw the histogram for you as well as use the GenomeScope model to predict some genome characteristics of your data, given the expected ploidy. Let's try it out! Download the <code>read-db.hist</code> file and throw it into the GenomeScope website: <a href="http://genomescope.org/genomescope2.0/">http://genomescope.org/genomescope2.0/</a> and adjust the parameters accordingly.</p>
 <details class="tip">
 <summary>Can I use GenomeScope to QC my raw data before assembly?</summary>
 <p>As you can see here, GenomeScope can be useful for getting an idea of what your raw dataset looks like, as well as feeling out the genome that should be represented by those sequencing reads. This can be useful as a QC step before even running the assembly, to make sure that your dataset is good enough to use. Here's an example of a good diploid dataset of HiFi reads:</p>
@@ -1033,79 +1203,82 @@ Now we're ready to roll!
 <p>Use your text editor of choice to make a Slurm script (<code>run_merqury.sl</code>) to run the actual Merqury program with the following contents:</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="ch">#!/bin/bash -e</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1">#SBATCH --account       nesi02659</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1">#SBATCH --job-name      merqury1</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1">#SBATCH --cpus-per-task 8</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1">#SBATCH --time          00:15:00</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1">#SBATCH --mem           1G</span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1">#SBATCH --output        slurmlogs/%x.%j.log</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="c1">#SBATCH --error         slurmlogs/%x.%j.err</span>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="c1">#SBATCH --partition     milan</span>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
-<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="c1">## load modules</span>
-<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>module purge
-<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>module load Merqury
-<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="nb">export</span> <span class="nv">MERQURY</span><span class="o">=</span>/opt/nesi/CS400_centos7_bdw/Merqury/1.3-Miniconda3/merqury
-<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
-<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="c1">## create solo merqury dir and use it</span>
-<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>mkdir -p merqury_solo
-<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="nb">cd</span> merqury_solo
-<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>
-<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="c1">## run merqury</span>
-<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>merqury.sh <span class="se">\</span>
-<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>    ../read-db.meryl <span class="se">\</span>
-<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>    ../assembly.fasta <span class="se">\</span>
-<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>    output
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="ch">#!/bin/bash -e</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1">#SBATCH --account       nesi02659</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1">#SBATCH --job-name      merqury1</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1">#SBATCH --cpus-per-task 8</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1">#SBATCH --time          00:15:00</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1">#SBATCH --mem           1G</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1">#SBATCH --output        slurmlogs/%x.%j.log</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1">#SBATCH --error         slurmlogs/%x.%j.err</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c1">#SBATCH --partition     milan</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="c1">## load modules</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>module<span class="w"> </span>purge
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>module<span class="w"> </span>load<span class="w"> </span>Merqury
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="c1">## create solo merqury dir and use it</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>merqury_solo
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="nb">cd</span><span class="w"> </span>merqury_solo
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="c1">## run merqury</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>merqury.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">    </span>../read-db.meryl<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">    </span>../assembly.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">    </span>output
 </code></pre></div>
+<div class="admonition callout">
+<p class="admonition-title">Callout</p>
+<p>Submit using <code>sbatch</code> on the login node</p>
 </div>
-<details class="note">
-<summary>What's that <code>export</code> command doing there?</summary>
-<p>Merqury as a package ships with a lot of scripts, especially for plotting. The <code>merqury.sh</code> command that we're using is calling those scripts, but we need to tell it where we installed Merqury.</p>
-</details>
+</div>
 <p>To find out the QV, we want the file named <code>output.qv</code>. Take a look at it and try to interpret the QV value you find (third column). If we recall the Phred scale system, this would mean that this QV value is great! Which is not surprising, considering we used HiFi data. <strong>It's worth noting, though, that we are using HiFi <em>k</em>-mers to evaluate sequences derived from those same HiFi reads.</strong> This does a good job of showing whether the assembly worked with that data well, but what if the HiFi data itself is missing parts of the genome, such as due to bias (<em>e.g.</em>, GA dropout)? That's why it's important to use orthogonal datasets made using different sequencing technology, when possible. For instance, we can use an Illumina-based Meryl database to evaluate a HiFi assembly. For non-human vertebrates, this often results in the QV dropping from 50-60 to 35-45, depending on the genome in question.</p>
 <h3 id="using-merqury-in-trio-mode">Using Merqury in trio mode<a class="headerlink" href="#using-merqury-in-trio-mode" title="Permanent link">&para;</a></h3>
 <p>We just ran Merqury on our E. coli assembly, and evaluated it using the HiFi reads that we used for that assembly. Merqury can also utilize trio data (using those hapmer DBs we talked about before) to evaluate the phasing of an assembly, so let's try that with our HG002 trio data. We can create run_merqury_trio.sl to do so.</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="ch">#!/bin/bash -e</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1">#SBATCH --account       nesi02659</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1">#SBATCH --job-name      merqury2</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1">#SBATCH --cpus-per-task 8</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1">#SBATCH --time          02:00:00</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="c1">#SBATCH --mem           40G</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1">#SBATCH --output        slurmlogs/%x.%j.log</span>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1">#SBATCH --error         slurmlogs/%x.%j.err</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="c1">#SBATCH --partition     milan</span>
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="c1">## load modules</span>
-<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>module purge
-<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>module load Merqury
-<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="nb">export</span> <span class="nv">MERQURY</span><span class="o">=</span>/opt/nesi/CS400_centos7_bdw/Merqury/1.3-Miniconda3/merqury
-<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>
-<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="c1">## create trio merqury dir and use it</span>
-<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="nb">cd</span> ~/obss_2023/genome_assembly/assembly_qc
-<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>mkdir -p  merqury_trio
-<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="nb">cd</span> merqury_trio
-<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="c1"># Go get the necessary files</span>
-<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="nv">OBSS_RESOURCES</span><span class="o">=</span>/nesi/project/nesi02659/obss_2023/resources/genome_assembly
-<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>ln -s <span class="nv">$OBSS_RESOURCES</span>/assembly.*.fasta .
-<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>ln -s <span class="nv">$OBSS_RESOURCES</span>/maternal.k30.hapmer.meryl .
-<a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>ln -s <span class="nv">$OBSS_RESOURCES</span>/paternal.k30.hapmer.meryl .
-<a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>
-<a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a><span class="c1">## let&#39;s run the program in a results directory to make things a little neater</span>
-<a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>mkdir -p results
-<a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a><span class="nb">cd</span> results
-<a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>
-<a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a><span class="c1">## run merqury</span>
-<a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a>merqury.sh <span class="se">\</span>
-<a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a>    ../read-db.meryl <span class="se">\</span>
-<a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a>    ../paternal.k30.hapmer.meryl <span class="se">\</span>
-<a id="__codelineno-13-34" name="__codelineno-13-34" href="#__codelineno-13-34"></a>    ../maternal.k30.hapmer.meryl <span class="se">\</span>
-<a id="__codelineno-13-35" name="__codelineno-13-35" href="#__codelineno-13-35"></a>    ../assembly.haplotype1.fasta <span class="se">\</span>
-<a id="__codelineno-13-36" name="__codelineno-13-36" href="#__codelineno-13-36"></a>    ../assembly.haplotype2.fasta <span class="se">\</span>
-<a id="__codelineno-13-37" name="__codelineno-13-37" href="#__codelineno-13-37"></a>    output
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="ch">#!/bin/bash -e</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1">#SBATCH --account       nesi02659</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1">#SBATCH --job-name      merqury2</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1">#SBATCH --cpus-per-task 8</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1">#SBATCH --time          02:00:00</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1">#SBATCH --mem           40G</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1">#SBATCH --output        slurmlogs/%x.%j.log</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="c1">#SBATCH --error         slurmlogs/%x.%j.err</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="c1">#SBATCH --partition     milan</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="c1">## load modules</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>module<span class="w"> </span>purge
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>module<span class="w"> </span>load<span class="w"> </span>Merqury
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MERQURY</span><span class="o">=</span>/opt/nesi/CS400_centos7_bdw/Merqury/1.3-Miniconda3/merqury
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="c1">## create trio merqury dir and use it</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="nb">cd</span><span class="w"> </span>~/obss_2026/genome_assembly/assembly_qc
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>mkdir<span class="w"> </span>-p<span class="w">  </span>merqury_trio
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="nb">cd</span><span class="w"> </span>merqury_trio
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="c1"># Go get the necessary files</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="nv">OBSS_RESOURCES</span><span class="o">=</span>/nesi/project/nesi02659/obss_2026/resources/genome_assembly
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$OBSS_RESOURCES</span>/assembly.*.fasta<span class="w"> </span>.
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$OBSS_RESOURCES</span>/maternal.k30.hapmer.meryl<span class="w"> </span>.
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$OBSS_RESOURCES</span>/paternal.k30.hapmer.meryl<span class="w"> </span>.
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="c1">## let&#39;s run the program in a results directory to make things a little neater</span>
+<a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>results
+<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="nb">cd</span><span class="w"> </span>results
+<a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>
+<a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a><span class="c1">## run merqury</span>
+<a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>merqury.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a><span class="w">    </span>../read-db.meryl<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a><span class="w">    </span>../paternal.k30.hapmer.meryl<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a><span class="w">    </span>../maternal.k30.hapmer.meryl<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a><span class="w">    </span>../assembly.haplotype1.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a><span class="w">    </span>../assembly.haplotype2.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a><span class="w">    </span>output
 </code></pre></div>
+<div class="admonition callout">
+<p class="admonition-title">Callout</p>
+<p>Submit using <code>sbatch</code> on the login node</p>
+</div>
 </div>
 <p>You can also look in this folder for the merqury outputs if there isn't enough time to run the actual program: <code>/nesi/nobackup/nesi02659/LRA/resources/merqury</code></p>
 <p>There will be lots of outputs, but let's look at two now to get an idea for how the sequences have been partitioned between our assemblies, and whether that's consistent with information we know from trio sequencing. First let's look at the spectra-asm plot:</p>
@@ -1130,47 +1303,51 @@ Now we're ready to roll!
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
 </div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nb">cd</span> ~/obss_2023/genome_assembly/assembly_qc
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>mkdir -p yak
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="nb">cd</span> yak
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">cd</span><span class="w"> </span>~/obss_2026/genome_assembly/assembly_qc
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>yak
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nb">cd</span><span class="w"> </span>yak
 </code></pre></div>
 <p>As the image illustrates, switch errors occur when an assembly <em>switches</em> between haplotypes. These errors are more prevalent in pseudohaplotype (<em>e.g.</em>, primary/alternate) assemblies that did not use any phasing data, as the assembler has no way of properly linking haplotype blocks, which can result in mixed hapmer content contigs that are a chimera of parental sequences.</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="ch">#!/bin/bash -e</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1">#SBATCH --account       nesi02659</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="c1">#SBATCH --job-name      yaktrioeval</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1">#SBATCH --cpus-per-task 32</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1">#SBATCH --time          01:00:00</span>
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="c1">#SBATCH --mem           256G</span>
-<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="c1">#SBATCH --output        slurmlogs/%x.%j.log</span>
-<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="c1">#SBATCH --error         slurmlogs/%x.%j.err</span>
-<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="c1">#SBATCH --partition     milan</span>
-<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
-<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="c1">## change to qc dir, link the necessary files</span>
-<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="nb">cd</span> ~/obss_2023/genome_assembly/assembly_qc/yak
-<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="nv">OBSS_RESOURCES</span><span class="o">=</span>/nesi/project/nesi02659/obss_2023/resources/genome_assembly
-<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>ln -s <span class="nv">$OBSS_RESOURCES</span>/yak .
-<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>ln -s <span class="nv">$OBSS_RESOURCES</span>/hic .
-<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>ln -s <span class="nv">$OBSS_RESOURCES</span>/trio .
-<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>mkdir -p qc_yak
-<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="nb">cd</span> qc_yak
-<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
-<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="c1">## load modules</span>
-<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>module purge
-<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>module load yak
-<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>
-<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="c1">## run yak</span>
-<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>yak trioeval -t <span class="m">32</span> <span class="se">\</span>
-<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>    ../yak/pat.HG003.yak ../yak/mat.HG004.yak <span class="se">\</span>
-<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>    ../hic/HG002.hap1.fa.gz <span class="se">\</span>
-<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a>    &gt; hifiasm.hic.hap1.trioeval
-<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a>
-<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>yak trioeval -t <span class="m">32</span> <span class="se">\</span>
-<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>    ../yak/pat.HG003.yak ../yak/mat.HG004.yak <span class="se">\</span>
-<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a>    ../trio/HG002.mat.fa.gz <span class="se">\</span>
-<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a>    &gt; hifiasm.trio.mat.trioeval
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="ch">#!/bin/bash -e</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="c1">#SBATCH --account       nesi02659</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1">#SBATCH --job-name      yaktrioeval</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1">#SBATCH --cpus-per-task 32</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="c1">#SBATCH --time          01:00:00</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1">#SBATCH --mem           256G</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c1">#SBATCH --output        slurmlogs/%x.%j.log</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="c1">#SBATCH --error         slurmlogs/%x.%j.err</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="c1">#SBATCH --partition     milan</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="c1">## change to qc dir, link the necessary files</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="nb">cd</span><span class="w"> </span>~/obss_2026/genome_assembly/assembly_qc/yak
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="nv">OBSS_RESOURCES</span><span class="o">=</span>/nesi/project/nesi02659/obss_2026/resources/genome_assembly
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$OBSS_RESOURCES</span>/yak<span class="w"> </span>.
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$OBSS_RESOURCES</span>/hic<span class="w"> </span>.
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$OBSS_RESOURCES</span>/trio<span class="w"> </span>.
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>qc_yak
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="nb">cd</span><span class="w"> </span>qc_yak
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="c1">## load modules</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>module<span class="w"> </span>purge
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>module<span class="w"> </span>load<span class="w"> </span>yak
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="c1">## run yak</span>
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a>yak<span class="w"> </span>trioeval<span class="w"> </span>-t<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a><span class="w">    </span>../yak/pat.HG003.yak<span class="w"> </span>../yak/mat.HG004.yak<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a><span class="w">    </span>../hic/HG002.hap1.fa.gz<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a><span class="w">    </span>&gt;<span class="w"> </span>hifiasm.hic.hap1.trioeval
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a>
+<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a>yak<span class="w"> </span>trioeval<span class="w"> </span>-t<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a><span class="w">    </span>../yak/pat.HG003.yak<span class="w"> </span>../yak/mat.HG004.yak<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a><span class="w">    </span>../trio/HG002.mat.fa.gz<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="w">    </span>&gt;<span class="w"> </span>hifiasm.trio.mat.trioeval
 </code></pre></div>
+<div class="admonition callout">
+<p class="admonition-title">Callout</p>
+<p>Submit using <code>sbatch</code> on the login node</p>
+</div>
 </div>
 <h2 id="completeness-asmgene">Completeness (asmgene)<a class="headerlink" href="#completeness-asmgene" title="Permanent link">&para;</a></h2>
 <p>Another way to assess an assembly is via <strong>completeness</strong>, particularly with regard to expected gene content. If you have a reference genome that's been annotated with coding sequences, then you can use the tool <em>asmgene</em> to align multi-copy genes to your assembly and see if they remain multi-copy, or if the assembler has created a misassembly. asmgene works by aligning annotated transcripts to the reference genome, and record hits if the transcript is mapped at or over 99% identity over 99% or greater of the transcript length. If the transcript only has one hit, then it is single-copy (SC), otherwise it's multi-copy (MC). The same is then done for your assembly, and the fraction of missing multi-copy (%MMC) gene content is computed.</p>
@@ -1180,107 +1357,129 @@ Now we're ready to roll!
 <p>Let's try running asmgene on <code>haplotype1</code> and <code>haplotype2</code> from the pre-baked Verkko trio assemblies.</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">## asmgene</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nb">cd</span> ~/obss_2023/genome_assembly/
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>mkdir -p ~/obss_2023/genome_assembly/assembly_qc/asmgene
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="nb">cd</span> assembly_qc/asmgene
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="c1"># let&#39;s symlink some of the necessary files</span>
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="nv">OBSS_RESOURCES</span><span class="o">=</span>/nesi/project/nesi02659/obss_2023/resources/genome_assembly
-<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>ln -s <span class="nv">$OBSS_RESOURCES</span>/chm13v2.0.fa .
-<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>ln -s <span class="nv">$OBSS_RESOURCES</span>/CHM13-T2T.cds.fasta .
-<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>ln -s <span class="nv">$OBSS_RESOURCES</span>/assembly.haplotype1.fasta .
-<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>ln -s <span class="nv">$OBSS_RESOURCES</span>/assembly.haplotype2.fasta .
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">## asmgene</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">cd</span><span class="w"> </span>~/obss_2026/genome_assembly/
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/obss_2026/genome_assembly/assembly_qc/asmgene
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nb">cd</span><span class="w"> </span>assembly_qc/asmgene
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># let&#39;s symlink some of the necessary files</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="nv">OBSS_RESOURCES</span><span class="o">=</span>/nesi/project/nesi02659/obss_2026/resources/genome_assembly
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$OBSS_RESOURCES</span>/chm13v2.0.fa<span class="w"> </span>.
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$OBSS_RESOURCES</span>/CHM13-T2T.cds.fasta<span class="w"> </span>.
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$OBSS_RESOURCES</span>/assembly.haplotype1.fasta<span class="w"> </span>.
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$OBSS_RESOURCES</span>/assembly.haplotype2.fasta<span class="w"> </span>.
 </code></pre></div>
 </div>
 <p>Now that we have our files, we're ready to go. Make a script with the following content and run it in the directory with the appropriate files:</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="ch">#!/bin/bash -e</span>
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="c1">#SBATCH --account       nesi02659</span>
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="c1">#SBATCH --job-name      asmgene</span>
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1">#SBATCH --cpus-per-task 32</span>
-<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1">#SBATCH --time          05:00:00</span>
-<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c1">#SBATCH --mem           256G</span>
-<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1">#SBATCH --output        slurmlogs/%x.%j.log</span>
-<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="c1">#SBATCH --error         slurmlogs/%x.%j.err</span>
-<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="c1">#SBATCH --partition     milan</span>
-<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
-<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="c1">## load modules</span>
-<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>module purge
-<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>module load minimap2/2.24-GCC-11.3.0
-<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
-<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="c1">## run minimap2 on ref, hap1, and hap2</span>
-<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>minimap2 -cxsplice:hq -t32 <span class="se">\</span>
-<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>    chm13v2.0.fa CHM13-T2T.cds.fasta <span class="se">\</span>
-<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>    &gt; ref.cdna.paf
-<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>minimap2 -cxsplice:hq -t32 <span class="se">\</span>
-<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>    assembly.haplotype1.fasta CHM13-T2T.cds.fasta <span class="se">\</span>
-<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>    &gt; asm.hap1.cdna.paf
-<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>minimap2 -cxsplice:hq -t32 <span class="se">\</span>
-<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>    assembly.haplotype2.fasta CHM13-T2T.cds.fasta <span class="se">\</span>
-<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>    &gt; asm.hap2.cdna.paf
-<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>
-<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a><span class="c1">## run asmgene</span>
-<a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a>
-<a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a>k8 /opt/nesi/CS400_centos7_bdw/minimap2/2.24-GCC-11.3.0/bin/paftools.js asmgene -a ref.cdna.paf asm.hap1.cdna.paf &gt; verkko.haplotype1.asmgene.tsv
-<a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a>k8 /opt/nesi/CS400_centos7_bdw/minimap2/2.24-GCC-11.3.0/bin/paftools.js asmgene -a ref.cdna.paf asm.hap2.cdna.paf &gt; verkko.haplotype2.asmgene.tsv
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="ch">#!/bin/bash -e</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1">#SBATCH --account       nesi02659</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1">#SBATCH --job-name      asmgene</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1">#SBATCH --cpus-per-task 32</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="c1">#SBATCH --time          05:00:00</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1">#SBATCH --mem           256G</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1">#SBATCH --output        slurmlogs/%x.%j.log</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="c1">#SBATCH --error         slurmlogs/%x.%j.err</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="c1">#SBATCH --partition     milan</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="c1">## load modules</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>module<span class="w"> </span>purge
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>module<span class="w"> </span>load<span class="w"> </span>minimap2/2.24-GCC-11.3.0
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="c1">## run minimap2 on ref, hap1, and hap2</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>minimap2<span class="w"> </span>-cxsplice:hq<span class="w"> </span>-t32<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="w">    </span>chm13v2.0.fa<span class="w"> </span>CHM13-T2T.cds.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="w">    </span>&gt;<span class="w"> </span>ref.cdna.paf
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>minimap2<span class="w"> </span>-cxsplice:hq<span class="w"> </span>-t32<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="w">    </span>assembly.haplotype1.fasta<span class="w"> </span>CHM13-T2T.cds.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="w">    </span>&gt;<span class="w"> </span>asm.hap1.cdna.paf
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>minimap2<span class="w"> </span>-cxsplice:hq<span class="w"> </span>-t32<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="w">    </span>assembly.haplotype2.fasta<span class="w"> </span>CHM13-T2T.cds.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">    </span>&gt;<span class="w"> </span>asm.hap2.cdna.paf
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="c1">## run asmgene</span>
+<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>
+<a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a>k8<span class="w"> </span>/opt/nesi/CS400_centos7_bdw/minimap2/2.24-GCC-11.3.0/bin/paftools.js<span class="w"> </span>asmgene<span class="w"> </span>-a<span class="w"> </span>ref.cdna.paf<span class="w"> </span>asm.hap1.cdna.paf<span class="w"> </span>&gt;<span class="w"> </span>verkko.haplotype1.asmgene.tsv
+<a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>k8<span class="w"> </span>/opt/nesi/CS400_centos7_bdw/minimap2/2.24-GCC-11.3.0/bin/paftools.js<span class="w"> </span>asmgene<span class="w"> </span>-a<span class="w"> </span>ref.cdna.paf<span class="w"> </span>asm.hap2.cdna.paf<span class="w"> </span>&gt;<span class="w"> </span>verkko.haplotype2.asmgene.tsv
 </code></pre></div>
+<div class="admonition callout">
+<p class="admonition-title">Callout</p>
+<p>Submit using <code>sbatch</code> on the login node</p>
+</div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Another popular tool for checking genome completeness using gene content is the software Benchmarking Universal Single-Copy Orthologs (BUSCO). This approach uses a set of evolutionarily conserved genes that are expected to be present at single copy for a given taxa, so one could check their genome to see if, for instance, it has all the genes predicted to be necessary for <em>Aves</em> or <em>Vertebrata</em>. This approach is useful if your <em>de novo</em> genome assembly is for a species that does not have a reference genome yet. And it's even faster now with the recently developed tool <em>minibusco</em>!</p>
 </div>
 
-              
-            </article>
-            
-          </div>
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
-          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
-            Back to top
-          </a>
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
         
       </main>
       
         <footer class="md-footer">
   
     
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
-        <a href="../3_assembly/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. Assembly" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
+          
+          <a href="../3_assembly/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. Assembly">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
               <span class="md-footer__direction">
                 Previous
               </span>
-              4. Assembly
+              <div class="md-ellipsis">
+                4. Assembly
+              </div>
             </div>
-          </div>
-        </a>
-      
-      
+          </a>
         
-        <a href="../5_assembly_cleanup_annotation/" class="md-footer__link md-footer__link--next" aria-label="Next: 6. Assembly Cleanup &amp; Genome Annotation" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
+        
+          
+          <a href="../5_assembly_cleanup_annotation/" class="md-footer__link md-footer__link--next" aria-label="Next: 6. Assembly Cleanup &amp;amp; Genome Annotation">
+            <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
-              6. Assembly Cleanup & Genome Annotation
+              <div class="md-ellipsis">
+                6. Assembly Cleanup &amp; Genome Annotation
+              </div>
             </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1306,14 +1505,16 @@ Now we're ready to roll!
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       

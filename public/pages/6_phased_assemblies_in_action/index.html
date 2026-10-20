@@ -10,10 +10,17 @@
         <meta name="author" content="Originally Genomics Aotearoa. This is a modified version.">
       
       
-        <link rel="canonical" href="https://otagobioinformaticsspringschool.github.io/long-read-assembly/pages/6_phased_assemblies_in_action/">
+        <link rel="canonical" href="https://otagobioinformaticsspringschool.github.io/long-read-assembly-one-day/pages/6_phased_assemblies_in_action/">
+      
+      
+        <link rel="prev" href="../5_assembly_cleanup_annotation/">
+      
+      
+        <link rel="next" href="../../supplementary/supplementary_2/">
+      
       
       <link rel="icon" href="../../theme_figures/nesi_ga.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
@@ -21,14 +28,17 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.1d29e8d0.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
-        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
+
+
     
+    
+      
     
     
       
@@ -42,10 +52,11 @@
     
       <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
+    
     
     
   </head>
@@ -58,11 +69,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="custom" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -82,7 +90,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Long-read Assembly" class="md-header__button md-logo" aria-label="Long-read Assembly" data-md-component="logo">
       
@@ -90,7 +100,8 @@
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -109,81 +120,96 @@
       </div>
     </div>
     
-      <form class="md-header__option" data-md-component="palette">
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="" data-md-color-primary="custom" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
-          
-            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_3" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
-            </label>
-          
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
-          
-            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
-            </label>
-          
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent=""  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_3">
-          
-            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_2" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
-            </label>
-          
-        
-      </form>
+      
+        <form class="md-header__option" data-md-component="palette">
+  
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
       </label>
-      <div class="md-search" data-md-component="search" role="dialog">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
   </div>
 </div>
+      
     
     
       <div class="md-header__source">
-        <a href="https://github.com/otagobioinformaticsspringschool/long-read-assembly" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/GenomicsAotearoa/long-read-assembly-one-day" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    otagobioinformaticsspringschool/long-read-assembly
+    GenomicsAotearoa/long-read-assembly-one-day
   </div>
 </a>
       </div>
@@ -210,6 +236,7 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Long-read Assembly" class="md-nav__button md-logo" aria-label="Long-read Assembly" data-md-component="logo">
@@ -221,13 +248,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/otagobioinformaticsspringschool/long-read-assembly" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/GenomicsAotearoa/long-read-assembly-one-day" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    otagobioinformaticsspringschool/long-read-assembly
+    GenomicsAotearoa/long-read-assembly-one-day
   </div>
 </a>
     </div>
@@ -236,14 +263,21 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../.." class="md-nav__link">
-        Home
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -251,142 +285,226 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
+    
     
       
+        
+        
+      
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_2">
-          Pages
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Pages" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
-          <span class="md-nav__icon md-icon"></span>
-          Pages
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
           
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pages
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Pages
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../0_intro/" class="md-nav__link">
-        1. Introduction - Long Read Assembly Workshop
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Introduction - Long Read Assembly Workshop
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../1_read_inputs/" class="md-nav__link">
-        2. Sequence Data
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Sequence Data
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../2_familiarise_w_data/" class="md-nav__link">
-        3. Familiarize Ourselves With The Data
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Familiarize Ourselves With The Data
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../3_assembly/" class="md-nav__link">
-        4. Assembly
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Assembly
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../4_assembly_qc/" class="md-nav__link">
-        5. Assembly QC
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Assembly QC
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../5_assembly_cleanup_annotation/" class="md-nav__link">
-        6. Assembly Cleanup & Genome Annotation
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Assembly Cleanup &amp; Genome Annotation
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          7. Phased Assemblies in Action
+          
+  
+  
+  <span class="md-ellipsis">
+    7. Phased Assemblies in Action
+    
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        7. Phased Assemblies in Action
+        
+  
+  
+  <span class="md-ellipsis">
+    7. Phased Assemblies in Action
+    
+  </span>
+  
+
       </a>
       
         
@@ -406,7 +524,9 @@
       
         <li class="md-nav__item">
   <a href="#visualizing-repeats-using-moddotplot" class="md-nav__link">
-    Visualizing Repeats using ModDotPlot
+    <span class="md-ellipsis">
+      Visualizing Repeats using ModDotPlot
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Visualizing Repeats using ModDotPlot">
@@ -414,14 +534,18 @@
         
           <li class="md-nav__item">
   <a href="#initial-setup" class="md-nav__link">
-    Initial setup
+    <span class="md-ellipsis">
+      Initial setup
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#find-chry-contigs-with-mashmap" class="md-nav__link">
-    Find chrY contigs with MashMap
+    <span class="md-ellipsis">
+      Find chrY contigs with MashMap
+    </span>
   </a>
   
 </li>
@@ -433,7 +557,9 @@
       
         <li class="md-nav__item">
   <a href="#create-self-dot-plots-for-each-contig" class="md-nav__link">
-    Create self dot plots for each contig
+    <span class="md-ellipsis">
+      Create self dot plots for each contig
+    </span>
   </a>
   
 </li>
@@ -445,102 +571,132 @@
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
     
       
       
-      
-
+  
   
   
   
     
+    
+    
+    
       
+        
+        
+      
+    
     
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3">
-          Supplementary
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Supplementary" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
-          <span class="md-nav__icon md-icon"></span>
-          Supplementary
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
           
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
-              
   
   
-  
-    <li class="md-nav__item">
-      <a href="../../supplementary/supplementary_1/" class="md-nav__link">
-        NeSI HPC Auth.Factors Setup & Jupyter Login
-      </a>
-    </li>
+  <span class="md-ellipsis">
+    Supplementary
+    
+  </span>
   
 
-            
-          
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Supplementary
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../supplementary/supplementary_2/" class="md-nav__link">
-        NeSI File system, Working directory and Symlinks
+        
+  
+  
+  <span class="md-ellipsis">
+    the REANNZ HPC File system, Working directory and Symlinks
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../supplementary/supplementary_3/" class="md-nav__link">
-        Jupyter Virtual Desktop
+        
+  
+  
+  <span class="md-ellipsis">
+    OnDemand Virtual Desktop
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../supplementary/supplementary_4/" class="md-nav__link">
-        Additional materials
+        
+  
+  
+  <span class="md-ellipsis">
+    Additional materials
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -573,7 +729,9 @@
       
         <li class="md-nav__item">
   <a href="#visualizing-repeats-using-moddotplot" class="md-nav__link">
-    Visualizing Repeats using ModDotPlot
+    <span class="md-ellipsis">
+      Visualizing Repeats using ModDotPlot
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Visualizing Repeats using ModDotPlot">
@@ -581,14 +739,18 @@
         
           <li class="md-nav__item">
   <a href="#initial-setup" class="md-nav__link">
-    Initial setup
+    <span class="md-ellipsis">
+      Initial setup
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#find-chry-contigs-with-mashmap" class="md-nav__link">
-    Find chrY contigs with MashMap
+    <span class="md-ellipsis">
+      Find chrY contigs with MashMap
+    </span>
   </a>
   
 </li>
@@ -600,7 +762,9 @@
       
         <li class="md-nav__item">
   <a href="#create-self-dot-plots-for-each-contig" class="md-nav__link">
-    Create self dot plots for each contig
+    <span class="md-ellipsis">
+      Create self dot plots for each contig
+    </span>
   </a>
   
 </li>
@@ -613,14 +777,15 @@
               </div>
             
           
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
                 
-  <a href="https://github.com/otagobioinformaticsspringschool/long-read-assembly/edit/master/docs/pages/6_phased_assemblies_in_action.md" title="Edit this page" class="md-content__button md-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+                  
 
+
+  
+  
 
 
 <h1 id="7-phased-assemblies-in-action">7. Phased Assemblies in Action<a class="headerlink" href="#7-phased-assemblies-in-action" title="Permanent link">&para;</a></h1>
@@ -703,17 +868,17 @@ can map against the human CHM13-T2T reference.</p>
 <p><strong>Make a directory to work in</strong></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span> ~/obss_2023/genome_assembly/
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mkdir moddotplot
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span> moddotplot
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/obss_2026/genome_assembly/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mkdir<span class="w"> </span>moddotplot
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>moddotplot
 </code></pre></div>
 </div>
 <p><strong>Get the files</strong></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ln -s /nesi/project/nesi02659/obss_2023/resources/genome_assembly/chm13v2.0.fa chm13.fa
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ln -s /nesi/project/nesi02659/obss_2023/resources/genome_assembly/assembly.haplotype2.fasta hg002.hap2.fa
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ln -s /nesi/project/nesi02659/obss_2023/resources/genome_assembly/assembly.haplotype2.fasta.fai hg002.hap2.fa.fai
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ln<span class="w"> </span>-s<span class="w"> </span>/nesi/project/nesi02659/obss_2026/resources/genome_assembly/chm13v2.0.fa<span class="w"> </span>chm13.fa
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ln<span class="w"> </span>-s<span class="w"> </span>/nesi/project/nesi02659/obss_2026/resources/genome_assembly/assembly.haplotype2.fasta<span class="w"> </span>hg002.hap2.fa
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ln<span class="w"> </span>-s<span class="w"> </span>/nesi/project/nesi02659/obss_2026/resources/genome_assembly/assembly.haplotype2.fasta.fai<span class="w"> </span>hg002.hap2.fa.fai
 </code></pre></div>
 </div>
 <p>Note that we&rsquo;re cheating a bit. We could map against the entire diploid
@@ -731,14 +896,14 @@ the satellites on chrY. We&rsquo;ll use pre-computed results to avoid needing
 to wait for the job to complete, but this is what the command would look like:</p>
 <div class="admonition terminal">
 <p class="admonition-title">view, but do not run this code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>module purge
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>module load MashMap/3.0.4-Miniconda3
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>mashmap -f <span class="s2">&quot;one-to-one&quot;</span> <span class="se">\</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    -k <span class="m">16</span> --pi <span class="m">90</span> <span class="se">\</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    -s <span class="m">100000</span> -t <span class="m">4</span> <span class="se">\</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    -r chm13.fa <span class="se">\</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    -q hg002.hap2.fa <span class="se">\</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    -o hg2hap2-x-chm13.ssv
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>module<span class="w"> </span>purge
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>module<span class="w"> </span>load<span class="w"> </span>MashMap/3.0.4-Miniconda3
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>mashmap<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;one-to-one&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span>-k<span class="w"> </span><span class="m">16</span><span class="w"> </span>--pi<span class="w"> </span><span class="m">90</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span>-s<span class="w"> </span><span class="m">100000</span><span class="w"> </span>-t<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span>-r<span class="w"> </span>chm13.fa<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span>-q<span class="w"> </span>hg002.hap2.fa<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span>-o<span class="w"> </span>hg2hap2-x-chm13.ssv
 </code></pre></div>
 </div>
 <details class="question">
@@ -757,34 +922,34 @@ script named <code>mashmap.sh</code>:</p>
 <a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1">#SBATCH --error         slurmlogs/%x.%j.err</span>
 <a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
 <a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>module purge
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>module load MashMap/3.0.4-Miniconda3
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>module<span class="w"> </span>purge
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>module<span class="w"> </span>load<span class="w"> </span>MashMap/3.0.4-Miniconda3
 <a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>mashmap -f <span class="s2">&quot;one-to-one&quot;</span> <span class="se">\</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    -k <span class="m">16</span> --pi <span class="m">90</span> <span class="se">\</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>    -s <span class="m">100000</span> -t <span class="m">16</span> <span class="se">\</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    -r chm13.fa <span class="se">\</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>    -q hg002.hap2.fa <span class="se">\</span>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>    -o hg2hap2-x-chm13.ssv
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>mashmap<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;one-to-one&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span>-k<span class="w"> </span><span class="m">16</span><span class="w"> </span>--pi<span class="w"> </span><span class="m">90</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span>-s<span class="w"> </span><span class="m">100000</span><span class="w"> </span>-t<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">    </span>-r<span class="w"> </span>chm13.fa<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">    </span>-q<span class="w"> </span>hg002.hap2.fa<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">    </span>-o<span class="w"> </span>hg2hap2-x-chm13.ssv
 </code></pre></div>
 <p>Then submit the job with the following command:</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sbatch mashmap.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sbatch<span class="w"> </span>mashmap.sh
 </code></pre></div>
 </div>
 </details>
 <p><strong>Get the pre-computed results</strong></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cp /nesi/nobackup/nesi02659/LRA/resources/hap2-mashmap/hg2hap2-x-chm13.ssv ./
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>cp /nesi/nobackup/nesi02659/LRA/resources/hap2-mashmap/mashmap.log ./
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cp<span class="w"> </span>/nesi/nobackup/nesi02659/LRA/resources/hap2-mashmap/hg2hap2-x-chm13.ssv<span class="w"> </span>./
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>cp<span class="w"> </span>/nesi/nobackup/nesi02659/LRA/resources/hap2-mashmap/mashmap.log<span class="w"> </span>./
 </code></pre></div>
 </div>
 <p><strong>View the output file</strong></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>less -S hg2hap2-x-chm13.ssv
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>less<span class="w"> </span>-S<span class="w"> </span>hg2hap2-x-chm13.ssv
 </code></pre></div>
 </div>
 <p>There is more information present than we need, and we can simplify things by
@@ -793,16 +958,16 @@ looking at long alignments only.</p>
 <summary>Optionally, view the MashMap log file</summary>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>less -S mashmap.log
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>less<span class="w"> </span>-S<span class="w"> </span>mashmap.log
 </code></pre></div>
 </div>
 </details>
 <p><strong>Subset the alignments</strong></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>awk <span class="s1">&#39;BEGIN{FS=&quot; &quot;; OFS=FS}{if($6 == &quot;chrY&quot; &amp;&amp; ($4-$3) &gt;= 1000000){print $0}}&#39;</span> <span class="se">\</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    &lt; hg2hap2-x-chm13.ssv <span class="se">\</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    &gt; hg2hap2-x-chm13.gt1m-chrY.ssv
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>awk<span class="w"> </span><span class="s1">&#39;BEGIN{FS=&quot; &quot;; OFS=FS}{if($6 == &quot;chrY&quot; &amp;&amp; ($4-$3) &gt;= 1000000){print $0}}&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span>&lt;<span class="w"> </span>hg2hap2-x-chm13.ssv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span>&gt;<span class="w"> </span>hg2hap2-x-chm13.gt1m-chrY.ssv
 </code></pre></div>
 </div>
 <details class="clipboard-question">
@@ -842,7 +1007,7 @@ consequence of ignoring contigs that are shorter than 1 Mbp.</p>
 <p>Now that we&rsquo;ve culled the alignments, viewing them should be much easier:</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>less -S hg2hap2-x-chm13.gt1m-chrY.ssv
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>less<span class="w"> </span>-S<span class="w"> </span>hg2hap2-x-chm13.gt1m-chrY.ssv
 </code></pre></div>
 </div>
 <p><strong>Which contigs belong to chrY?</strong></p>
@@ -859,11 +1024,11 @@ these were). One thing that may help is seeing what percentage of the contig is
 covered by each alignment:</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>awk <span class="s1">&#39;BEGIN{FS=&quot; &quot;; OFS=&quot;\t&quot;; print &quot;Contig&quot;, &quot;Length&quot;, &quot;Percent Identity&quot;, &quot;Percent Aligned&quot;}{print $1, $2, $10 &quot;%&quot;, ($4-$3)/$2*100 &quot;%&quot;}&#39;</span> <span class="se">\</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    hg2hap2-x-chm13.gt1m-chrY.ssv <span class="se">\</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="p">|</span> column -ts <span class="s1">$&#39;\t&#39;</span> <span class="se">\</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    &gt; hg2hap2-x-chm13.gt1m-chrY.annotated.txt
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>less -S hg2hap2-x-chm13.gt1m-chrY.annotated.txt
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>awk<span class="w"> </span><span class="s1">&#39;BEGIN{FS=&quot; &quot;; OFS=&quot;\t&quot;; print &quot;Contig&quot;, &quot;Length&quot;, &quot;Percent Identity&quot;, &quot;Percent Aligned&quot;}{print $1, $2, $10 &quot;%&quot;, ($4-$3)/$2*100 &quot;%&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span>hg2hap2-x-chm13.gt1m-chrY.ssv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>column<span class="w"> </span>-ts<span class="w"> </span><span class="s1">$&#39;\t&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span>&gt;<span class="w"> </span>hg2hap2-x-chm13.gt1m-chrY.annotated.txt
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>less<span class="w"> </span>-S<span class="w"> </span>hg2hap2-x-chm13.gt1m-chrY.annotated.txt
 </code></pre></div>
 </div>
 <!-- this was wrong- it was based on only --pi 95, which is why we saw only a small amount:
@@ -943,12 +1108,12 @@ files for our contigs of interest.</p>
 <p><strong>Create and index subset fastas</strong></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>module load SAMtools/1.16.1-GCC-11.3.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>module<span class="w"> </span>load<span class="w"> </span>SAMtools/1.16.1-GCC-11.3.0
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">for</span> CTG <span class="k">in</span> pat-000072<span class="o">{</span><span class="m">4</span>,5,7<span class="o">}</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">for</span><span class="w"> </span>CTG<span class="w"> </span><span class="k">in</span><span class="w"> </span>pat-000072<span class="o">{</span><span class="m">4</span>,5,7<span class="o">}</span>
 <a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="k">do</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    samtools faidx hg002.hap2.fa <span class="si">${</span><span class="nv">CTG</span><span class="si">}</span> &gt; hg002.hap2.<span class="si">${</span><span class="nv">CTG</span><span class="si">}</span>.fa
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    samtools faidx hg002.hap2.<span class="si">${</span><span class="nv">CTG</span><span class="si">}</span>.fa
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span>samtools<span class="w"> </span>faidx<span class="w"> </span>hg002.hap2.fa<span class="w"> </span><span class="si">${</span><span class="nv">CTG</span><span class="si">}</span><span class="w"> </span>&gt;<span class="w"> </span>hg002.hap2.<span class="si">${</span><span class="nv">CTG</span><span class="si">}</span>.fa
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span>samtools<span class="w"> </span>faidx<span class="w"> </span>hg002.hap2.<span class="si">${</span><span class="nv">CTG</span><span class="si">}</span>.fa
 <a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="k">done</span>
 </code></pre></div>
 </div>
@@ -969,22 +1134,22 @@ large sequences (&gt;100 Mbp). Let's create a script to submit with
 <a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1">#SBATCH --partition     milan</span>
 <a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="c1">#SBATCH --output        slurmlogs/%x.%j.log</span>
 <a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>module purge
-<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>module load ModDotPlot/2023-06-gimkl-2022a-Python-3.11.3
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>module<span class="w"> </span>purge
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>module<span class="w"> </span>load<span class="w"> </span>ModDotPlot/2023-06-gimkl-2022a-Python-3.11.3
 <a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
-<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="k">for</span> CTG <span class="k">in</span> pat-000072<span class="o">{</span><span class="m">4</span>,5,7<span class="o">}</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="k">for</span><span class="w"> </span>CTG<span class="w"> </span><span class="k">in</span><span class="w"> </span>pat-000072<span class="o">{</span><span class="m">4</span>,5,7<span class="o">}</span>
 <a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="k">do</span>
-<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>    moddotplot <span class="se">\</span>
-<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>        -k <span class="m">21</span> -id <span class="m">85</span> <span class="se">\</span>
-<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>        -i hg002.hap2.<span class="si">${</span><span class="nv">CTG</span><span class="si">}</span>.fa <span class="se">\</span>
-<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>        -o mdp_hg002-<span class="si">${</span><span class="nv">CTG</span><span class="si">}</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="w">    </span>moddotplot<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="w">        </span>-k<span class="w"> </span><span class="m">21</span><span class="w"> </span>-id<span class="w"> </span><span class="m">85</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="w">        </span>-i<span class="w"> </span>hg002.hap2.<span class="si">${</span><span class="nv">CTG</span><span class="si">}</span>.fa<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="w">        </span>-o<span class="w"> </span>mdp_hg002-<span class="si">${</span><span class="nv">CTG</span><span class="si">}</span>
 <a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="k">done</span>
 </code></pre></div>
 </div>
 <p>Then submit with <code>sbatch</code>:</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sbatch moddotplot.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sbatch<span class="w"> </span>moddotplot.sh
 </code></pre></div>
 </div>
 <details class="clipboard-question">
@@ -1009,7 +1174,7 @@ Here are the options we used:</p>
 <p>First, take a look at the log file:</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>less -S slurmlogs/moddotplot.*.log
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>less<span class="w"> </span>-S<span class="w"> </span>slurmlogs/moddotplot.*.log
 </code></pre></div>
 </div>
 <p>Then note that for every run, we created <code>_HIST.png</code> and <code>_TRI.png</code> files. The
@@ -1021,56 +1186,74 @@ the plot. Go ahead a view these files now.</p>
 <p class="admonition-title">What do you observe?</p>
 </div>
 
-              
-            </article>
-            
-          </div>
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
-          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
-            Back to top
-          </a>
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
         
       </main>
       
         <footer class="md-footer">
   
     
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
-        <a href="../5_assembly_cleanup_annotation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. Assembly Cleanup &amp; Genome Annotation" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
+          
+          <a href="../5_assembly_cleanup_annotation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. Assembly Cleanup &amp;amp; Genome Annotation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
               <span class="md-footer__direction">
                 Previous
               </span>
-              6. Assembly Cleanup & Genome Annotation
+              <div class="md-ellipsis">
+                6. Assembly Cleanup &amp; Genome Annotation
+              </div>
             </div>
-          </div>
-        </a>
-      
-      
+          </a>
         
-        <a href="../../supplementary/supplementary_1/" class="md-footer__link md-footer__link--next" aria-label="Next: NeSI HPC Auth.Factors Setup &amp; Jupyter Login" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
+        
+          
+          <a href="../../supplementary/supplementary_2/" class="md-footer__link md-footer__link--next" aria-label="Next: the REANNZ HPC File system, Working directory and Symlinks">
+            <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
-              NeSI HPC Auth.Factors Setup & Jupyter Login
+              <div class="md-ellipsis">
+                the REANNZ HPC File system, Working directory and Symlinks
+              </div>
             </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1096,14 +1279,16 @@ the plot. Go ahead a view these files now.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       

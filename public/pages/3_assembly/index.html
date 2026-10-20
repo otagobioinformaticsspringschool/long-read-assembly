@@ -10,10 +10,17 @@
         <meta name="author" content="Originally Genomics Aotearoa. This is a modified version.">
       
       
-        <link rel="canonical" href="https://otagobioinformaticsspringschool.github.io/long-read-assembly/pages/3_assembly/">
+        <link rel="canonical" href="https://otagobioinformaticsspringschool.github.io/long-read-assembly-one-day/pages/3_assembly/">
+      
+      
+        <link rel="prev" href="../2_familiarise_w_data/">
+      
+      
+        <link rel="next" href="../4_assembly_qc/">
+      
       
       <link rel="icon" href="../../theme_figures/nesi_ga.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
@@ -21,14 +28,17 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.1d29e8d0.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
-        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
+
+
     
+    
+      
     
     
       
@@ -42,10 +52,11 @@
     
       <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
+    
     
     
   </head>
@@ -58,11 +69,8 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="custom" data-md-color-accent="">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -82,7 +90,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Long-read Assembly" class="md-header__button md-logo" aria-label="Long-read Assembly" data-md-component="logo">
       
@@ -90,7 +100,8 @@
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -109,81 +120,96 @@
       </div>
     </div>
     
-      <form class="md-header__option" data-md-component="palette">
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="" data-md-color-primary="custom" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
-          
-            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_3" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
-            </label>
-          
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
-          
-            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
-            </label>
-          
-        
-          
-          
-          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent=""  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_3">
-          
-            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_2" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
-            </label>
-          
-        
-      </form>
+      
+        <form class="md-header__option" data-md-component="palette">
+  
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
       </label>
-      <div class="md-search" data-md-component="search" role="dialog">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
   </div>
 </div>
+      
     
     
       <div class="md-header__source">
-        <a href="https://github.com/otagobioinformaticsspringschool/long-read-assembly" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/GenomicsAotearoa/long-read-assembly-one-day" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    otagobioinformaticsspringschool/long-read-assembly
+    GenomicsAotearoa/long-read-assembly-one-day
   </div>
 </a>
       </div>
@@ -210,6 +236,7 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Long-read Assembly" class="md-nav__button md-logo" aria-label="Long-read Assembly" data-md-component="logo">
@@ -221,13 +248,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/otagobioinformaticsspringschool/long-read-assembly" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/GenomicsAotearoa/long-read-assembly-one-day" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
-    otagobioinformaticsspringschool/long-read-assembly
+    GenomicsAotearoa/long-read-assembly-one-day
   </div>
 </a>
     </div>
@@ -236,14 +263,21 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../.." class="md-nav__link">
-        Home
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
       </a>
     </li>
   
@@ -251,100 +285,157 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
+    
     
       
+        
+        
+      
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_2">
-          Pages
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Pages" data-md-level="1">
-        <label class="md-nav__title" for="__nav_2">
-          <span class="md-nav__icon md-icon"></span>
-          Pages
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
           
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pages
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Pages
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../0_intro/" class="md-nav__link">
-        1. Introduction - Long Read Assembly Workshop
+        
+  
+  
+  <span class="md-ellipsis">
+    1. Introduction - Long Read Assembly Workshop
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../1_read_inputs/" class="md-nav__link">
-        2. Sequence Data
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Sequence Data
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../2_familiarise_w_data/" class="md-nav__link">
-        3. Familiarize Ourselves With The Data
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Familiarize Ourselves With The Data
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          4. Assembly
+          
+  
+  
+  <span class="md-ellipsis">
+    4. Assembly
+    
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        4. Assembly
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Assembly
+    
+  </span>
+  
+
       </a>
       
         
@@ -364,7 +455,9 @@
       
         <li class="md-nav__item">
   <a href="#theoretical-walkthrough-of-the-assembly-process" class="md-nav__link">
-    Theoretical Walkthrough Of The Assembly Process
+    <span class="md-ellipsis">
+      Theoretical Walkthrough Of The Assembly Process
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Theoretical Walkthrough Of The Assembly Process">
@@ -372,7 +465,9 @@
         
           <li class="md-nav__item">
   <a href="#verkko" class="md-nav__link">
-    Verkko
+    <span class="md-ellipsis">
+      Verkko
+    </span>
   </a>
   
 </li>
@@ -384,7 +479,9 @@
       
         <li class="md-nav__item">
   <a href="#exploring-with-test-data" class="md-nav__link">
-    Exploring With Test Data
+    <span class="md-ellipsis">
+      Exploring With Test Data
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Exploring With Test Data">
@@ -392,21 +489,27 @@
         
           <li class="md-nav__item">
   <a href="#run-hifiasm-with-test-data" class="md-nav__link">
-    Run Hifiasm With Test Data
+    <span class="md-ellipsis">
+      Run Hifiasm With Test Data
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#introduction-to-gfa-files" class="md-nav__link">
-    Introduction To GFA Files
+    <span class="md-ellipsis">
+      Introduction To GFA Files
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#view-hifiasm-test-assembly-gfa-in-bandage" class="md-nav__link">
-    View Hifiasm Test Assembly GFA in Bandage
+    <span class="md-ellipsis">
+      View Hifiasm Test Assembly GFA in Bandage
+    </span>
   </a>
   
 </li>
@@ -418,28 +521,36 @@
       
         <li class="md-nav__item">
   <a href="#run-verkko-with-test-data" class="md-nav__link">
-    Run Verkko With Test Data
+    <span class="md-ellipsis">
+      Run Verkko With Test Data
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#running-on-full-data-sets" class="md-nav__link">
-    Running on Full Data Sets
+    <span class="md-ellipsis">
+      Running on Full Data Sets
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#building-graph-sense" class="md-nav__link">
-    Building Graph Sense
+    <span class="md-ellipsis">
+      Building Graph Sense
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#comparison-of-computational-cost" class="md-nav__link">
-    Comparison of Computational Cost
+    <span class="md-ellipsis">
+      Comparison of Computational Cost
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Comparison of Computational Cost">
@@ -447,14 +558,18 @@
         
           <li class="md-nav__item">
   <a href="#hifiasm" class="md-nav__link">
-    Hifiasm
+    <span class="md-ellipsis">
+      Hifiasm
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#verkko_1" class="md-nav__link">
-    Verkko
+    <span class="md-ellipsis">
+      Verkko
+    </span>
   </a>
   
 </li>
@@ -466,7 +581,9 @@
       
         <li class="md-nav__item">
   <a href="#comparison-of-outputs" class="md-nav__link">
-    Comparison of Outputs
+    <span class="md-ellipsis">
+      Comparison of Outputs
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Comparison of Outputs">
@@ -474,21 +591,27 @@
         
           <li class="md-nav__item">
   <a href="#verrkos-approach" class="md-nav__link">
-    Verrko's Approach
+    <span class="md-ellipsis">
+      Verrko's Approach
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#hifiasms-approach" class="md-nav__link">
-    Hifiasm's Approach
+    <span class="md-ellipsis">
+      Hifiasm's Approach
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#how-should-i-choose" class="md-nav__link">
-    How Should I Choose?
+    <span class="md-ellipsis">
+      How Should I Choose?
+    </span>
   </a>
   
 </li>
@@ -500,7 +623,9 @@
       
         <li class="md-nav__item">
   <a href="#how-much-input-data-do-i-need" class="md-nav__link">
-    How Much Input Data Do I Need?
+    <span class="md-ellipsis">
+      How Much Input Data Do I Need?
+    </span>
   </a>
   
 </li>
@@ -512,144 +637,201 @@
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../4_assembly_qc/" class="md-nav__link">
-        5. Assembly QC
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Assembly QC
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../5_assembly_cleanup_annotation/" class="md-nav__link">
-        6. Assembly Cleanup & Genome Annotation
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Assembly Cleanup &amp; Genome Annotation
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../6_phased_assemblies_in_action/" class="md-nav__link">
-        7. Phased Assemblies in Action
+        
+  
+  
+  <span class="md-ellipsis">
+    7. Phased Assemblies in Action
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
     
       
       
-      
-
+  
   
   
   
     
+    
+    
+    
       
+        
+        
+      
+    
     
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_3">
-          Supplementary
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Supplementary" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
-          <span class="md-nav__icon md-icon"></span>
-          Supplementary
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
           
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
-              
   
   
-  
-    <li class="md-nav__item">
-      <a href="../../supplementary/supplementary_1/" class="md-nav__link">
-        NeSI HPC Auth.Factors Setup & Jupyter Login
-      </a>
-    </li>
+  <span class="md-ellipsis">
+    Supplementary
+    
+  </span>
   
 
-            
-          
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Supplementary
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../supplementary/supplementary_2/" class="md-nav__link">
-        NeSI File system, Working directory and Symlinks
+        
+  
+  
+  <span class="md-ellipsis">
+    the REANNZ HPC File system, Working directory and Symlinks
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../supplementary/supplementary_3/" class="md-nav__link">
-        Jupyter Virtual Desktop
+        
+  
+  
+  <span class="md-ellipsis">
+    OnDemand Virtual Desktop
+    
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../supplementary/supplementary_4/" class="md-nav__link">
-        Additional materials
+        
+  
+  
+  <span class="md-ellipsis">
+    Additional materials
+    
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -682,7 +864,9 @@
       
         <li class="md-nav__item">
   <a href="#theoretical-walkthrough-of-the-assembly-process" class="md-nav__link">
-    Theoretical Walkthrough Of The Assembly Process
+    <span class="md-ellipsis">
+      Theoretical Walkthrough Of The Assembly Process
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Theoretical Walkthrough Of The Assembly Process">
@@ -690,7 +874,9 @@
         
           <li class="md-nav__item">
   <a href="#verkko" class="md-nav__link">
-    Verkko
+    <span class="md-ellipsis">
+      Verkko
+    </span>
   </a>
   
 </li>
@@ -702,7 +888,9 @@
       
         <li class="md-nav__item">
   <a href="#exploring-with-test-data" class="md-nav__link">
-    Exploring With Test Data
+    <span class="md-ellipsis">
+      Exploring With Test Data
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Exploring With Test Data">
@@ -710,21 +898,27 @@
         
           <li class="md-nav__item">
   <a href="#run-hifiasm-with-test-data" class="md-nav__link">
-    Run Hifiasm With Test Data
+    <span class="md-ellipsis">
+      Run Hifiasm With Test Data
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#introduction-to-gfa-files" class="md-nav__link">
-    Introduction To GFA Files
+    <span class="md-ellipsis">
+      Introduction To GFA Files
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#view-hifiasm-test-assembly-gfa-in-bandage" class="md-nav__link">
-    View Hifiasm Test Assembly GFA in Bandage
+    <span class="md-ellipsis">
+      View Hifiasm Test Assembly GFA in Bandage
+    </span>
   </a>
   
 </li>
@@ -736,28 +930,36 @@
       
         <li class="md-nav__item">
   <a href="#run-verkko-with-test-data" class="md-nav__link">
-    Run Verkko With Test Data
+    <span class="md-ellipsis">
+      Run Verkko With Test Data
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#running-on-full-data-sets" class="md-nav__link">
-    Running on Full Data Sets
+    <span class="md-ellipsis">
+      Running on Full Data Sets
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#building-graph-sense" class="md-nav__link">
-    Building Graph Sense
+    <span class="md-ellipsis">
+      Building Graph Sense
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#comparison-of-computational-cost" class="md-nav__link">
-    Comparison of Computational Cost
+    <span class="md-ellipsis">
+      Comparison of Computational Cost
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Comparison of Computational Cost">
@@ -765,14 +967,18 @@
         
           <li class="md-nav__item">
   <a href="#hifiasm" class="md-nav__link">
-    Hifiasm
+    <span class="md-ellipsis">
+      Hifiasm
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#verkko_1" class="md-nav__link">
-    Verkko
+    <span class="md-ellipsis">
+      Verkko
+    </span>
   </a>
   
 </li>
@@ -784,7 +990,9 @@
       
         <li class="md-nav__item">
   <a href="#comparison-of-outputs" class="md-nav__link">
-    Comparison of Outputs
+    <span class="md-ellipsis">
+      Comparison of Outputs
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Comparison of Outputs">
@@ -792,21 +1000,27 @@
         
           <li class="md-nav__item">
   <a href="#verrkos-approach" class="md-nav__link">
-    Verrko's Approach
+    <span class="md-ellipsis">
+      Verrko's Approach
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#hifiasms-approach" class="md-nav__link">
-    Hifiasm's Approach
+    <span class="md-ellipsis">
+      Hifiasm's Approach
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#how-should-i-choose" class="md-nav__link">
-    How Should I Choose?
+    <span class="md-ellipsis">
+      How Should I Choose?
+    </span>
   </a>
   
 </li>
@@ -818,7 +1032,9 @@
       
         <li class="md-nav__item">
   <a href="#how-much-input-data-do-i-need" class="md-nav__link">
-    How Much Input Data Do I Need?
+    <span class="md-ellipsis">
+      How Much Input Data Do I Need?
+    </span>
   </a>
   
 </li>
@@ -831,14 +1047,15 @@
               </div>
             
           
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
                 
-  <a href="https://github.com/otagobioinformaticsspringschool/long-read-assembly/edit/master/docs/pages/3_assembly.md" title="Edit this page" class="md-content__button md-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+                  
 
+
+  
+  
 
 
 <h1 id="4-assembly">4. Assembly<a class="headerlink" href="#4-assembly" title="Permanent link">&para;</a></h1>
@@ -911,39 +1128,39 @@ One key difference between trio phasing and Hi-C is that Hi-C data cannot say th
 <p><strong>Create a directory</strong></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span> ~/obss_2023/genome_assembly/
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mkdir -p assembly/hifiasm_test
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span> assembly/hifiasm_test
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>~/obss_2026/genome_assembly/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>assembly/hifiasm_test
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>assembly/hifiasm_test
 </code></pre></div>
 </div>
 <p><strong>Now download Hifiasm's test data</strong></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>wget https://github.com/chhylp123/hifiasm/releases/download/v0.7/chr11-2M.fa.gz
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>wget<span class="w"> </span>https://github.com/chhylp123/hifiasm/releases/download/v0.7/chr11-2M.fa.gz
 </code></pre></div>
 </div>
 <p>This is HiFi data from about 2 million bases of chromosome 11. HiFi data is the only required data type for Hifiasm and Verkko. You can create assemblies from only HiFi data and you can add ONT and phasing later. Also notice that this data is in FASTA format! Presumably this is to make the file smaller since this is test data.</p>
 <p><strong>Now let's load the Hifiasm module</strong></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>module purge
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>module load hifiasm
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>module<span class="w"> </span>purge
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>module<span class="w"> </span>load<span class="w"> </span>hifiasm
 </code></pre></div>
 </div>
 <p>And actually run the test data</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>hifiasm <span class="se">\</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    -o <span class="nb">test</span> <span class="se">\</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    -t4 <span class="se">\</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    -f0 <span class="se">\</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    chr11-2M.fa.gz <span class="se">\</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="m">2</span>&gt; test.log <span class="p">&amp;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>hifiasm<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span>-o<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>-t4<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>-f0<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span>chr11-2M.fa.gz<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="m">2</span>&gt;<span class="w"> </span>test.log
 </code></pre></div>
 </div>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>head -n <span class="m">60</span> test.log
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>head<span class="w"> </span>-n<span class="w"> </span><span class="m">60</span><span class="w"> </span>test.log
 </code></pre></div>
 </div>
 <p>Now check the <a href="https://hifiasm.readthedocs.io/en/latest/interpreting-output.html#hifiasm-log-interpretation">Hifiasm log interpretation</a> section of the documentation to give that some context.</p>
@@ -954,14 +1171,14 @@ One key difference between trio phasing and Hi-C is that Hi-C data cannot say th
 <p>Now <code>ls</code> the directory to see what outputs are present. What do you see? No FASTA files, but there are a lot of files that end in <code>gfa</code>. If you haven't seen these before, then we get to introduce you to another file format!</p>
 <h3 id="introduction-to-gfa-files">Introduction To GFA Files<a class="headerlink" href="#introduction-to-gfa-files" title="Permanent link">&para;</a></h3>
 <p>GFA stands for <a href="http://gfa-spec.github.io/GFA-spec/GFA1.html">Graphical Fragment Alignment</a> and Hifiasm outputs assemblies in GFA files. GFAs aren't like bed or sam files which have one entry per line (or FASTA/Q that have 2/4 lines per entry). But this is bioinformatics, so you can rest assured that it is just a text file with a new file extension. It's easiest to just look at an example of a GFA file from the spec:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>H    VN:Z:1.0
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>S   <span class="m">11</span>  ACCTT
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>S   <span class="m">12</span>  TCAAGG
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>S   <span class="m">13</span>  CTTGATT
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>L   <span class="m">11</span>  +   <span class="m">12</span>  -   4M
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>L   <span class="m">12</span>  -   <span class="m">13</span>  +   5M
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>L   <span class="m">11</span>  +   <span class="m">13</span>  +   3M
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>P   <span class="m">14</span>  <span class="m">11</span>+,12-,13+ 4M,5M
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>H<span class="w">    </span>VN:Z:1.0
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>S<span class="w">   </span><span class="m">11</span><span class="w">  </span>ACCTT
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>S<span class="w">   </span><span class="m">12</span><span class="w">  </span>TCAAGG
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>S<span class="w">   </span><span class="m">13</span><span class="w">  </span>CTTGATT
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>L<span class="w">   </span><span class="m">11</span><span class="w">  </span>+<span class="w">   </span><span class="m">12</span><span class="w">  </span>-<span class="w">   </span>4M
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>L<span class="w">   </span><span class="m">12</span><span class="w">  </span>-<span class="w">   </span><span class="m">13</span><span class="w">  </span>+<span class="w">   </span>5M
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>L<span class="w">   </span><span class="m">11</span><span class="w">  </span>+<span class="w">   </span><span class="m">13</span><span class="w">  </span>+<span class="w">   </span>3M
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>P<span class="w">   </span><span class="m">14</span><span class="w">  </span><span class="m">11</span>+,12-,13+<span class="w"> </span>4M,5M
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">Here we see the following line types</p>
@@ -980,9 +1197,9 @@ One key difference between trio phasing and Hi-C is that Hi-C data cannot say th
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    ACCTT    <span class="o">(</span>Segment <span class="m">11</span><span class="o">)</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>     <span class="o">||||</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>     GGAACT  <span class="o">(</span>Segment <span class="m">12</span> -- reversed<span class="o">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="w">    </span>ACCTT<span class="w">    </span><span class="o">(</span>Segment<span class="w"> </span><span class="m">11</span><span class="o">)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">     </span><span class="o">||||</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">     </span>GGAACT<span class="w">  </span><span class="o">(</span>Segment<span class="w"> </span><span class="m">12</span><span class="w"> </span>--<span class="w"> </span>reversed<span class="o">)</span>
 </code></pre></div>
 <ul>
 <li>P (Path): Ordered list of segments (connected by links)</li>
@@ -992,11 +1209,11 @@ One key difference between trio phasing and Hi-C is that Hi-C data cannot say th
 To get a FASTA we just pull the S lines from a GFA and print them to a file:</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-</div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>    awk <span class="s1">&#39;/^S/{print &quot;&gt;&quot;$2;print $3}&#39;</span> <span class="se">\</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>        test.bp.p_ctg.gfa <span class="se">\</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>        &gt; test.p_ctg.fa
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>awk<span class="w"> </span><span class="s1">&#39;/^S/{print &quot;&gt;&quot;$2;print $3}&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>test.bp.p_ctg.gfa<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>&gt;<span class="w"> </span>test.p_ctg.fa
 </code></pre></div>
+</div>
 <div class="admonition info">
 <p class="admonition-title">You can read this awk command as:</p>
 <ol>
@@ -1014,16 +1231,17 @@ To get a FASTA we just pull the S lines from a GFA and print them to a file:</p>
 <div class="admonition jupyter">
 <p class="admonition-title">Start Bandage</p>
 <ol>
-<li>Open Jupyter Virtual Desktop <a href="../../supplementary/supplementary_3/">according to these instructions</a></li>
+<li>Open the Virtual Desktop app within OnDemand
+<img alt="Launching Virtual Desktop" src="../../images/virtualDesktop.png" /></li>
 <li>In the Virtual Desktop, click on the terminal emulator icon (in your toolbar at the bottom of your screen)</li>
 <li>Load the Bandage module with <code>module load Bandage</code></li>
 <li>Type <code>Bandage &amp;</code> to start Bandage
-   <img alt="image" src="../../theme_figures/bandage_vdt.png" width="600" /></li>
+   <img alt="image" src="../../images/bandage.png" width="600" /></li>
 </ol>
 <p><strong>Load a unitig GFA</strong></p>
 <ol>
 <li>Click the <em>File</em> dropdown then <em>Load Graph</em></li>
-<li>Navigate to our current folder (<code>cd ~/obss_2023/genome_assembly/assembly/hifiasm_test</code>)</li>
+<li>Navigate to our current folder (<code>cd ~/obss_2026/genome_assembly/assembly/hifiasm_test</code>)</li>
 <li>Select the <code>test.bp.r_utg.noseq.gfa</code> file and press the <strong>Open</strong> icon</li>
 <li>Under <strong>Graph Drawing</strong> on the left-hand side click <strong>Draw Graph</strong></li>
 </ol>
@@ -1042,16 +1260,16 @@ Open the <code>test.bp.p_ctg.noseq.gfa</code> file to see how boring it is.</p>
 <p><strong>Create a directory</strong></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span> ~/obss_2023/genome_assembly
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>mkdir -p assembly/verkko_test
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">cd</span> assembly/verkko_test
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>~/obss_2026/genome_assembly
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>assembly/verkko_test
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">cd</span><span class="w"> </span>assembly/verkko_test
 </code></pre></div>
 </div>
 <p><strong>Now download Verkko's test data</strong><br></p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl -L https://obj.umiacs.umd.edu/sergek/shared/ecoli_hifi_subset24x.fastq.gz -o hifi.fastq.gz
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>curl -L https://obj.umiacs.umd.edu/sergek/shared/ecoli_ont_subset50x.fastq.gz -o ont.fastq.gz
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl<span class="w"> </span>-L<span class="w"> </span>https://obj.umiacs.umd.edu/sergek/shared/ecoli_hifi_subset24x.fastq.gz<span class="w"> </span>-o<span class="w"> </span>hifi.fastq.gz
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>curl<span class="w"> </span>-L<span class="w"> </span>https://obj.umiacs.umd.edu/sergek/shared/ecoli_ont_subset50x.fastq.gz<span class="w"> </span>-o<span class="w"> </span>ont.fastq.gz
 </code></pre></div>
 </div>
 <p>You can see that this dataset is for <em>E. coli</em> and there is both HiFi and ONT data included.</p>
@@ -1059,7 +1277,7 @@ Open the <code>test.bp.p_ctg.noseq.gfa</code> file to see how boring it is.</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
 <p>Start your favourite text editor
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>nano verkko_test.sl
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>nano<span class="w"> </span>verkko_test.sl
 </code></pre></div></p>
 <p>And then paste in the following</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="ch">#!/bin/bash -e</span>
@@ -1074,33 +1292,44 @@ Open the <code>test.bp.p_ctg.noseq.gfa</code> file to see how boring it is.</p>
 <a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="c1">#SBATCH --error         slurmlogs/%x.%j.err</span>
 <a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
 <a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="c1">## load modules</span>
-<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>module purge
-<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>module load verkko/1.3.1-Miniconda3
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>module<span class="w"> </span>purge
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>module<span class="w"> </span>load<span class="w"> </span>verkko/1.3.1-Miniconda3
 <a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>
 <a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>
 <a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="c1">## run verkko</span>
-<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>verkko <span class="se">\</span>
-<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>    -d assembly <span class="se">\</span>
-<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>    --hifi ./hifi.fastq.gz <span class="se">\</span>
-<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>    --nano ./ont.fastq.gz
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>verkko<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">    </span>-d<span class="w"> </span>assembly<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">    </span>--hifi<span class="w"> </span>./hifi.fastq.gz<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">    </span>--nano<span class="w"> </span>./ont.fastq.gz
 </code></pre></div>
-<p><strong>Run verkko test</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sbatch verkko_test.sl
-</code></pre></div></p>
+<div class="admonition callout">
+<p class="admonition-title">Callout</p>
+<p>This has to be run on the login node, not within the Juptyer terminal</p>
+<p><strong>Run verkko test</strong></p>
+<div class="admonition terminal">
+<p class="admonition-title">code</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sbatch<span class="w"> </span>verkko_test.sl
+</code></pre></div>
+</div>
+</div>
 </div>
 <p>This should only take a few minutes to complete.</p>
 <p>You can keep track of the run with the <code>squeue</code> command.</p>
+<div class="admonition callout">
+<p class="admonition-title">Callout</p>
+<p>This has to be run on the login node, not within the Juptyer terminal</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>squeue --me
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>squeue<span class="w"> </span>--me
 </code></pre></div>
+</div>
 </div>
 <p><strong>How does Verkko run?</strong></p>
 <p>It turns out that if you run Verkko more than once or twice you will have to know a bit about how it is constructed. Verkko is a program that reads in the parameters you gave it and figures out a few things about your verkko installation and then creates a configuration file (<code>verkko.yml</code>) and a shell script (<code>snakemake.sh</code>). The shell script is then automatically executed.</p>
 <p>Take a look at the shell script that was created for your run</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>cat assembly/snakemake.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>cat<span class="w"> </span>assembly/snakemake.sh
 </code></pre></div>
 </div>
 <p>It is just a call to Snakemake!!! You can think of Verkko as a tool, but also as a pipeline because it is. This has some advantages. One is that if you know what Verkko is doing (which is somewhat achievable given that the Snakemake rules guide you through Verkko's logic), you can add to it, or even swap out how Verkko performs a given step for how you'd like to do it. It also means that you can restart a run at any given step (if you made a mistake or if the run failed). Lastly, and maybe most importantly, Snakemake supports Slurm as a backend. So if you have access to an HPC you could (and probably should) run Verkko and allow it to launch Slurm jobs for you. (This is in contrast to what we just did which was to run a Slurm job and just allow all jobs to run on the allocated resources that we requested for the entire run.)</p>
@@ -1108,20 +1337,20 @@ Open the <code>test.bp.p_ctg.noseq.gfa</code> file to see how boring it is.</p>
 <p>You can view the stderr from the run in your Slurm logs, or in Snakemake's logs. Let's take a look at the top of the log:</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>head -n <span class="m">35</span> assembly/.snakemake/log/*.log
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>head<span class="w"> </span>-n<span class="w"> </span><span class="m">35</span><span class="w"> </span>assembly/.snakemake/log/*.log
 </code></pre></div>
 </div>
 <p>This shows a list of Snakemake jobs that will get executed for this dataset. There are a few things to note. The first is that for larger datasets some jobs will get executed many times (hence the count column). This dataset is small, so most jobs have <code>count=1</code>. The second thing to note is that these jobs are sorted alphabetically, so we can get a feel for scale, but it's a bit hard to figure out what Verkko is really doing.</p>
 <p>Open the logs and scroll through them</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>less assembly/.snakemake/log/*.log
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>less<span class="w"> </span>assembly/.snakemake/log/*.log
 </code></pre></div>
 </div>
 <p>You can see all of the Snakemake jobs, in order, that were run. Even for this tiny dataset there are many. Since there are a lot of jobs, there are a lot of outputs, and these are organized (roughly) by Snakemake rule. Take a look at the output folder in order to familiarize yourself with the layout.</p>
 <div class="admonition terminal">
 <p class="admonition-title">code</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ls -lh assembly
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>ls<span class="w"> </span>-lh<span class="w"> </span>assembly
 </code></pre></div>
 </div>
 <p><strong>Take a look at the initial HiFi graph</strong></p>
@@ -1242,48 +1471,48 @@ an intution for what the graph visualization is telling you.</p>
 <table>
 <thead>
 <tr>
-<th align="left"><sub><strong>Step</strong></sub></th>
-<th align="left"><sub><strong>CPUs</strong></sub></th>
-<th align="left"><sub><strong>Shards</strong></sub></th>
-<th align="left"><sub><strong>Time/Shard (est)</strong></sub></th>
-<th align="left"><sub><strong>Total CPU Hours</strong></sub></th>
+<th style="text-align: left;"><sub><strong>Step</strong></sub></th>
+<th style="text-align: left;"><sub><strong>CPUs</strong></sub></th>
+<th style="text-align: left;"><sub><strong>Shards</strong></sub></th>
+<th style="text-align: left;"><sub><strong>Time/Shard (est)</strong></sub></th>
+<th style="text-align: left;"><sub><strong>Total CPU Hours</strong></sub></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left"><sub> pre overlap </sub></td>
-<td align="left"><sub> 24 </sub></td>
-<td align="left"><sub> 1 </sub></td>
-<td align="left"><sub> 3 </sub></td>
-<td align="left"><sub> 72 </sub></td>
+<td style="text-align: left;"><sub> pre overlap </sub></td>
+<td style="text-align: left;"><sub> 24 </sub></td>
+<td style="text-align: left;"><sub> 1 </sub></td>
+<td style="text-align: left;"><sub> 3 </sub></td>
+<td style="text-align: left;"><sub> 72 </sub></td>
 </tr>
 <tr>
-<td align="left"><sub> overlap </sub></td>
-<td align="left"><sub> 8 </sub></td>
-<td align="left"><sub> 600 </sub></td>
-<td align="left"><sub> 1 </sub></td>
-<td align="left"><sub> 4800 </sub></td>
+<td style="text-align: left;"><sub> overlap </sub></td>
+<td style="text-align: left;"><sub> 8 </sub></td>
+<td style="text-align: left;"><sub> 600 </sub></td>
+<td style="text-align: left;"><sub> 1 </sub></td>
+<td style="text-align: left;"><sub> 4800 </sub></td>
 </tr>
 <tr>
-<td align="left"><sub> create graph </sub></td>
-<td align="left"><sub> 80 </sub></td>
-<td align="left"><sub> 1 </sub></td>
-<td align="left"><sub> 13 </sub></td>
-<td align="left"><sub> 1040 </sub></td>
+<td style="text-align: left;"><sub> create graph </sub></td>
+<td style="text-align: left;"><sub> 80 </sub></td>
+<td style="text-align: left;"><sub> 1 </sub></td>
+<td style="text-align: left;"><sub> 13 </sub></td>
+<td style="text-align: left;"><sub> 1040 </sub></td>
 </tr>
 <tr>
-<td align="left"><sub> graph aligner </sub></td>
-<td align="left"><sub> 12 </sub></td>
-<td align="left"><sub> 100 </sub></td>
-<td align="left"><sub> 2 </sub></td>
-<td align="left"><sub> 2400 </sub></td>
+<td style="text-align: left;"><sub> graph aligner </sub></td>
+<td style="text-align: left;"><sub> 12 </sub></td>
+<td style="text-align: left;"><sub> 100 </sub></td>
+<td style="text-align: left;"><sub> 2 </sub></td>
+<td style="text-align: left;"><sub> 2400 </sub></td>
 </tr>
 <tr>
-<td align="left"><sub> complete asm </sub></td>
-<td align="left"><sub> 64 </sub></td>
-<td align="left"><sub> 1 </sub></td>
-<td align="left"><sub> 12 </sub></td>
-<td align="left"><sub> 768 </sub></td>
+<td style="text-align: left;"><sub> complete asm </sub></td>
+<td style="text-align: left;"><sub> 64 </sub></td>
+<td style="text-align: left;"><sub> 1 </sub></td>
+<td style="text-align: left;"><sub> 12 </sub></td>
+<td style="text-align: left;"><sub> 768 </sub></td>
 </tr>
 </tbody>
 </table>
@@ -1321,56 +1550,74 @@ an intution for what the graph visualization is telling you.</p>
 <p><strong>Trio and Hi-C</strong></p>
 <p>In general the better your graph, the easier it is to phase. If you have only a few big bubbles in the graph, it is a lot easier to find Illumina data that will map to them in a haplotype-specific way. This hasn't been tested rigorously, but people tend to talk about 30X for these datasets.</p>
 
-              
-            </article>
-            
-          </div>
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
-          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
-            Back to top
-          </a>
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
         
       </main>
       
         <footer class="md-footer">
   
     
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
-        <a href="../2_familiarise_w_data/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Familiarize Ourselves With The Data" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
+          
+          <a href="../2_familiarise_w_data/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Familiarize Ourselves With The Data">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
               <span class="md-footer__direction">
                 Previous
               </span>
-              3. Familiarize Ourselves With The Data
+              <div class="md-ellipsis">
+                3. Familiarize Ourselves With The Data
+              </div>
             </div>
-          </div>
-        </a>
-      
-      
+          </a>
         
-        <a href="../4_assembly_qc/" class="md-footer__link md-footer__link--next" aria-label="Next: 5. Assembly QC" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
+        
+          
+          <a href="../4_assembly_qc/" class="md-footer__link md-footer__link--next" aria-label="Next: 5. Assembly QC">
+            <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
-              5. Assembly QC
+              <div class="md-ellipsis">
+                5. Assembly QC
+              </div>
             </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1396,14 +1643,16 @@ an intution for what the graph visualization is telling you.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
