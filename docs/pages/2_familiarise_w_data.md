@@ -330,6 +330,12 @@ Yak won't work on our Jupyter instances, so create a slurm script that has 32 co
 ??? clipboard-question "Click here for the answer"
 
     Here is one way to call yak in a `yak.sl` script...
+	
+    ```bash
+    nano yak.sl
+    ```
+
+    And then paste in the following
 
     ```bash
     #!/bin/bash -e
@@ -354,26 +360,28 @@ Yak won't work on our Jupyter instances, so create a slurm script that has 32 co
          <(zcat HG003_HiSeq30x_05M_reads_R*.fastq.gz) \
          <(zcat HG003_HiSeq30x_05M_reads_R*.fastq.gz)
     ```
+    
+    If you haven't already, execute your yak script using slurm (takes about 2 minutes).
 
-If you haven't already, execute your yak script using slurm (takes about 2 minutes).
+	!!! callout
 
-!!! callout
+    	Slurm Scheduler commands such `sbatch`, `squeue`, and `sacct` cannot be run within Juptyer on the REANZ HPC. Instead, goto https://ondemand.nesi.org.nz, login if prompted, then in the top menu bar select "Clusters", then "NeSI HPC Shell access". This will open up a terminal on the login node. Then ensure you navigate this terminal to where you made the script
 
-    Slurm Scheduler commands such `sbatch`, `squeue`, and `sacct` cannot be run within Juptyer on the REANZ HPC. Instead, goto https://ondemand.nesi.org.nz, login if prompted, then in the top menu bar select "Clusters", then "NeSI HPC Shell access". This will open up a terminal on the login node. Then ensure you navigate this terminal to where you made the script
+    	!!! terminal "code"
 
-    !!! terminal "code"
+        	```bash       
+        	sbatch yak.sl
+        	```
 
-        ```bash
-        cd ~/obss_2026/genome_assembly/data/
-        ```  
+		You can keep track of the run with the `squeue` command.
 
-    !!! terminal "code"
+    	!!! terminal "code"
 
-        ```bash
-        sbatch yak.sl
-        ```
-
-When you are done you get out a non-human readable file. It doesn't need to be compressed or decompressed, and nothing else needs to be done in order to use it.
+        	```bash
+        	squeue --me
+        	```
+        	
+        When you are done you get out a non-human readable .yak file (yak k-mer database), ready to use for assembly.
 
 **Closing remarks on yak**
 

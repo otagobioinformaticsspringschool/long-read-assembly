@@ -30,7 +30,7 @@ Another statistic that is often reported with N50 is the _L50_, which is the ran
 
 Given how the N50 value can be so affected by addition or removal of small contigs, another metric has come into use: <a href="https://lh3.github.io/2020/04/08/a-new-metric-on-assembly-contiguity">the area under the (N50) curve</a>, or the auN value. Though N50 is measured at the 50% mark, we could make similar values for any value of x, for instance N30 would be the value where 30% of the sequence in that assembly is of that length or longer. These metrics are thus called Nx statistics, and one could plot them against contig length to get an _Nx curve_, which gives a more nuanced view of the actual contig size distribution of your assembly.
 
-<center>![NGx plot](https://raw.githubusercontent.com/human-pangenomics/hprc-tutorials/GA-workshop/assembly/genomics_aotearoa/images/qc/NGx_plot.png)</center>
+![NGx plot](https://raw.githubusercontent.com/human-pangenomics/hprc-tutorials/GA-workshop/assembly/genomics_aotearoa/images/qc/NGx_plot.png)
 
 <center><small>Image adapted from <a href='https://lh3.github.io/2020/04/08/a-new-metric-on-assembly-contiguity'>Heng Li's blog, which in turn adapts it from a NIBS workshop</a></small></center>
 
@@ -43,14 +43,13 @@ Let's get some basic statistics for an assembly using a tool called **gfastats**
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2026/genome_assembly
-    cd assembly_qc/gfastats
+    cd ~/obss_2026/genome_assembly/assembly_qc/gfastats
     ls -la          # you should see a bunch of "files" that are actually symlinks pointing to their actual content
     ```
     Now we're ready to roll!
     ```
     module purge
-    module load gfastats
+    module load gfastats/1.3.6-GCC-11.3.0
     gfastats assembly.haplotype1.fasta
     ```
 
@@ -262,7 +261,7 @@ We just made a directory for our runs, now let's sym link the fasta and reads he
 
 ```bash
 ln -s ~/obss_2026/genome_assembly/assembly/verkko_test/assembly/assembly.fasta .
-ln -s ~/obss_2026/genome_assembly//assembly/verkko_test/hifi.fastq.gz .
+ln -s ~/obss_2026/genome_assembly/assembly/verkko_test/hifi.fastq.gz .
 ```
 
 Now we can run Mercury!

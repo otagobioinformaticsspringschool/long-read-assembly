@@ -9,7 +9,7 @@
     * Compare the two assemblers
     * Talk about how much data we need
 
-At the end of the day you will hopefully have a feel for how to actually run each assembler, what data to give them, and when to choose one over the other.
+At the end of this section you will hopefully have a feel for how to actually run each assembler, what data to give them, and when to choose one over the other.
 
 ## Theoretical Walkthrough Of The Assembly Process
 
@@ -25,7 +25,7 @@ Both Verkko and Hifiasm can use a variety of data sources:
     * Oxford Nanopore Ultralong: >100kb, around 97% accuracy
     * Phasing data from Hi-C or trio Illumina data
 
-PacBio HiFi data is required for both assemblers. Other data types are optional&mdash;but they lead to much better assemblies. So let's jump ahead a bit and take a peek at how Verkko creates assemblies using figure 1 from the recent Verkko paper (Rautiainen, Mikko, et al.). It's ok if this is a bit confusing, you don't need to know the inner workings of Verkko in order to make great assemblies.
+PacBio HiFi data is required for both assemblers (or high-accuracy ONT data). Other data types are optional&mdash;but they lead to much better assemblies. So let's jump ahead a bit and take a peek at how Verkko creates assemblies using figure 1 from the recent Verkko paper (Rautiainen, Mikko, et al.). It's ok if this is a bit confusing, you don't need to know the inner workings of Verkko in order to make great assemblies.
 
 **PacBio HiFi is used to create the initial graph**
 
@@ -47,7 +47,7 @@ Note that in the middle section the orange and blue lines represent the ONT read
 
 **Oxford Nanopore Data (which is long) helps simplify the graph**
 
-Using these alignments, nodes that are linked (or phased) by a read are combined. This "simplifies" the graph -- in other words, you get nice long nodes where you previously had shorter nodes. (Long nodes are good, they mean you have longer sequences that are assembled.)
+Using these alignments, nodes that are linked (or phased) by a read are combined. This "simplifies" the graph — in other words, you get nice long nodes where you previously had shorter nodes. (Long nodes are good, they mean you have longer sequences that are assembled.)
 
 <p align="center">
     <img src="https://github.com/human-pangenomics/hprc-tutorials/blob/GA-workshop/assembly/genomics_aotearoa/images/assembly/verkko_process_ont_resolved.png?raw=true" width="550"/>
@@ -88,9 +88,8 @@ Running assemblers is very computationally intensive and the output files can be
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2026/genome_assembly/
-    mkdir -p assembly/hifiasm_test
-    cd assembly/hifiasm_test
+    mkdir -p ~/obss_2026/genome_assembly/assembly/hifiasm_test
+    cd ~/obss_2026/genome_assembly/assembly/hifiasm_test
     ```
 
 **Now download Hifiasm's test data**
@@ -109,7 +108,7 @@ This is HiFi data from about 2 million bases of chromosome 11. HiFi data is the 
 
     ```bash
     module purge
-    module load hifiasm
+    module load hifiasm/0.24.0-GCC-12.3.0
     ```
 
 And actually run the test data
@@ -233,9 +232,8 @@ We are going to take a look at the assembly GFA file in a browser called Bandage
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2026/genome_assembly
-    mkdir -p assembly/verkko_test
-    cd assembly/verkko_test
+    mkdir -p ~/obss_2026/genome_assembly/assembly/verkko_test
+    cd ~/obss_2026/genome_assembly/assembly/verkko_test
     ```
 
 **Now download Verkko's test data**<br>
@@ -276,7 +274,6 @@ You can see that this dataset is for _E. coli_ and there is both HiFi and ONT da
     ## load modules
     module purge
     module load verkko/1.3.1-Miniconda3
-
 
     ## run verkko
     verkko \
@@ -370,7 +367,7 @@ Open the `assembly/5-untip/unitig-normal-connected-tip.gfa` file in Bandage. Now
     <p align="center">
         <img src="https://github.com/human-pangenomics/hprc-tutorials/blob/GA-workshop/assembly/genomics_aotearoa/images/assembly/merqury_kmer_primary_only.png?raw=true" width="300"/>
     </p>
-    This is the primary assembly of a diploid, so we'd like to see the red section have two peaks -- one for heterozygous positions and one for homozygous positions. This is because the primary would ideally represent all of the homozygous regions as well as one set of alleles for heterozygous regions. We'd also like to see almost no blue section (since the blue section represents regions that are represented twice in the assembly), as these mean that a region is being represented twice. Unfortunately there are a lot of kmers seen twice in the assembly. When purge dups (a tool that looks for false duplications based on coverage information) is run, it gets better:
+    This is the primary assembly of a diploid, so we'd like to see the red section have two peaks - one for heterozygous positions and one for homozygous positions. This is because the primary would ideally represent all of the homozygous regions as well as one set of alleles for heterozygous regions. We'd also like to see almost no blue section (since the blue section represents regions that are represented twice in the assembly), as these mean that a region is being represented twice. Unfortunately there are a lot of kmers seen twice in the assembly. When purge dups (a tool that looks for false duplications based on coverage information) is run, it gets better:
 
     **Hifiasm assembly with Purge Dups**
 
@@ -472,19 +469,19 @@ you do not need to try to do this on your own machine. The goal is to develop
 an intution for what the graph visualization is telling you.
 
 - Overall feel for graphs and bandage
-  - graphs: nodes, edges, and paths
-    - simple examples: cycle & hairpin
-  - bandage UI
-  - loading CSVs and launching from CLI
+	- Graphs: nodes, edges, and paths
+		- Simple examples: cycle & hairpin
+	- Bandage UI
+	- Loading CSVs and launching from CLI
 - How does a typical human assembly look?
-  - ~23 chunks
-  - zippers: het-hom-het-etc.
-  - non-zippers (rDNA tangles, sex chrs, breaks)
+	- ~23 chunks
+	- Zippers: het-hom-het-etc.
+	- Non-zippers (rDNA tangles, sex chrs, breaks)
 - Complex examples
-  - hom with short hets w/o markers
-  - long hom with long hets
-  - &ldquo;scaffold&rdquo; from graph structure
-  - complete fail
+	- Hom with short hets w/o markers
+	- Long hom with long hets
+	- &ldquo;Scaffold&rdquo; from graph structure
+	- Complete fail
 
 ## Comparison of Computational Cost
 
