@@ -342,7 +342,7 @@ Use your text editor of choice to make a Slurm script (`run_merqury.sl`) to run 
 
     ## load modules
     module purge
-    module load Merqury
+    module load Merqury/1.3-Miniconda3
 
     ## create solo merqury dir and use it
     mkdir -p merqury_solo
@@ -379,7 +379,7 @@ We just ran Merqury on our E. coli assembly, and evaluated it using the HiFi rea
 
     ## load modules
     module purge
-    module load Merqury
+    module load Merqury/1.3-Miniconda3
     export MERQURY=/opt/nesi/CS400_centos7_bdw/Merqury/1.3-Miniconda3/merqury
 
     ## create trio merqury dir and use it
@@ -478,7 +478,7 @@ As the image illustrates, switch errors occur when an assembly _switches_ betwee
 
     ## load modules
     module purge
-    module load yak
+    module load yak/0.1
 
     ## run yak
     yak trioeval -t 32 \

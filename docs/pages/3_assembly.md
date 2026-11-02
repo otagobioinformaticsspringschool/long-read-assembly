@@ -201,7 +201,7 @@ We are going to take a look at the assembly GFA file in a browser called Bandage
     1. Open the Virtual Desktop app within OnDemand
     ![Launching Virtual Desktop](../images/virtualDesktop.png)
     2. In the Virtual Desktop, click on the terminal emulator icon (in your toolbar at the bottom of your screen)
-    3. Load the Bandage module with `module load Bandage`
+    3. Load the Bandage module with `module load Bandage/0.8.1_Centos`
     4. Type `Bandage &` to start Bandage
        ![image](../images/bandage.png){width="600"}
 

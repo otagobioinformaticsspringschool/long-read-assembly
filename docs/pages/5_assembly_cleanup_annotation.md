@@ -23,9 +23,8 @@ With that understanding, we are ready to test it out for ourselves...
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2026/genome_assembly/
-    mkdir -p cleanup/fcs/
-    cd cleanup/fcs/
+    mkdir -p ~/obss_2026/genome_assembly/fcs-cleanup
+    cd ~/obss_2026/genome_assembly/fcs-cleanup
     ```
 
 **Download the Foreign Contamination Screen (FCS) tool from NCBI**
@@ -45,7 +44,6 @@ This tool is a python script that calls a Docker/Singularity container. This was
     ```bash
     module purge
     module load Python/3.8.2-gimkl-2020a
-    module load Apptainer/1.2.5
     export FCS_DEFAULT_IMAGE=/opt/nesi/containers/fcs/fcs-gx-0.5.4.sif
     ```
 
@@ -164,7 +162,6 @@ There is a file created called something like `*fcs_gx_report.txt`. Open it in y
     ## load modules
     module purge
     module load Python/3.7.3-gimkl-2018b
-    module load Singularity/3.11.3
     export FCS_DEFAULT_IMAGE=/opt/nesi/containers/fcs/fcs-gx-0.4.0.sif
 
     python3 ./fcs.py \
@@ -320,8 +317,8 @@ of HG002.
 !!! terminal "code"
 
     ```shell
-    cd ~/obss_2026/genome_assembly/
-    cd liftoff-annotation
+    mkdir -p ~/obss_2026/genome_assembly/liftoff-annotation
+    cd ~/obss_2026/genome_assembly/liftoff-annotation
     ```
 
 **Gather the necessary files**
@@ -364,10 +361,10 @@ First create a shell script `liftoff.sh` with the following content:
 
     liftoff \
         -p 8 \
-        -db chm13-annotations.gff.liftoff.sqlite3 \
-        -o asm.hap1.annotations.gff \
-        asm.hap1.fa \
-        chm13.fa
+        -db ~/obss_2026/genome_assembly/chm13-annotations.gff.liftoff.sqlite3 \
+        -o ~/obss_2026/genome_assembly/liftoff-annotation/asm.hap1.annotations.gff \
+        ~/obss_2026/genome_assembly/asm.hap1.fa \
+        ~/obss_2026/genome_assembly/chm13.fa
     ```
 
 ??? info "What do each of these options do?"
@@ -487,8 +484,8 @@ The first thing we would like to do is to find out how our assembled genome comp
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2026/genome_assembly/
-    cd annotation/mashmap
+    mkdir -p ~/obss_2026/genome_assembly/mashmap-annotation
+    cd ~/obss_2026/genome_assembly/mashmap-annotation
     ```
 
 **Link the files we need**
@@ -506,13 +503,13 @@ The first thing we would like to do is to find out how our assembled genome comp
     module purge
     module load MashMap/3.0.4-Miniconda3
     mashmap \
-      -r chm13v2.0.fa \
-      -q assembly.haplotype1.fasta \
+      -r ~/obss_2026/genome_assembly/chm13v2.0.fa \
+      -q ~/obss_2026/genome_assembly/assembly.haplotype1.fasta \
       -f one-to-one \
       --pi 95 \
       -s 100000 \
       -t 4 \
-      -o asm-to-chm13.mashmap.out
+      -o ~/obss_2026/genome_assembly/mashmap-annotation/asm-to-chm13.mashmap.out
     ```
 
 ??? filter "Take a look at the parameters for MashMap. What are `-f`, `--pi`, and `-s` ?"
@@ -570,7 +567,7 @@ And take a look at it (you can click on it in your file explorer).
 
     Run the `telo` tool from seqtk to identify (human) telomeric ends:
     ```
-    module load seqtk
+    module load seqtk/1.4-GCC-11.3.0
     seqtk telo assembly.haplotype1.fasta > telos.bed
     ```
 

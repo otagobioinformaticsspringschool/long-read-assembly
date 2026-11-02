@@ -74,19 +74,19 @@ Run CutAdapt to check for adapter sequences in the downsampled data that we are 
 
 !!! terminal "code"
 
-     ```
-     module load cutadapt/4.1-gimkl-2022a-Python-3.10.5
+	```
+    module load cutadapt/4.1-gimkl-2022a-Python-3.10.5
 
-     cutadapt \
-         -b "AAAAAAAAAAAAAAAAAATTAACGGAGGAGGAGGA;min_overlap=35" \
-         -b "ATCTCTCTCTTTTCCTCCTCCTCCGTTGTTGTTGTTGAGAGAGAT;min_overlap=45" \
-         --discard-trimmed \
-         -o /dev/null \
-         hifi_50k_reads.fq.gz \
-         -j 0 \
-         --revcomp \
-         -e 0.05
-     ```
+    cutadapt \
+        -b "AAAAAAAAAAAAAAAAAATTAACGGAGGAGGAGGA;min_overlap=35" \
+        -b "ATCTCTCTCTTTTCCTCCTCCTCCGTTGTTGTTGTTGAGAGAGAT;min_overlap=45" \
+        --discard-trimmed \
+        -o /dev/null \
+        hifi_50k_reads.fq.gz \
+        -j 0 \
+        --revcomp \
+        -e 0.05
+    ```
 
 Notice that we are writing output to `/dev/null`. We are working on a subset of these reads so the runtime is reasonable. There is no need to hold onto the reads that we are filtering on, it is just a subset of the data.
 
