@@ -18,26 +18,15 @@ When you upload your assembly to Genbank, the sequence is automatically screen f
 
 With that understanding, we are ready to test it out for ourselves...
 
-**Make a directory**
+**Shift to Foreign Contamination Screen (FCS) Directory**
 
 !!! terminal "code"
 
     ```bash
-    mkdir -p ~/obss_2026/genome_assembly/fcs-cleanup
-    cd ~/obss_2026/genome_assembly/fcs-cleanup
+    cd ~/obss_2026/genome_assembly/cleanup/fcs/
     ```
 
-**Download the Foreign Contamination Screen (FCS) tool from NCBI**
-
-!!! terminal "code"
-
-    ```bash
-    curl -LO https://github.com/ncbi/fcs/raw/main/dist/fcs.py
-    # this was the last commit that had this file in the repo
-    curl -LO https://github.com/ncbi/fcs/raw/b8814cbc2458ab0e7d16533d5fdec1c1dccae420/examples/fcsgx_test.fa.gz
-    ```
-
-This tool is a python script that calls a Docker/Singularity container. This was done because contamination screens notoriously require a ton of dependencies. So having a Docker container makes things easier on the user. The docker container requires that a database of contaminants are downloaded. We have already downloaded the test database here: test-only`. The container has already been downloaded as well, we just need to load the singularity module and let FCS know where the container is:
+Foreign Contamination Screen (FCS) is a python script that calls a Docker/Singularity container. This was done because contamination screens notoriously require a ton of dependencies. So having a Docker container makes things easier on the user. The docker container requires that a database of contaminants are downloaded. We have already downloaded the test database here: test-only. The container has already been downloaded as well, we just need to load the singularity module and let FCS know where the container is:
 
 !!! terminal "code"
 
@@ -136,17 +125,11 @@ Note that the test data is not human (this matters for the `--tax-id` parameter)
     --------------------------------------------------------------------
     ```
 
-There is a file created called something like `*fcs_gx_report.txt`. Open it in your terminal, or if it's easier you can view it on the [FCS GitHub](https://raw.githubusercontent.com/ncbi/fcs/main/examples/fcsgx_test.6973.fcs_gx_report.txt).
+There is a file created called something like `*fcs_gx_report.txt`. Open it in your terminal, or if it's easier you can view it on the [FCS GitHub](https://raw.githubusercontent.com/ncbi/fcs/refs/heads/main/examples/FCS_combo_test.fcs_gx_report.txt).
 
 ??? success "Here's how you would run your actual data"
 
     We will copy over our prebaked Hifiasm trio assembly (maternal haplotype) and create a slurm script...
-    ```bash
-    cp /nesi/project/nesi02659/obss_2026/resources/genome_assembly/trio/HG002.mat.fa.gz .
-
-    nano fcs_full.sl
-    ```
-    And paste in the following
 
     ```bash
     #!/bin/bash -e
@@ -164,6 +147,10 @@ There is a file created called something like `*fcs_gx_report.txt`. Open it in y
     module load Python/3.7.3-gimkl-2018b
     export FCS_DEFAULT_IMAGE=/opt/nesi/containers/fcs/fcs-gx-0.4.0.sif
 
+    cd ~/obss_2026/genome_assembly/cleanup/fcs/
+
+    ln -s /nesi/project/nesi02659/obss_2026/resources/genome_assembly/trio/HG002.mat.fa.gz .
+
     python3 ./fcs.py \
     screen genome \
     --fasta ./HG002.mat.fa.gz \
@@ -171,9 +158,9 @@ There is a file created called something like `*fcs_gx_report.txt`. Open it in y
     --gx-db /nesi/project/nesi02659/obss_2026/resources/genome_assembly/gxdb \
     --tax-id 9606
     ```
-    Then you would just run the slurm script. Don't do this now. The results are boring for this assembly and the run takes 500GB of memory! (This is required to load the contamination database into memory -- if you don't give fcs enough memory it will take much much longer.)
+    Then you would just run the slurm script. Don't do this now. The results are boring for this assembly and the run takes 500GB of memory! (This is required to load the contamination database into memory&mdash;if you don't give fcs enough memory it will take much much longer.)
 
-    We've run this for you, and you can find the results in the folder `asm_fcs_output`:
+    We've run this for you, and you can find the results: `less /nesi/project/nesi02659/obss_2026/resources/genome_assembly/asm_fcs_output/HG002.mat.fa.9606.fcs_gx_report.txt`
 
 ## Genome Annotation
 
@@ -317,7 +304,6 @@ of HG002.
 !!! terminal "code"
 
     ```shell
-    mkdir -p ~/obss_2026/genome_assembly/liftoff-annotation
     cd ~/obss_2026/genome_assembly/liftoff-annotation
     ```
 
@@ -353,16 +339,27 @@ First create a shell script `liftoff.sh` with the following content:
 
     ```bash
     #!/bin/bash
-
+	#SBATCH --account       nesi02659
+	#SBATCH --job-name      liftoff
+	#SBATCH --cpus-per-task 8
+	#SBATCH --time          00:02:00
+	#SBATCH --mem           48G
+	#SBATCH --output        slurmlogs/%x.%j.log
+	#SBATCH --error         slurmlogs/%x.%j.err
+	#SBATCH --partition     milan
+    
     set -euo pipefail
-
+	
+	## load modules
     module purge
     module load Liftoff/1.6.3.2-gimkl-2022a-Python-3.11.3
 
+	cd ~/obss_2026/genome_assembly/liftoff-annotation
+
     liftoff \
         -p 8 \
-        -db ~/obss_2026/genome_assembly/chm13-annotations.gff.liftoff.sqlite3 \
-        -o ~/obss_2026/genome_assembly/liftoff-annotation/asm.hap1.annotations.gff \
+        -db ./chm13-annotations.gff.liftoff.sqlite3 \
+        -o ./asm.hap1.annotations.gff \
         ~/obss_2026/genome_assembly/asm.hap1.fa \
         ~/obss_2026/genome_assembly/chm13.fa
     ```
@@ -375,9 +372,9 @@ First create a shell script `liftoff.sh` with the following content:
 
     `-o` specifies the location of the GFF file with the output annotations for the target.
 
-    The two positional parameters at the end are respectively the target assembly (our HG002 assembly) and the reference assembly (T2T-CHM13). Run the following command to see all the options described in more detail:
-
-    `liftoff -h`
+    The two positional parameters at the end are respectively the target assembly (our HG002 assembly) and the reference assembly (T2T-CHM13). 
+    
+    Run the following command to see all the options described in more detail: `liftoff -h`
 
 <!-- OTHER POSSIBLE OPTIONS
     -g chm13-annotations.gff
@@ -396,14 +393,6 @@ First create a shell script `liftoff.sh` with the following content:
 
 This will probably take ~1 hour with 8 CPUs and 48 GB of memory. You could
 submit it as a job; however, we will pull pre-computed results for the next step.
-
-??? info "How to submit Liftoff with `sbatch`"
-
-    !!! terminal "code"
-
-        ```bash
-        sbatch -J liftoff -N1 -n1 -c8 --mem=48G -t 0-02:00 -A nesi02659 -o %x.%j.log liftoff.sh
-        ```
 
 To skip the run-time, we have pre-computed the output 'asm.hap1.annotations.gff' somewhere on nesi. You can access by creating a lin (i.e. a shortcut):
 

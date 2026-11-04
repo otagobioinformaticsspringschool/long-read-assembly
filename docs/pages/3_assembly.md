@@ -47,7 +47,7 @@ Note that in the middle section the orange and blue lines represent the ONT read
 
 **Oxford Nanopore Data (which is long) helps simplify the graph**
 
-Using these alignments, nodes that are linked (or phased) by a read are combined. This "simplifies" the graph — in other words, you get nice long nodes where you previously had shorter nodes. (Long nodes are good, they mean you have longer sequences that are assembled.)
+Using these alignments, nodes that are linked (or phased) by a read are combined. This "simplifies" the graph&mdash;in other words, you get nice long nodes where you previously had shorter nodes. (Long nodes are good, they mean you have longer sequences that are assembled.)
 
 <p align="center">
     <img src="https://github.com/human-pangenomics/hprc-tutorials/blob/GA-workshop/assembly/genomics_aotearoa/images/assembly/verkko_process_ont_resolved.png?raw=true" width="550"/>
@@ -282,33 +282,18 @@ You can see that this dataset is for _E. coli_ and there is both HiFi and ONT da
         --nano ./ont.fastq.gz
     ```
 
-    !!! callout
-    
-        This has to be run on the login node, not within the Juptyer terminal
-
-        **Run verkko test**
-        !!! terminal "code"
-            ```bash
-            sbatch verkko_test.sl
-            ```
-
-This should only take a few minutes to complete.
-
-You can keep track of the run with the `squeue` command.
-
-!!! callout
-    
     This has to be run on the login node, not within the Juptyer terminal
-        
-    !!! terminal "code"
 
-        ```bash
-        squeue --me
-        ```
+    **Run verkko test**
+    ```bash
+    sbatch verkko_test.sl
+    ```
+
+This should only take a few minutes to complete. You can keep track of the run with the `squeue --me` command.
 
 **How does Verkko run?**
 
-It turns out that if you run Verkko more than once or twice you will have to know a bit about how it is constructed. Verkko is a program that reads in the parameters you gave it and figures out a few things about your verkko installation and then creates a configuration file (`verkko.yml`) and a shell script (`snakemake.sh`). The shell script is then automatically executed.
+If you run Verkko more than once or twice you will have to know a bit about how it is constructed. Verkko is a program that reads in the parameters you gave it and figures out a few things about your verkko installation and then creates a configuration file (`verkko.yml`) and a shell script (`snakemake.sh`). The shell script is then automatically executed.
 
 Take a look at the shell script that was created for your run
 
@@ -356,7 +341,7 @@ Open the `assembly/1-buildGraph/hifi-resolved.gfa` file in Bandage. You will see
 
 Open the `assembly/5-untip/unitig-normal-connected-tip.gfa` file in Bandage. Now our three nodes have been resolved into one.
 
-!!! question "Do we need to phase?"
+??? question "Do we need to phase?"
 
     We just worked through test data that was HiFi only (Hifiasm) then HiFi + ONT UL (Verkko) so you'd be forgiven for thinking that for these assemblers you don't need phasing data. In truth, if the HiFi and ONT data could produce contigs that are chromosome-level in scale, then trios/Hi-C wouldn't be needed, but assemblers aren't there yet.
 

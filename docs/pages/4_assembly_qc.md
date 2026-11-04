@@ -44,8 +44,9 @@ Let's get some basic statistics for an assembly using a tool called **gfastats**
 
     ```bash
     cd ~/obss_2026/genome_assembly/assembly_qc/gfastats
-    ls -la          # you should see a bunch of "files" that are actually symlinks pointing to their actual content
+    ls -la
     ```
+    You should see a bunch of "files" that are actually symlinks pointing to their actual content
     Now we're ready to roll!
     ```
     module purge
@@ -53,7 +54,7 @@ Let's get some basic statistics for an assembly using a tool called **gfastats**
     gfastats assembly.haplotype1.fasta
     ```
 
-    - It should take about 20 seconds
+    It should take about 20 seconds
 
     ??? success "Output"
 
@@ -218,7 +219,7 @@ Now that we know how to get the statistics for one assembly, let's get them for 
 
 !!! info "Output explained"
 
-    ... where the first column is the stats from the HiFi-only assembly graph, and the second column is the stats from the HiFi+ONT assembly graph. Notice how the HiFi-only graph has way more nodes than the HiFi+ONT one, like we'd seen in Bandage. Stats-wise, this results in the HiFi-only graph having a N50 value of 223 Kbp while the HiFi+ONT one is 10.8 Mbp, a whole order of magnitude larger. For the HiFi-only graph, though, there's a bigger difference between its N50 value and its auN value: 223 Kbp vs. 638 Kbp, while the HiFi+ONT stats have a smaller difference of 10.8 Mbp vs. 11.4 Mbp. This might be due to the HiFi-only graph having on average shorter segments and more of the shorter ones, since it doesn't have the ONT data to resolve the segments into larger ones.
+    Where the first column is the stats from the HiFi-only assembly graph, and the second column is the stats from the HiFi+ONT assembly graph. Notice how the HiFi-only graph has way more nodes than the HiFi+ONT one, like we'd seen in Bandage. Stats-wise, this results in the HiFi-only graph having a N50 value of 223 Kbp while the HiFi+ONT one is 10.8 Mbp, a whole order of magnitude larger. For the HiFi-only graph, though, there's a bigger difference between its N50 value and its auN value: 223 Kbp vs. 638 Kbp, while the HiFi+ONT stats have a smaller difference of 10.8 Mbp vs. 11.4 Mbp. This might be due to the HiFi-only graph having on average shorter segments and more of the shorter ones, since it doesn't have the ONT data to resolve the segments into larger ones.
 
 ## Correctness (QV using Merqury)
 
@@ -252,31 +253,32 @@ Let's try this out on the _E. coli_ Verkko assembly. First we need a Meryl datab
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2026/genome_assembly/assembly_qc
-    mkdir   merqury
-    cd merqury
+    mkdir -p ~/obss_2026/genome_assembly/assembly_qc/merqury
+    cd ~/obss_2026/genome_assembly/assembly_qc/merqury
     ```
 
 We just made a directory for our runs, now let's sym link the fasta and reads here so we can refer to them more easily
 
-```bash
-ln -s ~/obss_2026/genome_assembly/assembly/verkko_test/assembly/assembly.fasta .
-ln -s ~/obss_2026/genome_assembly/assembly/verkko_test/hifi.fastq.gz .
-```
+!!! terminal "code"
+
+	```bash
+	ln -s ~/obss_2026/genome_assembly/assembly/verkko_test/assembly/assembly.fasta .
+	ln -s ~/obss_2026/genome_assembly/assembly/verkko_test/hifi.fastq.gz .
+	```
 
 Now we can run Mercury!
 
-```
-meryl count k=30 memory=4 threads=2 hifi.fastq.gz output read-db.meryl
-```
+!!! terminal "code"
+
+	```
+	module purge
+	module load Merqury/1.3-Miniconda3
+    export MERQURY=$(dirname $(which merqury.sh))
+
+	meryl count k=30 memory=4 threads=2 hifi.fastq.gz output read-db.meryl
+	```
 
 That shouldn't take too long to run. Now we have a Meryl DB for our HiFi reads. If we're curious about the distribution of our _k_-mers, we can use Meryl generate a histogram of the counts to show us how often a _k_-mer occurs only once in the reads, twice, etc.
-
-??? question "How would you go about trying to do this with meryl?"
-
-    When you want to use a tool to do something (and you are decently confident that the tool can actually do it), then a good point to start is just querying the tool's manual or help dialogue. Try out `meryl --help` and see if there's a function that looks like it could generate the histogram we want. <del>spoiler alert: it's `meryl histogram read-db.meryl`</del>
-
-If you tried to run that command with the output straight to standard out (_i.e._, your terminal screen), you'll see it's rather overwhelming and puts you all the way at the high, high coverage _k_-mer counts, which are only one occurrence. Let's look at just the first 100 lines instead.
 
 !!! terminal "code"
 
@@ -343,22 +345,20 @@ Use your text editor of choice to make a Slurm script (`run_merqury.sl`) to run 
     ## load modules
     module purge
     module load Merqury/1.3-Miniconda3
+	export MERQURY=$(dirname $(which merqury.sh))
 
-    ## create solo merqury dir and use it
-    mkdir -p merqury_solo
-    cd merqury_solo
+	# create solo merqury dir and use it
+    mkdir -p ~/obss_2026/genome_assembly/assembly_qc/merqury/merqury_solo
+    cd ~/obss_2026/genome_assembly/assembly_qc/merqury/merqury_solo
 
-    ## run merqury
-    merqury.sh \
-        ../read-db.meryl \
-        ../assembly.fasta \
-        output
+	## run merqury
+	merqury.sh \
+    	../read-db.meryl \
+    	../assembly.fasta \
+    	output
     ```
 
-    !!! callout
-        Submit using `sbatch` on the login node
-
-To find out the QV, we want the file named `output.qv`. Take a look at it and try to interpret the QV value you find (third column). If we recall the Phred scale system, this would mean that this QV value is great! Which is not surprising, considering we used HiFi data. **It's worth noting, though, that we are using HiFi _k_-mers to evaluate sequences derived from those same HiFi reads.** This does a good job of showing whether the assembly worked with that data well, but what if the HiFi data itself is missing parts of the genome, such as due to bias (_e.g._, GA dropout)? That's why it's important to use orthogonal datasets made using different sequencing technology, when possible. For instance, we can use an Illumina-based Meryl database to evaluate a HiFi assembly. For non-human vertebrates, this often results in the QV dropping from 50-60 to 35-45, depending on the genome in question.
+To find out the QV, we want the file named `output_solo.qv`. Take a look at it and try to interpret the QV value you find (third column). If we recall the Phred scale system, this would mean that this QV value is great! Which is not surprising, considering we used HiFi data. **It's worth noting, though, that we are using HiFi _k_-mers to evaluate sequences derived from those same HiFi reads.** This does a good job of showing whether the assembly worked with that data well, but what if the HiFi data itself is missing parts of the genome, such as due to bias (_e.g._, GA dropout)? That's why it's important to use orthogonal datasets made using different sequencing technology, when possible. For instance, we can use an Illumina-based Meryl database to evaluate a HiFi assembly. For non-human vertebrates, this often results in the QV dropping from 50-60 to 35-45, depending on the genome in question.
 
 ### Using Merqury in trio mode
 
@@ -380,21 +380,17 @@ We just ran Merqury on our E. coli assembly, and evaluated it using the HiFi rea
     ## load modules
     module purge
     module load Merqury/1.3-Miniconda3
-    export MERQURY=/opt/nesi/CS400_centos7_bdw/Merqury/1.3-Miniconda3/merqury
+	export MERQURY=$(dirname $(which merqury.sh))
 
     ## create trio merqury dir and use it
-    cd ~/obss_2026/genome_assembly/assembly_qc
-    mkdir -p  merqury_trio
-    cd merqury_trio
+    mkdir -p ~/obss_2026/genome_assembly/assembly_qc/merqury/merqury_trio
+    cd ~/obss_2026/genome_assembly/assembly_qc/merqury/merqury_trio
+    
     # Go get the necessary files
     OBSS_RESOURCES=/nesi/project/nesi02659/obss_2026/resources/genome_assembly
     ln -s $OBSS_RESOURCES/assembly.*.fasta .
     ln -s $OBSS_RESOURCES/maternal.k30.hapmer.meryl .
     ln -s $OBSS_RESOURCES/paternal.k30.hapmer.meryl .
-
-    ## let's run the program in a results directory to make things a little neater
-    mkdir -p results
-    cd results
 
     ## run merqury
     merqury.sh \
@@ -405,10 +401,6 @@ We just ran Merqury on our E. coli assembly, and evaluated it using the HiFi rea
         ../assembly.haplotype2.fasta \
         output
     ```
-    !!! callout
-        Submit using `sbatch` on the login node
-
-You can also look in this folder for the merqury outputs if there isn't enough time to run the actual program: `/nesi/nobackup/nesi02659/LRA/resources/merqury`
 
 There will be lots of outputs, but let's look at two now to get an idea for how the sequences have been partitioned between our assemblies, and whether that's consistent with information we know from trio sequencing. First let's look at the spectra-asm plot:
 
@@ -428,13 +420,13 @@ Now we know what a nice trio-phased assembly looks like in Merqury, but what do 
 
 ![bTaeGut2 examples](https://github.com/GenomicsAotearoa/long-read-assembly/blob/main/docs/images/qc/merqury_bTaeGut2_blobs.png?raw=true)
 
-On the left, we have the blob plot for the trio assembly, which looks nicely phased as we expect -- all the contigs exhibit hapmers from only one parent (which you can tell because all blobs are along the x- or y- axis), and on top of that all the contigs from one assembly show only one parent's hapmers (_i.e._, hap1's red blobs all show only bTaeGut3 hapmers). In the middle, we have a blob plot for a primary/alternate set of assemblies generated without any phasing data. You'll notice that a lot of the primary assembly blobs are not on the axes, meaning they have hapmers from both parents.
+On the left, we have the blob plot for the trio assembly, which looks nicely phased as we expect&mdash;all the contigs exhibit hapmers from only one parent (which you can tell because all blobs are along the x- or y-axis), and on top of that all the contigs from one assembly show only one parent's hapmers (_i.e._, hap1's red blobs all show only bTaeGut3 hapmers). In the middle, we have a blob plot for a primary/alternate set of assemblies generated without any phasing data. You'll notice that a lot of the primary assembly blobs are not on the axes, meaning they have hapmers from both parents.
 
 ??? question "Why are the alternate contigs all in phase?"
 
-    It starts to make sense if you think about what the alternae assembly is meant to represent: the haplotigs. These are the alternate alleles for the heterozygous loci, so it would track that only one parent's hapmers are represented -- the alternate assembly is a collection of the "other side of the bubble"s when looking at the assembly graph.
+    It starts to make sense if you think about what the alternate assembly is meant to represent: the haplotigs. These are the alternate alleles for the heterozygous loci, so it would track that only one parent's hapmers are represented -- the alternate assembly is a collection of the "other side of the bubble"s when looking at the assembly graph.
 
-The right plot is a blob plot from the Hi-C-phased assembly. Notably, most of the contigs are able to be properly phased, since they are almost all on the x- or -y axis.
+The right plot is a blob plot from the Hi-C-phased assembly. Notably, most of the contigs are able to be properly phased, since they are almost all on the x- or y-axis.
 
 ### Switch and Hamming errors using yak
 
@@ -446,11 +438,10 @@ Let's first create a director within `assembly_qc` for it.
 
 !!! terminal "code"
 
-```bash
-cd ~/obss_2026/genome_assembly/assembly_qc
-mkdir -p yak
-cd yak
-```
+	```bash
+	mkdir ~/obss_2026/genome_assembly/assembly_qc/yak
+	cd ~/obss_2026/genome_assembly/assembly_qc/yak
+	```
 
 As the image illustrates, switch errors occur when an assembly _switches_ between haplotypes. These errors are more prevalent in pseudohaplotype (_e.g._, primary/alternate) assemblies that did not use any phasing data, as the assembler has no way of properly linking haplotype blocks, which can result in mixed hapmer content contigs that are a chimera of parental sequences.
 
@@ -468,7 +459,7 @@ As the image illustrates, switch errors occur when an assembly _switches_ betwee
     #SBATCH --partition     milan
 
     ## change to qc dir, link the necessary files
-    cd ~/obss_2026/genome_assembly/assembly_qc/yak
+	cd ~/obss_2026/genome_assembly/assembly_qc/yak
     OBSS_RESOURCES=/nesi/project/nesi02659/obss_2026/resources/genome_assembly
     ln -s $OBSS_RESOURCES/yak .
     ln -s $OBSS_RESOURCES/hic .
@@ -491,8 +482,6 @@ As the image illustrates, switch errors occur when an assembly _switches_ betwee
         ../trio/HG002.mat.fa.gz \
         > hifiasm.trio.mat.trioeval
     ```
-    !!! callout
-        Submit using `sbatch` on the login node
 
 ## Completeness (asmgene)
 
@@ -509,14 +498,13 @@ Let's try running asmgene on `haplotype1` and `haplotype2` from the pre-baked Ve
 !!! terminal "code"
 
     ```bash
-    ## asmgene
-    cd ~/obss_2026/genome_assembly/
     mkdir -p ~/obss_2026/genome_assembly/assembly_qc/asmgene
-    cd assembly_qc/asmgene
+    cd ~/obss_2026/genome_assembly/assembly_qc/asmgene
+    
     # let's symlink some of the necessary files
     OBSS_RESOURCES=/nesi/project/nesi02659/obss_2026/resources/genome_assembly
     ln -s $OBSS_RESOURCES/chm13v2.0.fa .
-    ln -s $OBSS_RESOURCES/CHM13-T2T.cds.fasta .
+    ln -s $OBSS_RESOURCES/CHM13-T2T.cds.fasta.gz .
     ln -s $OBSS_RESOURCES/assembly.haplotype1.fasta .
     ln -s $OBSS_RESOURCES/assembly.haplotype2.fasta .
     ```
@@ -540,15 +528,18 @@ Now that we have our files, we're ready to go. Make a script with the following 
     module purge
     module load minimap2/2.24-GCC-11.3.0
 
+    ## move to asmgene dir
+    cd ~/obss_2026/genome_assembly/assembly_qc/asmgene
+
     ## run minimap2 on ref, hap1, and hap2
     minimap2 -cxsplice:hq -t32 \
-        chm13v2.0.fa CHM13-T2T.cds.fasta \
+        chm13v2.0.fa CHM13-T2T.cds.fasta.gz \
         > ref.cdna.paf
     minimap2 -cxsplice:hq -t32 \
-        assembly.haplotype1.fasta CHM13-T2T.cds.fasta \
+        assembly.haplotype1.fasta CHM13-T2T.cds.fasta.gz \
         > asm.hap1.cdna.paf
     minimap2 -cxsplice:hq -t32 \
-        assembly.haplotype2.fasta CHM13-T2T.cds.fasta \
+        assembly.haplotype2.fasta CHM13-T2T.cds.fasta.gz \
         > asm.hap2.cdna.paf
 
     ## run asmgene
@@ -556,8 +547,6 @@ Now that we have our files, we're ready to go. Make a script with the following 
     k8 /opt/nesi/CS400_centos7_bdw/minimap2/2.24-GCC-11.3.0/bin/paftools.js asmgene -a ref.cdna.paf asm.hap1.cdna.paf > verkko.haplotype1.asmgene.tsv
     k8 /opt/nesi/CS400_centos7_bdw/minimap2/2.24-GCC-11.3.0/bin/paftools.js asmgene -a ref.cdna.paf asm.hap2.cdna.paf > verkko.haplotype2.asmgene.tsv
     ```
-    !!! callout
-        Submit using `sbatch` on the login node
         
 !!! tip "Tip"
 

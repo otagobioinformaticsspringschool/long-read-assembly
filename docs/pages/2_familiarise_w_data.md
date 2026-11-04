@@ -6,11 +6,10 @@ Let's get our hands on some data so we can see with our own eyes what HiFi and U
 
 !!! terminal "code"
     ```bash
-    cd ~/obss_2026/genome_assembly
-    cd data
+    cd ~/obss_2026/genome_assembly/data
     ```
     
-    _Load modules_
+**Load modules**
 
 !!! terminal "code"
 
@@ -112,6 +111,7 @@ Hifiasm is often run with ONT data filtered to be over 50kb in length, so let's 
     module load SeqKit/2.4.0
     seqkit seq \
         -m 50000 \
+        -g \
         ont_ul_5k_reads.fq.gz \
         | pigz > ont_ul_5k_reads.50kb.fq.gz 
     ```
@@ -363,25 +363,21 @@ Yak won't work on our Jupyter instances, so create a slurm script that has 32 co
     
     If you haven't already, execute your yak script using slurm (takes about 2 minutes).
 
-	!!! callout
+    !!! terminal "code"
 
-    	Slurm Scheduler commands such `sbatch`, `squeue`, and `sacct` cannot be run within Juptyer on the REANZ HPC. Instead, goto https://ondemand.nesi.org.nz, login if prompted, then in the top menu bar select "Clusters", then "NeSI HPC Shell access". This will open up a terminal on the login node. Then ensure you navigate this terminal to where you made the script
+        ```bash       
+        sbatch yak.sl
+        ```
 
-    	!!! terminal "code"
+	You can keep track of the run with the `squeue` command.
 
-        	```bash       
-        	sbatch yak.sl
-        	```
+    !!! terminal "code"
 
-		You can keep track of the run with the `squeue` command.
-
-    	!!! terminal "code"
-
-        	```bash
-        	squeue --me
-        	```
+        ```bash
+        squeue --me
+        ```
         	
-        When you are done you get out a non-human readable .yak file (yak k-mer database), ready to use for assembly.
+    When you are done you get out a non-human readable .yak file (yak k-mer database), ready to use for assembly.
 
 **Closing remarks on yak**
 
@@ -417,6 +413,4 @@ We should also mention that there are other datatypes that can be used for phasi
 Pore-C is a variant of Hi-C which retains the chromatin conformation capture aspect, but the sequencing is done on ONT. This allows long-read sequencing of concatemers. Where Hi-C typically has at most one "contact" per read, Pore-C can have many contacts per read. The libraries also do not need to be amplified, so Pore-C reads can carry base modification calls.
 
 **StrandSeq**<br>
-StrandSeq is a technique that creates sparse Illumina datasets that are both cell- and strand-specific. Cell specificity is achieved by putting one cell per well into 384-well plates (often multiple). Strand specificity is achieved through selective fragmentation of nascent strands. (During DNA replication, BrdU is incorporated exclusively into nascent DNA strands. In the library preparation the BrdU strand is fragmented and only the other strand amplifies.) This strand specificity gives another way to identify haplotype-specific kmers and use them during assembly phasing.
-
-!!! quote-right "If you are interested in these phasing approaches, you can read more about them in the following articles:"
+StrandSeq is a technique that creates sparse Illumina datasets that are both cell- and strand-specific. Cell specificity is achieved by putting one cell per well into 384-well plates (often multiple). Strand specificity is achieved through selective fragmentation of nascent strands. During DNA replication, BrdU is incorporated exclusively into nascent DNA strands. In the library preparation the BrdU strand is fragmented and only the other strand amplifies. This strand specificity gives another way to identify haplotype-specific kmers and use them during assembly phasing.
