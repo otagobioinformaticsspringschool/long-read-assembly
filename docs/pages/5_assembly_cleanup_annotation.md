@@ -360,8 +360,8 @@ First create a shell script `liftoff.sh` with the following content:
         -p 8 \
         -db ./chm13-annotations.gff.liftoff.sqlite3 \
         -o ./asm.hap1.annotations.gff \
-        ~/obss_2026/genome_assembly/asm.hap1.fa \
-        ~/obss_2026/genome_assembly/chm13.fa
+        ./asm.hap1.fa \
+        ./chm13.fa
     ```
 
 ??? info "What do each of these options do?"
@@ -468,23 +468,16 @@ The first thing we would like to do is to find out how our assembled genome comp
 
     [MashMap](https://genomeinformatics.github.io/mashmap/) is a super fast mapper that is commonly used for these kinds of questions. MashMap doesn't seed and extend, it takes sequences and plays tricks with kmers. Loosely speaking if you take a sequence and get all of its kmers of a certain size and then sort those kmers, you can do a lot with just the "smallest" kmer (this is called a minimizer). MashMap uses a set of those smallest kmers to say: this sequence here and my query sequence share a lot of smallest kmers. The output of MashMap is an approximation of read position and identity. Let's actually use it now to align our asembly to CHM13 and we will use the results to map our contigs onto chromosomes and to try and find some T2T chromosomes in our assemblies.
 
-**Create A Directory**
+**Run MashMap**
 
 !!! terminal "code"
 
     ```bash
-    mkdir -p ~/obss_2026/genome_assembly/mashmap-annotation
-    cd ~/obss_2026/genome_assembly/mashmap-annotation
+    cd ~/obss_2026/genome_assembly/annotation/mashmap
     ```
 
-**Link the files we need**
-
-!!! terminal "code"
-
-    We are going to use CHM13 v2.0 (which includes a Y chromosome)
-    as well as haplotype 1 from our Verkko trio assembly in the file `assembly.haplotype1.fasta.
-
-**Run MashMap**
+We are going to use CHM13 v2.0 (which includes a Y chromosome)
+as well as haplotype 1 from our Verkko trio assembly in the file `assembly.haplotype1.fasta.
 
 !!! terminal "code"
 
@@ -492,13 +485,13 @@ The first thing we would like to do is to find out how our assembled genome comp
     module purge
     module load MashMap/3.0.4-Miniconda3
     mashmap \
-      -r ~/obss_2026/genome_assembly/chm13v2.0.fa \
-      -q ~/obss_2026/genome_assembly/assembly.haplotype1.fasta \
+      -r ./chm13v2.0.fa \
+      -q ./assembly.haplotype1.fasta \
       -f one-to-one \
       --pi 95 \
       -s 100000 \
       -t 4 \
-      -o ~/obss_2026/genome_assembly/mashmap-annotation/asm-to-chm13.mashmap.out
+      -o ./asm-to-chm13.mashmap.out
     ```
 
 ??? filter "Take a look at the parameters for MashMap. What are `-f`, `--pi`, and `-s` ?"
@@ -583,8 +576,7 @@ Today we are going to use minimap2 to align ONT reads that have 5mC information 
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2026/genome_assembly/
-    cd annotation/minimap2
+    cd ~/obss_2026/genome_assembly/annotation/minimap2
     ```
 
 We are going to use the diploid version of our Verkko trio assembly. (This just means that the maternal and paternal haplotypes are both included in the fasta.)
@@ -640,14 +632,6 @@ And paste in the following:
 
     samtools index verkko_trio_diploid.mm2.5mC.bam
     ```
-    **And run the script**
-
-    !!! callout
-    Run this on the login node
-        !!! terminal
-        ```bash
-        sbatch ont_mm2.sl
-        ```
 
 This should take only 3 hours or so, but we have some pre-baked results for you already. We will use these results in the next section.
 
@@ -656,10 +640,6 @@ This should take only 3 hours or so, but we have some pre-baked results for you 
     The traditional thing to do is to align your data to a haploid or pseudo-haploid assembly like CHM13 or GRCh38. We are diploid individuals, though. And for some use cases we want to align long reads to a diploid assembly in order to have the reads segregate by haplotype. When we are aligning a samples reads to its own assembly this is especially important.
 
 ### Visualize The Alignments In IGV
-
-**Before switching over to your virtual desktop, link the prerun alignments to your working directory**
-
-!!! terminal "code"
 
 !!! jupyter "Now view the alignments in IGV"
 

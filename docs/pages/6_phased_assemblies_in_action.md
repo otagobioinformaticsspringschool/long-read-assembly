@@ -15,7 +15,7 @@ in chromosome Y of our HG002 assembly.
 
 [ModDotPlot](https://github.com/marbl/ModDotPlot) <!--([Sweeten _et al._ 2023](https://doi.org/##############))-->
 is a tool for visualizing tandem repeats using dot plots, similar to
-[StainedGlass](https://mrvollger.github.io/StainedGlass)
+[StainedGlass](https://github.com/vollgerlab/StainedGlass)
 ([Vollger _et al._ 2022](https://doi.org/10.1093/bioinformatics/btac018)), but
 using sketching methods to radically reduce the computational requirements.
 Visualizing tandem repeats like this _requires_ an assembly that spans all the
@@ -83,9 +83,8 @@ can map against the human CHM13-T2T reference.
 !!! terminal "code"
 
     ```bash
-    cd ~/obss_2026/genome_assembly/
-    mkdir moddotplot
-    cd moddotplot
+    mkdir -p ~/obss_2026/genome_assembly/annotation/moddotplot
+    cd ~/obss_2026/genome_assembly/annotation/moddotplot
     ```
 
 **Get the files**
@@ -95,7 +94,6 @@ can map against the human CHM13-T2T reference.
     ```bash
     ln -s /nesi/project/nesi02659/obss_2026/resources/genome_assembly/chm13v2.0.fa chm13.fa
     ln -s /nesi/project/nesi02659/obss_2026/resources/genome_assembly/assembly.haplotype2.fasta hg002.hap2.fa
-    ln -s /nesi/project/nesi02659/obss_2026/resources/genome_assembly/assembly.haplotype2.fasta.fai hg002.hap2.fa.fai
     ```
 
 Note that we&rsquo;re cheating a bit. We could map against the entire diploid
@@ -107,30 +105,16 @@ we&rsquo;ll save some time and work with only that haplotype.
 **Do the alignments**
 
 We&rsquo;ll do the alignments with [MashMap](https://github.com/marbl/MashMap)
-([Kille _et al._ 2023](https://doi.org/10.1101/2023.05.16.540882)). This should
-take ~25 minutes with 4 CPUs and should use &lt;4 GB RAM. With 16 CPUs, it
+([Kille _et al._ 2023](https://doi.org/10.1101/2023.05.16.540882)). With 16 CPUs, it
 should take ~4 minutes and will use &lt;8 GB RAM. This command is the same as
 the one you ran earlier, except that this time it is on haplotype2 and the
 percent identity threshold is lower, which should help us recruit alignments in
 the satellites on chrY. We&rsquo;ll use pre-computed results to avoid needing
 to wait for the job to complete, but this is what the command would look like:
 
-!!! terminal "view, but do not run this code"
+!!! terminal "How would I submit this as a job?"
 
-    ```bash
-    module purge
-    module load MashMap/3.0.4-Miniconda3
-    mashmap -f "one-to-one" \
-        -k 16 --pi 90 \
-        -s 100000 -t 4 \
-        -r chm13.fa \
-        -q hg002.hap2.fa \
-        -o hg2hap2-x-chm13.ssv
-    ```
-
-??? question "How would I submit this as a job?"
-
-    Submit it as a job with `sbatch`. First copy the command into a
+    Submit it as a job with `sbatch`. Copy the below into a
     script named `mashmap.sh`:
 
 
@@ -158,21 +142,12 @@ to wait for the job to complete, but this is what the command would look like:
         -o hg2hap2-x-chm13.ssv
     ```
 
-    Then submit the job with the following command:
-
-    !!! terminal "code"
-
-        ```bash
-        sbatch mashmap.sh
-        ```
-
 **Get the pre-computed results**
 
 !!! terminal "code"
 
     ```bash
     cp /nesi/nobackup/nesi02659/LRA/resources/hap2-mashmap/hg2hap2-x-chm13.ssv ./
-    cp /nesi/nobackup/nesi02659/LRA/resources/hap2-mashmap/mashmap.log ./
     ```
 
 **View the output file**
@@ -185,14 +160,6 @@ to wait for the job to complete, but this is what the command would look like:
 
 There is more information present than we need, and we can simplify things by
 looking at long alignments only.
-
-??? info "Optionally, view the MashMap log file"
-
-    !!! terminal "code"
-
-        ```bash
-        less -S mashmap.log
-        ```
 
 **Subset the alignments**
 
@@ -358,6 +325,8 @@ files for our contigs of interest.
     ```bash
     module load SAMtools/1.16.1-GCC-11.3.0
 
+	samtools faidx hg002.hap2.fa
+
     for CTG in pat-000072{4,5,7}
     do
         samtools faidx hg002.hap2.fa ${CTG} > hg002.hap2.${CTG}.fa
@@ -397,10 +366,6 @@ large sequences (>100 Mbp). Let's create a script to submit with
     done
     ```
 
-Then submit with `sbatch`:
-
-!!! terminal "code"
-
     ```bash
     sbatch moddotplot.sh
     ```
@@ -439,6 +404,4 @@ Then note that for every run, we created `_HIST.png` and `_TRI.png` files. The
 HIST files show the distribution of the Percent Identity of the alignments. The
 TRI files show everything above (or below, depending on how you look at it) the
 diagonal of the dotplot, rotated such that the diagonal is along the X-axis of
-the plot. Go ahead a view these files now.
-
-!!! question "What do you observe?"
+the plot. Go ahead a view these files now and have a look at chrY for [CHM13](https://www.nature.com/articles/s41586-023-06457-y/figures/1)
