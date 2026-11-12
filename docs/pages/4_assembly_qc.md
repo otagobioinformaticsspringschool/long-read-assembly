@@ -332,11 +332,10 @@ Use your text editor of choice to make a Slurm script (`run_merqury.sl`) to run 
 !!! terminal "code"
 
     ```bash
-    Start your favourite text editor
-    ```bash
-    nano verkko_test.sl
+    nano merqury_solo.sl
     ```
-
+    
+    ```bash
     #!/bin/bash -e
     #SBATCH --account       nesi02659
     #SBATCH --job-name      merqury1
@@ -362,6 +361,11 @@ Use your text editor of choice to make a Slurm script (`run_merqury.sl`) to run 
     	../assembly.fasta \
     	output
     ```
+    
+    **Run Merqury solo**
+    ```bash
+    sbatch merqury_solo.sl
+    ```
 
 To find out the QV, we want the file named `output_solo.qv`. Take a look at it and try to interpret the QV value you find (third column). If we recall the Phred scale system, this would mean that this QV value is great! Which is not surprising, considering we used HiFi data. **It's worth noting, though, that we are using HiFi _k_-mers to evaluate sequences derived from those same HiFi reads.** This does a good job of showing whether the assembly worked with that data well, but what if the HiFi data itself is missing parts of the genome, such as due to bias (_e.g._, GA dropout)? That's why it's important to use orthogonal datasets made using different sequencing technology, when possible. For instance, we can use an Illumina-based Meryl database to evaluate a HiFi assembly. For non-human vertebrates, this often results in the QV dropping from 50-60 to 35-45, depending on the genome in question.
 
@@ -370,6 +374,10 @@ To find out the QV, we want the file named `output_solo.qv`. Take a look at it a
 We just ran Merqury on our E. coli assembly, and evaluated it using the HiFi reads that we used for that assembly. Merqury can also utilize trio data (using those hapmer DBs we talked about before) to evaluate the phasing of an assembly, so let's try that with our HG002 trio data. We can create run_merqury_trio.sl to do so.
 
 !!! terminal "code"
+
+    ```bash
+    nano merqury_trio.sl
+    ```
 
     ```bash
     #!/bin/bash -e
@@ -405,6 +413,11 @@ We just ran Merqury on our E. coli assembly, and evaluated it using the HiFi rea
         ../assembly.haplotype1.fasta \
         ../assembly.haplotype2.fasta \
         output
+    ```
+    
+    **Run Merqury trio**
+    ```bash
+    sbatch merqury_trio.sl
     ```
 
 There will be lots of outputs, but let's look at two now to get an idea for how the sequences have been partitioned between our assemblies, and whether that's consistent with information we know from trio sequencing. First let's look at the spectra-asm plot:
@@ -444,13 +457,17 @@ Let's first create a director within `assembly_qc` for it.
 !!! terminal "code"
 
 	```bash
-	mkdir ~/obss_2026/genome_assembly/assembly_qc/yak
+	mkdir -p ~/obss_2026/genome_assembly/assembly_qc/yak
 	cd ~/obss_2026/genome_assembly/assembly_qc/yak
 	```
 
 As the image illustrates, switch errors occur when an assembly _switches_ between haplotypes. These errors are more prevalent in pseudohaplotype (_e.g._, primary/alternate) assemblies that did not use any phasing data, as the assembler has no way of properly linking haplotype blocks, which can result in mixed hapmer content contigs that are a chimera of parental sequences.
 
 !!! terminal "code"
+
+    ```bash
+    nano yak_qc.sl
+    ```
 
     ```bash
     #!/bin/bash -e
@@ -487,6 +504,11 @@ As the image illustrates, switch errors occur when an assembly _switches_ betwee
         ../trio/HG002.mat.fa.gz \
         > hifiasm.trio.mat.trioeval
     ```
+    
+    **Run Yak QC**
+    ```bash
+    sbatch yak_qc.sl
+    ```
 
 ## Completeness (asmgene)
 
@@ -517,6 +539,10 @@ Let's try running asmgene on `haplotype1` and `haplotype2` from the pre-baked Ve
 Now that we have our files, we're ready to go. Make a script with the following content and run it in the directory with the appropriate files:
 
 !!! terminal "code"
+
+    ```bash
+    nano asmgene.sl
+    ```
 
     ```bash
     #!/bin/bash -e
@@ -552,7 +578,12 @@ Now that we have our files, we're ready to go. Make a script with the following 
     k8 /opt/nesi/CS400_centos7_bdw/minimap2/2.24-GCC-11.3.0/bin/paftools.js asmgene -a ref.cdna.paf asm.hap1.cdna.paf > verkko.haplotype1.asmgene.tsv
     k8 /opt/nesi/CS400_centos7_bdw/minimap2/2.24-GCC-11.3.0/bin/paftools.js asmgene -a ref.cdna.paf asm.hap2.cdna.paf > verkko.haplotype2.asmgene.tsv
     ```
-        
+      
+    **Run asmgene**
+    ```bash
+    sbatch asmgene.sl
+    ```
+      
 !!! tip "Tip"
 
     Another popular tool for checking genome completeness using gene content is the software Benchmarking Universal Single-Copy Orthologs (BUSCO). This approach uses a set of evolutionarily conserved genes that are expected to be present at single copy for a given taxa, so one could check their genome to see if, for instance, it has all the genes predicted to be necessary for *Aves* or *Vertebrata*. This approach is useful if your *de novo* genome assembly is for a species that does not have a reference genome yet. And it's even faster now with the recently developed tool *minibusco*!

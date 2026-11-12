@@ -304,7 +304,7 @@ of HG002.
 !!! terminal "code"
 
     ```shell
-    cd ~/obss_2026/genome_assembly/liftoff-annotation
+    cd ~/obss_2026/genome_assembly/annotation/liftoff
     ```
 
 **Gather the necessary files**
@@ -354,7 +354,7 @@ First create a shell script `liftoff.sh` with the following content:
     module purge
     module load Liftoff/1.6.3.2-gimkl-2022a-Python-3.11.3
 
-	cd ~/obss_2026/genome_assembly/liftoff-annotation
+	cd ~/obss_2026/genome_assembly/annotation/liftoff
 
     liftoff \
         -p 8 \
@@ -399,7 +399,7 @@ To skip the run-time, we have pre-computed the output 'asm.hap1.annotations.gff'
 !!! terminal "code"
 
     ```shell
-    ln -s /nesi/nobackup/nesi02659/LRA/resources/liftoff/asm.hap1.annotations.gff .
+    ln -s /nesi/project/nesi02659/obss_2026/resources/genome_assembly/liftoff/asm.hap1.annotations.gff .
     ```
 
 **Look at the output GFF3 file**
@@ -411,9 +411,9 @@ To skip the run-time, we have pre-computed the output 'asm.hap1.annotations.gff'
     ```
 
 You could also explore the files in Liftoff's intermediate directory
-(`/nesi/nobackup/nesi02659/LRA/resources/liftoff/intermediate_files`) or the
+(`/nesi/project/nesi02659/obss_2026/resources/genome_assembly/liftoff/intermediate_files`) or the
 unmapped features
-(`/nesi/nobackup/nesi02659/LRA/resources/liftoff/unmapped_features.txt`).
+(`/nesi/project/nesi02659/obss_2026/resources/genome_assembly/liftoff/unmapped_features.txt`).
 
 **Visualize the annotations in a genome browser**
 
@@ -476,8 +476,7 @@ The first thing we would like to do is to find out how our assembled genome comp
     cd ~/obss_2026/genome_assembly/annotation/mashmap
     ```
 
-We are going to use CHM13 v2.0 (which includes a Y chromosome)
-as well as haplotype 1 from our Verkko trio assembly in the file `assembly.haplotype1.fasta.
+We are going to use CHM13 v2.0 (which includes a Y chromosome) as well as haplotype 1 from our Verkko trio assembly in the file `assembly.haplotype1.fasta`.
 
 !!! terminal "code"
 
@@ -583,18 +582,14 @@ We are going to use the diploid version of our Verkko trio assembly. (This just 
 
 **Create a minimap2 slurm script**
 
-Open your favourite text editor
+**This will take ~3 hours**, but we have some pre-baked results for you already. We will use these results in the next section.
 
 !!! terminal "code"
 
     ```bash
     nano ont_mm2.sl
     ```
-
-And paste in the following:
-
-!!! terminal "code"
-
+    
     ```bash
     #!/bin/bash -e
 
@@ -632,8 +627,6 @@ And paste in the following:
 
     samtools index verkko_trio_diploid.mm2.5mC.bam
     ```
-
-This should take only 3 hours or so, but we have some pre-baked results for you already. We will use these results in the next section.
 
 ??? clipboard-question "Why did we align to the diploid version of our assembly ?"
 
