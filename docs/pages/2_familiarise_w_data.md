@@ -26,7 +26,7 @@ In order to get a feel for the data, we only need a small portion of it. Pull th
 
     ```bash
     zcat m64011_190830_220126.Q20.fastq.gz \
-        | head -n 200000 \
+        | head -n 20000 \
         | pigz > hifi_50k_reads.fq.gz
     ```
 
@@ -363,19 +363,15 @@ Yak won't work on our Jupyter instances, so create a slurm script that has 32 co
     
     If you haven't already, execute your yak script using slurm (takes about 2 minutes).
 
-    !!! terminal "code"
-
-        ```bash       
-        sbatch yak.sl
-        ```
+    ```bash       
+    sbatch yak.sl
+    ```
 
 	You can keep track of the run with the `squeue` command.
 
-    !!! terminal "code"
-
-        ```bash
-        squeue --me
-        ```
+    ```bash
+    squeue --me
+    ```
         	
     When you are done you get out a non-human readable .yak file (yak k-mer database), ready to use for assembly.
 

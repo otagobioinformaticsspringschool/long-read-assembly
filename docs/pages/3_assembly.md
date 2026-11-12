@@ -303,7 +303,7 @@ Take a look at the shell script that was created for your run
     cat assembly/snakemake.sh
     ```
 
-It is just a call to Snakemake!!! You can think of Verkko as a tool, but also as a pipeline because it is. This has some advantages. One is that if you know what Verkko is doing (which is somewhat achievable given that the Snakemake rules guide you through Verkko's logic), you can add to it, or even swap out how Verkko performs a given step for how you'd like to do it. It also means that you can restart a run at any given step (if you made a mistake or if the run failed). Lastly, and maybe most importantly, Snakemake supports Slurm as a backend. So if you have access to an HPC you could (and probably should) run Verkko and allow it to launch Slurm jobs for you. (This is in contrast to what we just did which was to run a Slurm job and just allow all jobs to run on the allocated resources that we requested for the entire run.)
+It is just a call to Snakemake!!! You can think of Verkko as a tool, but also as a pipeline because it is. This has some advantages. One is that if you know what Verkko is doing (which is somewhat achievable given that the Snakemake rules guide you through Verkko's logic), you can add to it, or even swap out how Verkko performs a given step for how you'd like to do it. It also means that you can restart a run at any given step (if you made a mistake or if the run failed). Lastly, and maybe most importantly, Snakemake supports Slurm as a backend. So if you have access to an HPC you could (and probably should) run Verkko and allow it to launch Slurm jobs for you. This is in contrast to what we just did which was to run a Slurm job and just allow all jobs to run on the allocated resources that we requested for the entire run.
 
 **Now take a look at the jobs that were run**
 
@@ -374,31 +374,7 @@ Open the `assembly/5-untip/unitig-normal-connected-tip.gfa` file in Bandage. Now
 
 ## Running on Full Data Sets
 
-We won't be running the full datasets during the workshop, but you are encouraged to do so yourself. To help facilitate that we've downloaded the full datasets to NeSi for you.
-
-**Raw Data**
-
-```
-/nesi/nobackup/nesi02659/LRA/resources/
-                                ├── deepconsensus/  # HiFi
-                                ├── ont_ul/
-                                ├── ilmn/           # Maternal/Paternal/Child
-                                └── hic/
-```
-
-**And we've run these assemblies for you**
-
-```
-/nesi/nobackup/nesi02659/LRA/resources/assemblies/
-                                            ├── verkko/
-                                                    ├── trio/ # full verkko folder available!
-                                                    └── hic/
-                                            └── hifiasm/
-                                                    ├── trio/
-                                                    └── hic/
-```
-
-We will be taking advantage of these pre-baked assemblies in the remainder of the workshop.
+We won't be running the full datasets during the workshop, but you are encouraged to do so yourself. 
 
 ??? question "How would you run Verkko/Hifiasm on full datasets?"
 

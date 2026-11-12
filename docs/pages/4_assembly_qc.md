@@ -332,6 +332,11 @@ Use your text editor of choice to make a Slurm script (`run_merqury.sl`) to run 
 !!! terminal "code"
 
     ```bash
+    Start your favourite text editor
+    ```bash
+    nano verkko_test.sl
+    ```
+
     #!/bin/bash -e
     #SBATCH --account       nesi02659
     #SBATCH --job-name      merqury1
