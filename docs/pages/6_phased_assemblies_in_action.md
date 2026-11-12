@@ -114,10 +114,6 @@ to wait for the job to complete, but this is what the command would look like:
 
 !!! terminal "How would I submit this as a job?"
 
-    Submit it as a job with `sbatch`. Copy the below into a
-    script named `mashmap.sh`:
-
-
     ```bash
     #!/bin/bash -e
 
@@ -147,7 +143,7 @@ to wait for the job to complete, but this is what the command would look like:
 !!! terminal "code"
 
     ```bash
-    cp /nesi/nobackup/nesi02659/LRA/resources/hap2-mashmap/hg2hap2-x-chm13.ssv ./
+    cp /nesi/project/nesi02659/obss_2026/resources/genome_assembly/hg2hap2-x-chm13.ssv ./
     ```
 
 **View the output file**
