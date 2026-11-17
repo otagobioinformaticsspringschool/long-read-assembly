@@ -347,6 +347,7 @@ First create a shell script `liftoff.sh` with the following content:
 	#SBATCH --output        slurmlogs/%x.%j.log
 	#SBATCH --error         slurmlogs/%x.%j.err
 	#SBATCH --partition     milan
+	#SBATCH --reservation=MPI_mc062 
     
     set -euo pipefail
 	
